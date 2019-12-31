@@ -8,9 +8,12 @@ export default () => {
             db.run(`
                 CREATE TABLE IF NOT EXISTS
                 movimentacao_animal(
-                    id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    idMovimento INTEGER NOT NULL,
-                    idAnimal INTEGER NOT NULL
+                    id_mov_animal INTEGER PRIMARY KEY AUTOINCREMENT,
+                    id_movimentacao INTEGER NOT NULL,
+                    id_animal INTEGER NOT NULL,
+                    id_historico_peso INTEGER NOT NULL,
+                    aparte INTEGER NOT NULL,
+                    data_cadastro DATE NOT NULL
                 )
             `, (err, result) => {
                 if (err) {

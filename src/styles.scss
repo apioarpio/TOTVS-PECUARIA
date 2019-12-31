@@ -1,1 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  /* Botão primário, Links, Cor da borda do input selecionado, Cor da borda do botão secundário */
+  --color-primary: #8E5C3B;
+  /* Hover do Botão primário, Links, Cor da borda do botão secundário */
+  --color-primary-dark-20: #7a493a;
+  /* Pressed do Botão primário, Links, Cor da borda do botão secundário */
+  --color-primary-dark-40: #5f332d;
+
+  --color-secondary: #2f3640;
+  --color-tertiary: #44bd32;
+}
+
+.pecuaria-back-span {
+
+  font-size: 30px;
+  color: #c9357d;
+  cursor: pointer;
+
+}
+
+.pec-header-toolbar {
+
+  .pec-header-toolbar-back {
+    width: 25%;
+    display: inline-block;
+    text-align: start;
+    overflow-x: auto;
+  }
+
+  .pec-header-toolbar-title {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    overflow-x: auto;
+  }
+
+  .pec-header-toolbar-add-button {
+    width: 25%;
+    display: inline-block;
+    text-align: end;
+    overflow-x: auto;
+  }
+}

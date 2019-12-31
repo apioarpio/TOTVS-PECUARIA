@@ -4,21 +4,26 @@ export default () => {
     return new Promise((resolve, reject) => {
         const db = database();
         db.serialize(() => {
-
+            /**
+             * tipos de movimentacao: 1 - entrada, 2 - saída, 3 - interno
+             */
             db.run(`
                 CREATE TABLE IF NOT EXISTS
-                    MOVIMENTACAO(
-                        ID INTEGER PRIAMRY KEY AUTOINCREMENT,
-                        CODTM INTEGER,
-                        QTDANIMAIS INTEGER,
-                        OBSERVACAO TEXT,
-                        NUMEROGTA INTEGER,
-                        SERIEGTA INTEGER,
-                        DTEMISSAOGTA DATE,
-                        DTVALIDADEGTA DATE,
-                        DTSAIDAGTA DATE,
-                        DTCHEGADAGTA DATE,
-                        DTCADASTRO DATE,
+                    movimentacao(
+                        id_movimentacao INTEGER PRIMARY KEY AUTOINCREMENT,
+                        id_tm INTEGER,
+                        id_fornecedor INTEGER,
+                        id_fazenda,
+                        quantidade_animal INTEGER,
+                        tipo INTEGER,
+                        observacao TEXT,
+                        numero_gta INTEGER,
+                        serie_gta INTEGER,
+                        data_emissao_gta DATE,
+                        data_validade_gta DATE,
+                        data_saida_gta DATE,
+                        data_chegada_gta DATE,
+                        data_cadastro DATE
                     )
             `,
                 (err, success) => {
