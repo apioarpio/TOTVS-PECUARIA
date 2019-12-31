@@ -1,0 +1,20 @@
+<h1>bluetooth selection</h1>
+
+<po-list-view *ngIf="!bluetoothService.isDeviceConected"
+              p-property-title="name"
+              [p-items]="devices">
+
+  <ng-template p-list-view-content-template let-item>
+    <div class="po-row">
+      <po-button (p-click)="syncDevice(item)" p-label="Emparelhar"></po-button>
+    </div>
+  </ng-template>
+
+</po-list-view>
+
+<div *ngIf="bluetoothService.isDeviceConected">
+
+  <p>{{bluetoothService.deviceConected.name}}</p>
+  {{resultBluetooth}}
+
+</div>

@@ -1,0 +1,76 @@
+<div class="po-row" class="pec-header-toolbar">
+  <div class="pec-header-toolbar-back">
+    <span class="po-icon po-icon-arrow-left pecuaria-back-span" (click)="backRoute()"></span>
+  </div>
+  <div class="pec-header-toolbar-title">
+    <h3>Manejo de Entrada</h3>
+  </div>
+  <div class="pec-header-toolbar-add-button">
+    <po-button
+      p-icon="po-icon-plus"
+      p-label="Salvar"
+      p-type="primary"
+      (p-click)="saveMovimentacao()"
+      [p-disabled]="!manejoEntradaForm.valid"
+    ></po-button>
+  </div>
+</div>
+<form [formGroup]="manejoEntradaForm">
+  <div class="po-row">
+    <po-lookup class="po-md-4"
+               name="codTM"
+               p-field-label="CODIGO"
+               p-field-value="CODIGO"
+               p-label="Código Tipo de Movimento"
+               [p-filter-service]="tiposMovimentoLookupService"
+               [p-columns]="lookupColumns"
+               (p-selected)="lookupSelected($event)"
+               [p-no-autocomplete]="true"
+               formControlName="codTM"
+    ></po-lookup>
+    <po-input class="po-md-6" p-label="Tipo de Movimento" formControlName="descTM" p-disabled="true"></po-input>
+    <po-input class="po-md-2" p-label="Quantidade Animais" formControlName="quantidadeAnimais"></po-input>
+  </div>
+  <div class="po-row">
+    <po-textarea class="po-md-12" p-label="Observação" formControlName="observacao"></po-textarea>
+  </div>
+  <!--  campos GTA-->
+  <div *ngIf="TMTipo === 1">
+    <po-divider p-label="GTA"></po-divider>
+    <div class="po-row">
+      <po-input class="po-md-4" p-label="Código Fornecedor"></po-input>
+      <po-input class="po-md-8" p-label="Fornecedor"></po-input>
+    </div>
+    <div class="po-row">
+      <po-input class="po-md-4" p-label="Número GTA"></po-input>
+      <po-input class="po-md-4" p-label="Série GTA"></po-input>
+      <po-datepicker class="po-md-4" p-label="Emissão GTA"></po-datepicker>
+    </div>
+    <div class="po-row">
+      <po-datepicker class="po-md-4" p-label="Validade GTA"></po-datepicker>
+      <po-datepicker class="po-md-4" p-label="Chegada GTA"></po-datepicker>
+      <po-datepicker class="po-md-4" p-label="Saída GTA"></po-datepicker>
+    </div>
+  </div>
+  <!--  <po-divider></po-divider>-->
+  <!--  <div class="po-row">-->
+  <!--    <pec-modal-form-animal-->
+  <!--      buttonIcon="po-icon-plus"-->
+  <!--      buttonType="primary"-->
+  <!--      buttonLabel="Adicionar Animal"-->
+  <!--      class="po-md-12" (pecAnimalEmitter)="addAnimal($event)"-->
+  <!--    ></pec-modal-form-animal>-->
+  <!--  </div>-->
+  <!--  <div class="po-row">-->
+  <!--    <po-table-->
+  <!--      class="po-md-12"-->
+  <!--      p-container-->
+  <!--      p-hide-text-overflow-->
+  <!--      p-sort="true"-->
+  <!--      p-striped="true"-->
+  <!--      [p-columns]="columns"-->
+  <!--      [p-items]="animais"-->
+  <!--    >-->
+  <!--    </po-table>-->
+  <!--  </div>-->
+</form>

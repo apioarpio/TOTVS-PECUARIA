@@ -1,0 +1,47 @@
+.pec-input-tronco-header {
+  width: 50%;
+  text-align: center;
+  float: left;
+  padding: 5px 15px 5px 0;
+  color: #4a5c60;
+  font-family: Roboto, sans-serif;
+
+  label {
+    font-size: 20px;
+  }
+
+  input {
+    width: 100%;
+    height: 70px;
+    font-size: 35px;
+    font-family: Roboto, sans-serif;
+    border: none;
+    border-bottom: 3px solid #4a5c60;;
+    border-radius: 2%;
+    text-align: center;
+
+    &:focus {
+      border-bottom: 3px solid #61CB61;
+      box-shadow: none;
+      outline: none;
+    }
+  }
+}
+
+.movimentacao-form-tronco {
+  float: left;
+  width: 70%;
+}
+
+.movimentacao-info-tronco {
+  float: right;
+  width: 30%;
+  height: 60%;
+
+  po-widget {
+    .po-widget {
+      background-color: #847d6b;
+      color: white;
+    }
+  }
+}

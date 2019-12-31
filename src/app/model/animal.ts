@@ -1,138 +1,123 @@
 export class Animal {
 
-  private _filial;
+  private _id;
   private _sisbov;
   private _manejo;
   private _raca;
+  private _nomeRaca;
   private _sexo;
-  private _dtNasc;
-  private _dtSbov;
-  private _fxeEra;
+  private _dataNascimento;
+  private _dataIncSisbov;
+  private _codFAixaEtaria;
   private _peso;
-  private _dtPsge;
-  private _codFaz;
-  private _codFor;
-  private _numSol;
-  private _dtEntr;
-  private _movOri;
-  private _cdRfid;
+  private _dataPesagem;
+  private _codFazenda;
+  private _codFornecedor;
+  private _numeroSolSisbov;
+  private _dataEntrada;
+  private _movimentoOrigem;
+  private _rfid;
   private _lote;
   private _pasto;
-  private _dtLbab;
-  private _dtAbat;
-  private _dlBab2;
-  private _dslmrt;
-  private _dtMort;
-  private _ctrlws;
+  private _dataLibAbateCertificadora;
+  private _dataAbate;
+  private _dataLibAbateSanitario;
+  private _dataApontamentoMorte;
+  private _controleWebservice;
   private _status;
-  private _dtCtht;
-  private _cstrdo;
-  private _dtAtua;
-  private _fazOri;
-  private _certif;
-  private _dtCert;
-  private _dtDslg;
-  private _cotaht;
-  private _transf;
+  private _dataLimiteCotaHilton;
+  private _cadastro;
+  private _dataAtualizacaoAnimal;
+  private _fazendaOrigem;
+  private _certificadora;
+  private _dataCertificadora;
+  private _controleTransferencia;
+  private _dataSync;
 
   constructor() {
 
   }
 
-  createAnimal(filial, sisbov, manejo, raca, sexo, dtNasc, dtSbov, fxeEra, peso, dtPsge, codFaz, codFor, numSol, dtEntr,
-               movOri, cdRfid, lote, pasto, dtLbab, dtAbat, dlBab2, dslmrt, dtMort, ctrlws, status, dtCtht, cstrdo, dtAtua,
-               fazOri, certif, dtCert, dtDslg, cotaht, transf) {
+  createAnimal(sisbov, manejo, raca, sexo, dataNascimento, dataIncSisbov, codFAixaEtaria, peso, dataPesagem,
+               codFazenda, codFornecedor, numeroSolSisbov, dataEntrada, movimentoOrigem, rfid, lote, pasto, dataLibAbateCertificadora,
+               dataAbate, dataLibAbateSanitario, dataApontamentoMorte, controleWebservice, status, dataLimiteCotaHilton, cadastro,
+               dataAtualizacaoAnimal, fazendaOrigem, certificadora, dataCertificadora, controleTransferencia) {
 
-    this._filial = filial;
     this._sisbov = sisbov;
     this._manejo = manejo;
     this._raca = raca;
     this._sexo = sexo;
-    this._dtNasc = dtNasc;
-    this._dtSbov = dtSbov;
-    this._fxeEra = fxeEra;
+    this._dataNascimento = dataNascimento;
+    this._dataIncSisbov = dataIncSisbov;
+    this._codFAixaEtaria = codFAixaEtaria;
     this._peso = peso;
-    this._dtPsge = dtPsge;
-    this._codFaz = codFaz;
-    this._codFor = codFor;
-    this._numSol = numSol;
-    this._dtEntr = dtEntr;
-    this._movOri = movOri;
-    this._cdRfid = cdRfid;
+    this._dataPesagem = dataPesagem;
+    this._codFazenda = codFazenda;
+    this._codFornecedor = codFornecedor;
+    this._numeroSolSisbov = numeroSolSisbov;
+    this._dataEntrada = dataEntrada;
+    this._movimentoOrigem = movimentoOrigem;
+    this._rfid = rfid;
     this._lote = lote;
     this._pasto = pasto;
-    this._dtLbab = dtLbab;
-    this._dtAbat = dtAbat;
-    this._dlBab2 = dlBab2;
-    this._dslmrt = dslmrt;
-    this._dtMort = dtMort;
-    this._ctrlws = ctrlws;
+    this._dataLibAbateCertificadora = dataLibAbateCertificadora;
+    this._dataAbate = dataAbate;
+    this._dataLibAbateSanitario = dataLibAbateSanitario;
+    this._dataApontamentoMorte = dataApontamentoMorte;
+    this._controleWebservice = controleWebservice;
     this._status = status;
-    this._dtCtht = dtCtht;
-    this._cstrdo = cstrdo;
-    this._dtAtua = dtAtua;
-    this._fazOri = fazOri;
-    this._certif = certif;
-    this._dtCert = dtCert;
-    this._dtDslg = dtDslg;
-    this._cotaht = cotaht;
-    this._transf = transf;
+    this._dataLimiteCotaHilton = dataLimiteCotaHilton;
+    this._cadastro = cadastro;
+    this._dataAtualizacaoAnimal = dataAtualizacaoAnimal;
+    this._fazendaOrigem = fazendaOrigem;
+    this._certificadora = certificadora;
+    this._dataCertificadora = dataCertificadora;
+    this._controleTransferencia = controleTransferencia;
 
   }
 
   getAnimalObject(): object {
     return {
-      "filial": this._filial,
       "sisbov": this._sisbov,
       "manejo": this._manejo,
       "raca": this._raca,
       "sexo": this._sexo,
-      "dtNasc": this._dtNasc,
-      "dtSbov": this._dtSbov,
-      "fxeEra": this._fxeEra,
+      "dataNascimento": this._dataNascimento,
+      "dataIncSisbov": this._dataIncSisbov,
+      "codFAixaEtaria": this._codFAixaEtaria,
       "peso": this._peso,
-      "dtPsge": this._dtPsge,
-      "codFaz": this._codFaz,
-      "codFor": this._codFor,
-      "numSol": this._numSol,
-      "dtEntr": this._dtEntr,
-      "movOri": this._movOri,
-      "cdRfid": this._cdRfid,
+      "dataPesagem": this._dataPesagem,
+      "codFazenda": this._codFazenda,
+      "codFornecedor": this._codFornecedor,
+      "numeroSolSisbov": this._numeroSolSisbov,
+      "dataEntrada": this._dataEntrada,
+      "movimentoOrigem": this._movimentoOrigem,
+      "rfid": this._rfid,
       "lote": this._lote,
       "pasto": this._pasto,
-      "dtLbab": this._dtLbab,
-      "dtAbat": this._dtAbat,
-      "dlBab2": this._dlBab2,
-      "dslmrt": this._dslmrt,
-      "dtMort": this._dtMort,
-      "ctrlws": this._ctrlws,
+      "dataLibAbateCertificadora": this._dataLibAbateCertificadora,
+      "dataAbate": this._dataAbate,
+      "dataLibAbateSanitario": this._dataLibAbateSanitario,
+      "dataApontamentoMorte": this._dataApontamentoMorte,
+      "controleWebservice": this._controleWebservice,
       "status": this._status,
-      "dtCtht": this._dtCtht,
-      "cstrdo": this._cstrdo,
-      "dtAtua": this._dtAtua,
-      "fazOri": this._fazOri,
-      "certif": this._certif,
-      "dtCert": this._dtCert,
-      "dtDslg": this._dtDslg,
-      "cotaht": this._cotaht,
-      "transf": this._transf
+      "dataLimiteCotaHilton": this._dataLimiteCotaHilton,
+      "cadastro": this._cadastro,
+      "dataAtualizacaoAnimal": this._dataAtualizacaoAnimal,
+      "fazendaOrigem": this._fazendaOrigem,
+      "certificadora": this._certificadora,
+      "dataCertificadora": this._dataCertificadora,
+      "controleTransferencia": this._controleTransferencia
     }
   }
 
-  get filial() {
-    return this._filial;
+
+  get id() {
+    return this._id;
   }
 
-  set filial(value) {
-    this._filial = value;
-  }
-
-  get sisbov() {
-    return this._sisbov;
-  }
-
-  set sisbov(value) {
-    this._sisbov = value;
+  set id(value) {
+    this._id = value;
   }
 
   get manejo() {
@@ -143,108 +128,60 @@ export class Animal {
     this._manejo = value;
   }
 
-  get raca() {
-    return this._raca;
+  get dataNascimento() {
+    return this._dataNascimento;
   }
 
-  set raca(value) {
-    this._raca = value;
+  set dataNascimento(value) {
+    this._dataNascimento = value;
   }
 
-  get sexo() {
-    return this._sexo;
+  get dataIncSisbov() {
+    return this._dataIncSisbov;
   }
 
-  set sexo(value) {
-    this._sexo = value;
+  set dataIncSisbov(value) {
+    this._dataIncSisbov = value;
   }
 
-  get dtNasc() {
-    return this._dtNasc;
+  get codFAixaEtaria() {
+    return this._codFAixaEtaria;
   }
 
-  set dtNasc(value) {
-    this._dtNasc = value;
+  set codFAixaEtaria(value) {
+    this._codFAixaEtaria = value;
   }
 
-  get dtSbov() {
-    return this._dtSbov;
+  get codFazenda() {
+    return this._codFazenda;
   }
 
-  set dtSbov(value) {
-    this._dtSbov = value;
+  set codFazenda(value) {
+    this._codFazenda = value;
   }
 
-  get fxeEra() {
-    return this._fxeEra;
+  get codFornecedor() {
+    return this._codFornecedor;
   }
 
-  set fxeEra(value) {
-    this._fxeEra = value;
+  set codFornecedor(value) {
+    this._codFornecedor = value;
   }
 
-  get peso() {
-    return this._peso;
+  get numeroSolSisbov() {
+    return this._numeroSolSisbov;
   }
 
-  set peso(value) {
-    this._peso = value;
+  set numeroSolSisbov(value) {
+    this._numeroSolSisbov = value;
   }
 
-  get dtPsge() {
-    return this._dtPsge;
+  get dataEntrada() {
+    return this._dataEntrada;
   }
 
-  set dtPsge(value) {
-    this._dtPsge = value;
-  }
-
-  get codFaz() {
-    return this._codFaz;
-  }
-
-  set codFaz(value) {
-    this._codFaz = value;
-  }
-
-  get codFor() {
-    return this._codFor;
-  }
-
-  set codFor(value) {
-    this._codFor = value;
-  }
-
-  get numSol() {
-    return this._numSol;
-  }
-
-  set numSol(value) {
-    this._numSol = value;
-  }
-
-  get dtEntr() {
-    return this._dtEntr;
-  }
-
-  set dtEntr(value) {
-    this._dtEntr = value;
-  }
-
-  get movOri() {
-    return this._movOri;
-  }
-
-  set movOri(value) {
-    this._movOri = value;
-  }
-
-  get cdRfid() {
-    return this._cdRfid;
-  }
-
-  set cdRfid(value) {
-    this._cdRfid = value;
+  set dataEntrada(value) {
+    this._dataEntrada = value;
   }
 
   get lote() {
@@ -263,52 +200,141 @@ export class Animal {
     this._pasto = value;
   }
 
-  get dtLbab() {
-    return this._dtLbab;
+  get dataLibAbateCertificadora() {
+    return this._dataLibAbateCertificadora;
   }
 
-  set dtLbab(value) {
-    this._dtLbab = value;
+  set dataLibAbateCertificadora(value) {
+    this._dataLibAbateCertificadora = value;
   }
 
-  get dtAbat() {
-    return this._dtAbat;
+  get dataLimiteCotaHilton() {
+    return this._dataLimiteCotaHilton;
   }
 
-  set dtAbat(value) {
-    this._dtAbat = value;
+  set dataLimiteCotaHilton(value) {
+    this._dataLimiteCotaHilton = value;
   }
 
-  get dlBab2() {
-    return this._dlBab2;
+  get fazendaOrigem() {
+    return this._fazendaOrigem;
   }
 
-  set dlBab2(value) {
-    this._dlBab2 = value;
+  set fazendaOrigem(value) {
+    this._fazendaOrigem = value;
   }
 
-  get dslmrt() {
-    return this._dslmrt;
+  get dataCertificadora() {
+    return this._dataCertificadora;
   }
 
-  set dslmrt(value) {
-    this._dslmrt = value;
+  set dataCertificadora(value) {
+    this._dataCertificadora = value;
   }
 
-  get dtMort() {
-    return this._dtMort;
+  get controleTransferencia() {
+    return this._controleTransferencia;
   }
 
-  set dtMort(value) {
-    this._dtMort = value;
+  set controleTransferencia(value) {
+    this._controleTransferencia = value;
   }
 
-  get ctrlws() {
-    return this._ctrlws;
+  get dataSync() {
+    return this._dataSync;
   }
 
-  set ctrlws(value) {
-    this._ctrlws = value;
+  set dataSync(value) {
+    this._dataSync = value;
+  }
+
+
+  get sisbov() {
+    return this._sisbov;
+  }
+
+  set sisbov(value) {
+    this._sisbov = value;
+  }
+
+  get raca() {
+    return this._raca;
+  }
+
+  set raca(value) {
+    this._raca = value;
+  }
+
+  get sexo() {
+    return this._sexo;
+  }
+
+  set sexo(value) {
+    this._sexo = value;
+  }
+
+  get peso() {
+    return this._peso;
+  }
+
+  set peso(value) {
+    this._peso = value;
+  }
+
+  get dataPesagem() {
+    return this._dataPesagem;
+  }
+
+  set dataPesagem(value) {
+    this._dataPesagem = value;
+  }
+
+  get movimentoOrigem() {
+    return this._movimentoOrigem;
+  }
+
+  set movimentoOrigem(value) {
+    this._movimentoOrigem = value;
+  }
+
+  get rfid() {
+    return this._rfid;
+  }
+
+  set rfid(value) {
+    this._rfid = value;
+  }
+
+  get dataAbate() {
+    return this._dataAbate;
+  }
+
+  set dataAbate(value) {
+    this._dataAbate = value;
+  }
+
+  get dataLibAbateSanitario() {
+    return this._dataLibAbateSanitario;
+  }
+
+  set dataLibAbateSanitario(value) {
+    this._dataLibAbateSanitario = value;
+  }
+
+  get dataApontamentoMorte() {
+    return this._dataApontamentoMorte;
+  }
+
+  set dataApontamentoMorte(value) {
+    this._dataApontamentoMorte = value;
+  }
+
+  get controleWebservice() {
+    return this._controleWebservice;
+  }
+
+  set controleWebservice(value) {
+    this._controleWebservice = value;
   }
 
   get status() {
@@ -319,75 +345,36 @@ export class Animal {
     this._status = value;
   }
 
-  get dtCtht() {
-    return this._dtCtht;
+  get cadastro() {
+    return this._cadastro;
   }
 
-  set dtCtht(value) {
-    this._dtCtht = value;
+  set cadastro(value) {
+    this._cadastro = value;
   }
 
-  get cstrdo() {
-    return this._cstrdo;
+  get dataAtualizacaoAnimal() {
+    return this._dataAtualizacaoAnimal;
   }
 
-  set cstrdo(value) {
-    this._cstrdo = value;
+  set dataAtualizacaoAnimal(value) {
+    this._dataAtualizacaoAnimal = value;
   }
 
-  get dtAtua() {
-    return this._dtAtua;
+  get certificadora() {
+    return this._certificadora;
   }
 
-  set dtAtua(value) {
-    this._dtAtua = value;
+  set certificadora(value) {
+    this._certificadora = value;
   }
 
-  get fazOri() {
-    return this._fazOri;
+
+  get nomeRaca() {
+    return this._nomeRaca;
   }
 
-  set fazOri(value) {
-    this._fazOri = value;
-  }
-
-  get certif() {
-    return this._certif;
-  }
-
-  set certif(value) {
-    this._certif = value;
-  }
-
-  get dtCert() {
-    return this._dtCert;
-  }
-
-  set dtCert(value) {
-    this._dtCert = value;
-  }
-
-  get dtDslg() {
-    return this._dtDslg;
-  }
-
-  set dtDslg(value) {
-    this._dtDslg = value;
-  }
-
-  get cotaht() {
-    return this._cotaht;
-  }
-
-  set cotaht(value) {
-    this._cotaht = value;
-  }
-
-  get transf() {
-    return this._transf;
-  }
-
-  set transf(value) {
-    this._transf = value;
+  set nomeRaca(value) {
+    this._nomeRaca = value;
   }
 }

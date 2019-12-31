@@ -14,6 +14,7 @@ import {
 } from "@portinari/portinari-ui";
 import {ModalSyncComponent} from "./modals/modal-sync/modal-sync.component";
 import {CommonModule} from "@angular/common";
+import { PecGridComponent } from './pec-grid/pec-grid.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {CommonModule} from "@angular/common";
     ToolBarPecuariaComponent,
     ToolBarSyncComponent,
     BluetoothComponent,
-    ModalSyncComponent
+    ModalSyncComponent,
+    PecGridComponent
   ],
   imports: [
     CommonModule,

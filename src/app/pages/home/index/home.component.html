@@ -1,0 +1,11 @@
+<div class="po-wrapper">
+  <app-tool-bar-pecuaria></app-tool-bar-pecuaria>
+  <!--  <pecuaria-side-menu *ngIf="!hideMenu"></pecuaria-side-menu>-->
+<!--  <pecuaria-side-menu></pecuaria-side-menu>-->
+  <po-menu [p-menus]="menus"></po-menu>
+
+  <po-page-default>
+    <app-tool-bar-sync></app-tool-bar-sync>
+    <router-outlet></router-outlet>
+  </po-page-default>
+</div>

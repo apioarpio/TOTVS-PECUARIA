@@ -17,6 +17,7 @@ import {PecModalFormAnimalComponent} from "./components/pec-modal-form-animal/pe
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ManejoTroncoPrincipalComponent} from "./manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component";
 import {CommonModule} from "@angular/common";
+import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/modal-filtros-tronco.component";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import {CommonModule} from "@angular/common";
     ManejoSaidaComponent,
     ManejoMovimentacaoInternaComponent,
     ManejoTroncoPrincipalComponent,
-    PecModalFormAnimalComponent
+    PecModalFormAnimalComponent,
+    ModalFiltrosTroncoComponent
   ],
   imports: [
     FormsModule,

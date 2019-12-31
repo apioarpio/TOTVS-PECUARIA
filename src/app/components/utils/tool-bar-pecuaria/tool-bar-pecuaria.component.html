@@ -1,0 +1,14 @@
+<po-toolbar
+  p-title="TOTVS Pecuaria"
+  [p-actions]="bluetoothActions"></po-toolbar>
+
+<po-modal>
+  <app-bluetooth></app-bluetooth>
+</po-modal>
+
+<po-modal #modalSync
+  p-title="Painel de sincronização"
+  [p-primary-action]="confirm"
+  [p-secondary-action]="close">
+  <app-modal-sync></app-modal-sync>
+</po-modal>

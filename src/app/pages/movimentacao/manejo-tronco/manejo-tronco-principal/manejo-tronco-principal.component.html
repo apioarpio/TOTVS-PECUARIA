@@ -1,0 +1,146 @@
+<div class="po-row" class="pec-header-toolbar">
+  <div class="pec-header-toolbar-back">
+    <span class="po-icon po-icon-arrow-left pecuaria-back-span" (click)="backRoute()"></span>
+  </div>
+  <div class="pec-header-toolbar-title">
+    <h3>Movimentação - {{idMovimentacao}}</h3>
+  </div>
+  <div class="pec-header-toolbar-add-button">
+    <po-button
+      p-icon="po-icon-plus"
+      p-label="Salvar"
+      p-type="primary">
+    </po-button>
+  </div>
+</div>
+
+<po-tabs>
+  <po-tab p-label="Tronco" [p-active]="true">
+    <po-container class="po-md-12">
+      <div class="movimentacao-form-tronco">
+        <div class="po-row">
+          <div class="pec-input-tronco-header">
+            <label for="sisbov">SISBOV/Manejo *</label>
+            <input id="sisbov" maxlength="15" (focusout)="onFocusOutManejo($event)" type="number">
+          </div>
+          <div class="pec-input-tronco-header">
+            <label for="peso">Peso *</label>
+            <input type="number" id="peso" maxlength="4" [(ngModel)]="pesoAnimal">
+          </div>
+          <div class="po-row">
+            <div class="po-md-12">
+              <po-button p-label="Adicionar Animal" (p-click)="addAnimal()"></po-button>
+              <po-button p-label="teste modal filtros" (p-click)="abrirModalFiltros()"></po-button>
+            </div>
+          </div>
+        </div>
+        <div class="po-row">
+          <po-divider class="po-md-12" p-label="Aparte"></po-divider>
+          <po-divider></po-divider>
+          <po-select class="po-md-6 po-offset-md-6" p-label="Aparte"
+                     [(ngModel)]="aparte"
+                     [p-options]="[
+               {label: 'Aparte 1', value: '1'},
+               {label: 'Aparte 2', value: '2'},
+               {label: 'Aparte 3', value: '3'},
+               {label: 'Aparte 4', value: '4'}
+               ]">
+          </po-select>
+        </div>
+        <div class="po-row">
+          <po-divider class="po-md-12" p-label="Informações do animal"></po-divider>
+          <po-divider></po-divider>
+          <po-input p-label="Manejo" class="po-md-2" [(ngModel)]="animal.manejo"></po-input>
+          <po-input p-label="Código Raça" class="po-md-2" [(ngModel)]="animal.raca"></po-input>
+          <po-input p-label="Raça" class="po-md-6" [(ngModel)]="animal.nomeRaca"></po-input>
+          <po-select class="po-md-2" p-label="Sexo"
+                     [(ngModel)]="animal.sexo"
+                     [p-options]="[{label: 'Macho', value: '1'},{label: 'Fêmea', value: '2'}]">
+          </po-select>
+          <po-input p-label="idade(meses)" class="po-md-3"></po-input>
+          <po-input p-label="Dt. Nascimento" class="po-md-3" [(ngModel)]="animal.dataNascimento"></po-input>
+          <po-input p-label="Dt. Limite Hilton" class="po-md-3"></po-input>
+          <po-input p-label="Dt. Ult Pesagem" class="po-md-3"></po-input>
+          <po-input p-label="Cód lote Origem" class="po-md-3" [(ngModel)]="animal.lote"></po-input>
+          <po-input p-label="RFID" class="po-md-3" [(ngModel)]="animal.rfid"></po-input>
+          <po-input p-label="Umbigo" class="po-md-3"></po-input>
+          <po-input p-label="Frame" class="po-md-3"></po-input>
+        </div>
+      </div>
+      <div class="movimentacao-info-tronco">
+        <div class="po-row">
+          <po-divider class="po-md-12" p-label="Contadores Animais"></po-divider>
+          <po-widget
+            class="po-md-12 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">{{movimentacao.quantidadeAnimal}}</div>
+            <div class="po-text-center"><b>Quantidade Animais</b></div>
+          </po-widget>
+          <po-widget
+            class="po-md-6 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">2</div>
+            <div class="po-text-center"><b>Quantidade Conferida</b></div>
+          </po-widget>
+          <po-widget
+            class="po-md-6 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">5</div>
+            <div class="po-text-center"><b>Quantidade Pendente</b></div>
+          </po-widget>
+        </div>
+        <div class="po-row">
+          <po-widget
+            class="po-md-6 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">1</div>
+            <div class="po-text-center"><b>Macho</b></div>
+          </po-widget>
+          <po-widget
+            class="po-md-6 po-sm-12 po-text-center"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">2</div>
+            <div class="po-text-center"><b>Fêmea</b></div>
+          </po-widget>
+        </div>
+        <div class="po-row">
+          <po-divider></po-divider>
+          <po-widget
+            class="po-md-12 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">100</div>
+            <div class="po-text-center"><b>Total conferido no dia</b></div>
+          </po-widget>
+          <po-widget
+            class="po-md-6 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">5000,00</div>
+            <div class="po-text-center"><b>Peso Total</b></div>
+          </po-widget>
+          <po-widget
+            class="po-md-6 po-sm-12"
+            p-primary="true">
+            <div class="po-font-subtitle po-text-center">870,00</div>
+            <div class="po-text-center"><b>Peso Médio</b></div>
+          </po-widget>
+        </div>
+        <div class="po-row">
+          <po-divider class="po-md-12" p-label="Aparte Animal"></po-divider>
+          <po-table
+            class="po-md-12"
+            [p-items]="[{ aparte: 'aparte 1',qntAnimais:'10',pesoMedio: '120' }]">
+          </po-table>
+        </div>
+      </div>
+    </po-container>
+  </po-tab>
+  <po-tab p-label="Animais Tronco">
+    <po-container>
+      <po-table class="po-md-12" [p-columns]="columns" [p-items]="items"></po-table>
+    </po-container>
+  </po-tab>
+</po-tabs>
+
+
+<pec-modal-filtros-tronco [filtroTroncoInput]="filtroTronco"
+                          (filtrosTroncoEvent)="aplicarFiltro($event)"></pec-modal-filtros-tronco>

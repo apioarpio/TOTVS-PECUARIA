@@ -1,20 +1,19 @@
 import {RouterModule, Routes} from "@angular/router";
 import {NgModule} from "@angular/core";
-import {HomeComponent} from "./home.component";
-import {IndexAnimaisComponent} from "../../../components/cadastros/animais/index-animais/index-animais.component";
-import {IndexEntidadesComponent} from "../../entidade/index-entidades/index-entidades.component";
+import {HomeComponent} from "./index/home.component";
 
 const homeRoutes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/index'
+    redirectTo: '/home'
   },
   {
-    path: 'index', component: HomeComponent,
+    path: 'home', component: HomeComponent,
     children: [
-      {path: 'entidade', component: IndexEntidadesComponent},
-      {path: 'animal', component: IndexAnimaisComponent}
+      {path: 'entidade', loadChildren: '../entidade/entidade.module#EntidadeModule'},
+      {path: 'animal', loadChildren: '../animal/animal.module#AnimalModule'},
+      {path: 'movimentacao', loadChildren: '../movimentacao/movimentacao.module#MovimentacaoModule'}
     ]
   }
 ];

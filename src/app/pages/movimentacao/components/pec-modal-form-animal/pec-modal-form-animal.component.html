@@ -1,0 +1,28 @@
+<po-button
+  [p-label]="buttonLabel"
+  [p-type]="buttonType"
+  [p-icon]="buttonIcon"
+  [p-disabled]="disableButton"
+  (p-click)="openModal()">
+</po-button>
+
+<po-modal
+  p-title="Adicionar Animal"
+  [p-primary-action]="confirm"
+  [p-secondary-action]="close">
+  <form [formGroup]="animalForm">
+    <div class="po-row">
+      <po-input class="po-md-9" p-label="SISBOV" formControlName="sisBov"></po-input>
+      <po-select class="po-md-3" p-label="Sexo" formControlName="sexo" [p-options]="sexoOptions"></po-select>
+    </div>
+    <div class="po-row">
+      <po-input class="po-md-3" p-label="Peso" formControlName="peso"></po-input>
+      <po-input class="po-md-3" p-label="Raça" formControlName="raca"></po-input>
+      <po-input class="po-md-3" p-label="Aparte" formControlName="aparte"></po-input>
+      <po-input class="po-md-3" p-label="Idade" formControlName="idade"></po-input>
+    </div>
+    <div class="po-row">
+      <po-input class="po-md-12" p-label="Faixa Etária" formControlName="faixaEtaria"></po-input>
+    </div>
+  </form>
+</po-modal>

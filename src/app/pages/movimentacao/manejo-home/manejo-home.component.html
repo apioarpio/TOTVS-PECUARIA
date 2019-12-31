@@ -1,0 +1,15 @@
+<po-button-group class="po-md-12" [p-buttons]="botoesManejo"></po-button-group>
+<div class="po-row">
+  <po-chart
+    class="po-lg-6 po-mt-2"
+    p-title="Top 5 coffee producing countries (in tons)"
+    [p-series]="coffeeProduction">
+  </po-chart>
+
+  <po-chart
+    class="po-lg-6 po-mt-2"
+    p-title="Top 5 Coffee Consuming Countries (in kg per capita)"
+    [p-series]="coffeeConsumption"
+    [p-type]="coffeConsumingChartType">
+  </po-chart>
+</div>

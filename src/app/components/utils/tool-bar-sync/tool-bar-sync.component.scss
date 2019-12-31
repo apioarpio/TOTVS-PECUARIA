@@ -1,0 +1,82 @@
+.pecuaria-toolbar-sync {
+  text-align: end;
+
+  span {
+    font-size: 18px;
+    padding: 0 1.5% 0 1.5%;
+  }
+}
+
+.pecuaria-rotate-sync {
+  animation-name: pecRotateAnimation;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+@keyframes pecRotateAnimation {
+  0% {
+    transform: rotate(0deg);
+    color: #147c15;
+  }
+  5% {
+    transform: rotate(18deg)
+  }
+  10% {
+    transform: rotate(36deg)
+  }
+  15% {
+    transform: rotate(54deg)
+  }
+  20% {
+    transform: rotate(72deg)
+  }
+  25% {
+    transform: rotate(90deg);
+    color: #2ddb2e;
+  }
+  30% {
+    transform: rotate(108deg)
+  }
+  35% {
+    transform: rotate(126deg)
+  }
+  40% {
+    transform: rotate(144deg)
+  }
+  45% {
+    transform: rotate(162deg)
+  }
+  50% {
+    transform: rotate(180deg);
+    color: #147c15;
+  }
+  60% {
+    transform: rotate(198deg);
+  }
+  65%{
+    transform: rotate(216deg);
+  }
+  70% {
+    transform: rotate(234deg);
+  }
+  75%{
+    transform: rotate(252deg);
+    color: #2ddb2e;
+  }
+  80% {
+    transform: rotate(270deg);
+  }
+  85%{
+    transform: rotate(306deg);
+  }
+  90% {
+    transform: rotate(324deg);
+  }
+  95%{
+    transform: rotate(342deg);
+  }
+  100% {
+    transform: rotate(360deg);
+    color: green;
+  }
+}

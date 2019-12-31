@@ -1,0 +1,18 @@
+<div class="po-md-12">
+  <po-button (p-click)="set()" p-label="SYNC"></po-button>
+</div>
+<div class="po-md-6 po-offset-md-3">
+  <po-input name="searchName" p-label="Nome" [(ngModel)]="filter.nome"></po-input>
+</div>
+<div class="po-md-3">
+  <po-button (p-click)="loadingTable()" p-label="filtrar"></po-button>
+</div>
+<div class="po-row">
+  <div class="po-md-12">
+    <po-table
+      [p-columns]="entidadesHeader"
+      [p-items]="entidades"
+      [p-loading]="loading"
+      (p-show-more)="showMore($event)"></po-table>
+  </div>
+</div>

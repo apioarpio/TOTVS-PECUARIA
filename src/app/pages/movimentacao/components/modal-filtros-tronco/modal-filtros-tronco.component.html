@@ -1,0 +1,75 @@
+<po-modal [p-primary-action]="confirm">
+  <po-container>
+    <h3 class="pec-filtro-tronco-label">Sexo</h3>
+    <div class="po-row">
+      <po-select class="po-md-12" [p-options]="sexoOptions" [(ngModel)]="filtroTroncoValues.sexo">
+      </po-select>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Raça</h3>
+    <div class="po-row">
+      <po-lookup class="po-md-2"
+                 [p-columns]="racaAnimalLookupColumns"
+                 [p-filter-service]="racaAnimalLookupFilterService"
+                 p-field-label="id"
+                 p-field-value="id"
+                 (p-selected)="selectRacaLookup($event)"
+                 [(ngModel)]="filtroTroncoValues.raca"
+                 [ngModelOptions]="{standalone: true}">
+
+        >
+      </po-lookup>
+      <po-input class="po-md-10" p-disabled="true" [ngModel]="filtroTroncoValues.racaDesc"></po-input>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Faixa Etária</h3>
+    <div class="po-row">
+      <po-lookup class="po-md-2"
+                 [p-columns]="faixaEtariaLookupColumns"
+                 [p-filter-service]="faixaEtariaLookupFilterService"
+                 p-field-label="id"
+                 p-field-value="id"
+                 (p-selected)="selectFaixaEtariaLookup($event)"
+                 [(ngModel)]="filtroTroncoValues.faixaEtaria"
+                 [ngModelOptions]="{standalone:true}"
+      ></po-lookup>
+      <po-input class="po-md-10" [ngModel]="filtroTroncoValues.faixaEtariaDesc" p-disabled="true"></po-input>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Validar liberação para abate?</h3>
+    <div class="po-row">
+      <po-select class="po-md-12" [p-options]="simNaoOptions"
+                 [(ngModel)]="filtroTroncoValues.validaLibAbate"></po-select>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Validar Carência sanitária?</h3>
+    <div class="po-row">
+      <po-select class="po-md-12" [p-options]="simNaoOptions"
+                 [(ngModel)]="filtroTroncoValues.validaCarenciaSanitaria"></po-select>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Cota Hilton</h3>
+    <div class="po-row">
+      <po-select class="po-md-12" [p-options]="simNaoOptions" [(ngModel)]="filtroTroncoValues.cotaHilton"></po-select>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Peso Animal</h3>
+    <div class="po-row">
+      <po-number class="po-md-6" p-label="De"
+                 [p-maxlength]="4"
+                 [(ngModel)]="filtroTroncoValues.pesoAnimalDe"
+                 (p-change)="onPesoChange()"
+      ></po-number>
+      <po-number class="po-md-6" p-label="Até"
+                 [p-maxlength]="4"
+                 (p-change)="onPesoChange($event)"
+                 [(ngModel)]="filtroTroncoValues.pesoAnimalAte"
+      ></po-number>
+    </div>
+    <hr>
+    <h3 class="pec-filtro-tronco-label">Aparte</h3>
+    <div class="po-row">
+      <po-select class="po-md-12" [p-options]="aparteOptions" [(ngModel)]="filtroTroncoValues.aparte"></po-select>
+    </div>
+  </po-container>
+</po-modal>

@@ -1,0 +1,56 @@
+<po-container>
+  <div class="po-row">
+    <div class="po-md-12 pecuaria-sync-card">
+      <po-container>
+        <h3 class="pecuaria-sync-card-title">Animal</h3>
+        <po-button
+          [p-label]="animalSyncBtn.label"
+          [p-type]="animalSyncBtn.type"
+          [p-icon]="animalSyncBtn.icon"
+          [p-loading]="animalSyncBtn.loading"
+          (p-click)="sincronizarAnimais()"
+        ></po-button>
+        <p>Ultima Sincronização: {{lastSyncAnimal["DATESYNC"]}}</p>
+      </po-container>
+    </div>
+    <hr>
+    <div class="po-md-12 pecuaria-sync-card">
+      <po-container>
+        <h3 class="pecuaria-sync-card-title">Entidade</h3>
+        <po-button p-label="Sincronizar" p-type="link" p-icon="po-icon-upload"></po-button>
+        <p>Ultima Sincronização: {{lastSyncAnimal["DATESYNC"]}}</p>
+      </po-container>
+    </div>
+    <hr>
+    <div class="po-md-12 pecuaria-sync-card">
+      <po-container>
+        <h3 class="pecuaria-sync-card-title">Tipos de Movimento</h3>
+        <po-button
+          [p-label]="tiposMovimentoSyncBtn.label"
+          [p-type]="tiposMovimentoSyncBtn.type"
+          [p-icon]="tiposMovimentoSyncBtn.icon"
+          [p-loading]="tiposMovimentoSyncBtn.loading"
+          (p-click)="sincronizarTiposMovimento()"></po-button>
+        <p *ngIf="lastSyncTM">Ultima Sincronização: {{lastSyncTM["DATESYNC"]}}</p>
+      </po-container>
+    </div>
+    <div class="po-md-12 pecuaria-sync-card">
+      <po-container>
+        <h3 class="pecuaria-sync-card-title">Raça Animal</h3>
+        <po-button
+          [p-label]="racaAnimalSyncBtn.label"
+          [p-type]="racaAnimalSyncBtn.type"
+          [p-icon]="racaAnimalSyncBtn.icon"
+          [p-loading]="racaAnimalSyncBtn.loading"
+          (p-click)="sincronizarRaca()"></po-button>
+        <p *ngIf="lastSyncTM">Ultima Sincronização: {{lastSyncTM["DATESYNC"]}}</p>
+      </po-container>
+    </div>
+    <div class="po-md-12 pecuaria-sync-card">
+      <po-container>
+        <h3 class="pecuaria-sync-card-title">Faixa Etaria</h3>
+        <po-button p-label="Sincronizar" (p-click)="sincronizarFaixaEtaria()"></po-button>
+      </po-container>
+    </div>
+  </div>
+</po-container>
