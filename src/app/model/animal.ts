@@ -33,6 +33,7 @@ export class Animal {
   private _dataCertificadora;
   private _controleTransferencia;
   private _dataSync;
+  private _idadeMeses;
 
   constructor() {
 
@@ -376,5 +377,13 @@ export class Animal {
 
   set nomeRaca(value) {
     this._nomeRaca = value;
+  }
+
+  get idadeMeses() {
+    return this._idadeMeses;
+  }
+
+  set idadeMeses(value) {
+    this._idadeMeses = value;
   }
 }

@@ -13,18 +13,21 @@ require('electron-reload')(__dirname, {
 electron_1.app.on('ready', function () {
     console.log('criando janela');
     createWindow();
-    var child = exec('npm start --prefix ./electron/pecuaria-db/');
-    child.stdout.on('data', function (data) {
-        console.log("stdout: " + data);
-    });
-    child.stderr.on('data', function (data) {
-        console.error("stderr: " + data);
-    });
-    child.on('close', function (code) {
-        console.log("child process exited with code " + code);
-        console.log('fechando a janela');
-        win.close();
-    });
+    // var child = exec('npm start --prefix ./electron/pecuaria-db/');
+    //
+    // child.stdout.on('data', (data) => {
+    //   console.log(`stdout: ${data}`);
+    // });
+    //
+    // child.stderr.on('data', (data) => {
+    //   console.error(`stderr: ${data}`);
+    // });
+    //
+    // child.on('close', (code) => {
+    //   console.log(`child process exited with code ${code}`);
+    //   console.log('fechando a janela');
+    //   win.close();
+    // });
 });
 electron_1.app.on('activate', function () {
     if (win === null) {

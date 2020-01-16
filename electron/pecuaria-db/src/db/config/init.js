@@ -9,9 +9,12 @@ import scriptContextoTable from '../scripts/createContextoTable';
 import scriptContextoFazendaTable from '../scripts/createContextoFazendaTable';
 import scriptRacaAnimalTable from '../scripts/createRacaAnimalTable';
 import scriptFaixaEtariaTable from '../scripts/createFaixaEtariaTable';
+import scriptLoteTable from '../scripts/createLoteTable';
+import scriptAreaTable from '../scripts/createAreaTable';
 
 export default async () => {
     try {
+
         await scriptEntidade();
         await scriptAnimal();
         await scriptSyncTable();
@@ -23,6 +26,9 @@ export default async () => {
         await scriptContextoFazendaTable();
         await scriptRacaAnimalTable();
         await scriptFaixaEtariaTable();
+        await scriptLoteTable();
+        await scriptAreaTable();
+
     } catch (e) {
         throw new Error(e);
     }

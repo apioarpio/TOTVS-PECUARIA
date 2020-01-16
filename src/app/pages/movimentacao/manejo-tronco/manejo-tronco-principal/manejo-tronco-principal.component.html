@@ -18,56 +18,128 @@
   <po-tab p-label="Tronco" [p-active]="true">
     <po-container class="po-md-12">
       <div class="movimentacao-form-tronco">
-        <div class="po-row">
-          <div class="pec-input-tronco-header">
-            <label for="sisbov">SISBOV/Manejo *</label>
-            <input id="sisbov" maxlength="15" (focusout)="onFocusOutManejo($event)" type="number">
-          </div>
-          <div class="pec-input-tronco-header">
-            <label for="peso">Peso *</label>
-            <input type="number" id="peso" maxlength="4" [(ngModel)]="pesoAnimal">
-          </div>
+        <form [formGroup]="troncoFormGroup">
           <div class="po-row">
-            <div class="po-md-12">
-              <po-button p-label="Adicionar Animal" (p-click)="addAnimal()"></po-button>
-              <po-button p-label="teste modal filtros" (p-click)="abrirModalFiltros()"></po-button>
+            <div class="pec-input-tronco-header">
+              <label for="sisbov">SISBOV/Manejo *</label>
+              <input id="sisbov" maxlength="15" (focusout)="onFocusOutManejo($event)" type="number"
+                     formControlName="sisbov" [(ngModel)]="animal.sisbov">
+            </div>
+            <div class="pec-input-tronco-header">
+              <label for="peso">Peso *</label>
+              <input type="number" id="peso" maxlength="4" [(ngModel)]="pesoAnimal" formControlName="peso">
+            </div>
+            <div class="po-row">
+              <div class="po-md-12">
+                <po-button p-label="Adicionar Animal" (p-click)="addAnimal()"></po-button>
+                <po-button p-label="teste modal filtros" (p-click)="abrirModalFiltros()"></po-button>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="po-row">
-          <po-divider class="po-md-12" p-label="Aparte"></po-divider>
-          <po-divider></po-divider>
-          <po-select class="po-md-6 po-offset-md-6" p-label="Aparte"
-                     [(ngModel)]="aparte"
-                     [p-options]="[
+          <div class="po-row">
+            <po-divider class="po-md-12" p-label="Aparte"></po-divider>
+            <po-select class="po-md-12"
+                       p-label="Aparte"
+                       formControlName="aparte"
+                       [(ngModel)]="aparte"
+                       [p-disabled]="aparteDisabled"
+                       [p-options]="[
+               {label: 'Sem Aparte', value:''},
                {label: 'Aparte 1', value: '1'},
                {label: 'Aparte 2', value: '2'},
                {label: 'Aparte 3', value: '3'},
                {label: 'Aparte 4', value: '4'}
                ]">
-          </po-select>
-        </div>
-        <div class="po-row">
+            </po-select>
+          </div>
           <po-divider class="po-md-12" p-label="Informações do animal"></po-divider>
           <po-divider></po-divider>
-          <po-input p-label="Manejo" class="po-md-2" [(ngModel)]="animal.manejo"></po-input>
-          <po-input p-label="Código Raça" class="po-md-2" [(ngModel)]="animal.raca"></po-input>
-          <po-input p-label="Raça" class="po-md-6" [(ngModel)]="animal.nomeRaca"></po-input>
-          <po-select class="po-md-2" p-label="Sexo"
-                     [(ngModel)]="animal.sexo"
-                     [p-options]="[{label: 'Macho', value: '1'},{label: 'Fêmea', value: '2'}]">
-          </po-select>
-          <po-input p-label="idade(meses)" class="po-md-3"></po-input>
-          <po-input p-label="Dt. Nascimento" class="po-md-3" [(ngModel)]="animal.dataNascimento"></po-input>
-          <po-input p-label="Dt. Limite Hilton" class="po-md-3"></po-input>
-          <po-input p-label="Dt. Ult Pesagem" class="po-md-3"></po-input>
-          <po-input p-label="Cód lote Origem" class="po-md-3" [(ngModel)]="animal.lote"></po-input>
-          <po-input p-label="RFID" class="po-md-3" [(ngModel)]="animal.rfid"></po-input>
-          <po-input p-label="Umbigo" class="po-md-3"></po-input>
-          <po-input p-label="Frame" class="po-md-3"></po-input>
-        </div>
+          <div class="po-row">
+            <po-input p-label="Manejo" class="po-md-6" [(ngModel)]="animal.manejo" formControlName="sisbov"></po-input>
+            <po-select class="po-md-6" p-label="Sexo"
+                       formControlName="sexo"
+                       [(ngModel)]="animal.sexo"
+                       [p-options]="[{label: 'Macho', value: '1'},{label: 'Fêmea', value: '2'}]">
+            </po-select>
+          </div>
+          <div class="po-row">
+            <po-lookup p-label="Código Raça" class="po-md-4" [(ngModel)]="animal.raca"
+                       [p-filter-service]="racaAnimalLookupFilterService"
+                       [p-columns]="racaAnimalLookupColumns"
+                       (p-selected)="onRacaSelect($event)"
+                       (change)="onRacaSelect($event)"
+                       p-field-label="id"
+                       p-field-value="id"
+                       formControlName="codigoRaca"
+            ></po-lookup>
+            <po-input p-label="Raça" class="po-md-8" [(ngModel)]="animal.nomeRaca" formControlName="raca"
+                      p-disabled="true"></po-input>
+          </div>
+          <div class="po-row">
+            <po-input p-label="idade(meses)" class="po-md-3"
+                      p-disabled="true"
+                      [(ngModel)]="animal.idadeMeses"
+                      formControlName="idadeMeses"></po-input>
+            <po-datepicker p-label="Dt. Nascimento" class="po-md-3"
+                           p-format="dd/mm/yyyy"
+                           p-locale="pt"
+                           (p-change)="calculateIdadeMeses()"
+                           [(ngModel)]="animal.dataNascimento"
+                           formControlName="dataNascimento"></po-datepicker>
+            <po-input p-label="Dt. Limite Hilton" class="po-md-3"></po-input>
+            <po-input p-label="Dt. Ult Pesagem" class="po-md-3"></po-input>
+            <po-input p-label="Cód lote Origem" class="po-md-3" [(ngModel)]="animal.lote"
+                      formControlName="codLoteOrigem"></po-input>
+            <po-input p-label="RFID" class="po-md-3" [(ngModel)]="animal.rfid" formControlName="rfid"></po-input>
+            <po-input p-label="Umbigo" class="po-md-3"></po-input>
+            <po-input p-label="Frame" class="po-md-3"></po-input>
+          </div>
+        </form>
       </div>
       <div class="movimentacao-info-tronco">
+        <div class="po-row">
+<!--          <div class="pec-info-liberacao-animal-bull"-->
+<!--               [ngClass]="{-->
+<!--            'bull-valid': animal.sisbov && troncoFormGroup.valid,-->
+<!--            'bull-invalid': animal.sisbov && !troncoFormGroup.valid,-->
+<!--            'bull-default': !animal.sisbov-->
+<!--            }">-->
+<!--            <span class="flaticon-bull"></span>-->
+<!--          </div>-->
+          <div class="pec-info-liberacao-animal" [ngClass]="{
+            'lib-animal-div-default-valid': animal.sisbov && troncoFormGroup.valid,
+            'lib-animal-div-default-invalid': animal.sisbov && !troncoFormGroup.valid,
+            'lib-animal-div-default-default': !animal.sisbov}">
+            <div [ngClass]="{
+            'pec-info-liberacao-animal-header-valid': animal.sisbov && troncoFormGroup.valid,
+            'pec-info-liberacao-animal-header-invalid': animal.sisbov && !troncoFormGroup.valid,
+            'pec-info-liberacao-animal-header': !animal.sisbov
+            }">
+              <p *ngIf="animal.sisbov && troncoFormGroup.valid">Animal {{animal.sisbov}} Liberado</p>
+              <p *ngIf="animal.sisbov && !troncoFormGroup.valid">Animal {{animal.sisbov}} não liberado.</p>
+              <p *ngIf="!animal.sisbov"> Animal não informado.</p>
+            </div>
+            <div class="pec-info-liberacao-animal-errors">
+              <!--                Erros Peso-->
+              <div *ngIf="troncoFormGroup.controls['peso'].errors && troncoFormGroup.controls['peso'].touched">
+                <p *ngFor="let erro of troncoFormGroup.controls['peso'].errors['pecError']">{{erro}}</p>
+              </div>
+              <!--                Erros Sexo-->
+              <div *ngIf="troncoFormGroup.controls['sexo'].errors && troncoFormGroup.controls['sexo'].touched">
+                <p *ngFor="let erro of troncoFormGroup.controls['sexo'].errors['pecError']">{{erro}}</p>
+              </div>
+              <!--                Erros Raça-->
+              <div *ngIf="troncoFormGroup.controls['raca'].errors && troncoFormGroup.controls['raca'].touched">
+                <p *ngFor="let erro of troncoFormGroup.controls['raca'].errors['pecError']">{{erro}}</p>
+              </div>
+              <!--                Erros Faixa Etaria-->
+              <div
+                *ngIf="troncoFormGroup.controls['dataNascimento'].errors && troncoFormGroup.controls['dataNascimento'].dirty">
+                <p *ngFor="let erro of troncoFormGroup.controls['dataNascimento'].errors['pecError']">{{erro}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div class="po-row">
           <po-divider class="po-md-12" p-label="Contadores Animais"></po-divider>
           <po-widget
@@ -143,4 +215,4 @@
 
 
 <pec-modal-filtros-tronco [filtroTroncoInput]="filtroTronco"
-                          (filtrosTroncoEvent)="aplicarFiltro($event)"></pec-modal-filtros-tronco>
+                          (filtrosTroncoEvent)="setFiltros($event)"></pec-modal-filtros-tronco>

@@ -21,7 +21,7 @@
     text-align: center;
 
     &:focus {
-      border-bottom: 3px solid #61CB61;
+      border-bottom: 3px solid var(--color-primary);
       box-shadow: none;
       outline: none;
     }
@@ -44,4 +44,87 @@
       color: white;
     }
   }
+}
+
+.pec-info-liberacao-animal-bull {
+  position: relative;
+  padding: 5% 0px;
+  width: 100%;
+  margin: 0px 39% auto;
+  top: 35px;
+  background: #2f3640;
+  border-radius: 104%;
+  border-style: solid;
+
+  &.bull-default {
+    border-color: #8E5C3B;
+    color: #8E5C3B;
+  }
+
+  &.bull-valid {
+    border-color: #238e00;
+    color: #238e00;
+  }
+
+  &.bull-invalid {
+    border-color: #c60214;
+    color: #c60214;
+  }
+
+  [class^="flaticon-"]:before, [class*=" flaticon-"]:before, [class^="flaticon-"]:after, [class*=" flaticon-"]:after {
+    font-size: 35px;
+    font-style: normal;
+    margin-left: 27%;
+  }
+
+}
+
+.pec-info-liberacao-animal {
+  border-width: thick;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+  background-color: #2f3640;
+  padding: 40px 10px 10px 10px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #8E5C3B;
+
+  &.lib-animal-div-default {
+    border-color: #8E5C3B;
+    color: #8E5C3B;
+  }
+
+  &.lib-animal-div-default-valid {
+    border-color: #238e00;
+    color: #238e00;
+  }
+
+  &.lib-animal-div-default-invalid {
+    border-color: #c60214;
+    color: #c60214;
+  }
+
+}
+
+.pec-info-liberacao-animal-header {
+  color: #8E5C3B;
+  text-align: center;
+  font-size: 25px;
+}
+
+.pec-info-liberacao-animal-header-valid {
+  color: green;
+  text-align: center;
+  font-size: 25px;
+}
+
+.pec-info-liberacao-animal-header-invalid {
+  color: red;
+  text-align: center;
+  font-size: 25px;
+}
+
+.pec-info-liberacao-animal-errors {
+  color: aliceblue;
 }

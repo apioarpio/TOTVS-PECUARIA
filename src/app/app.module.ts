@@ -37,6 +37,7 @@ import {ComponentsModule} from "./components/components.module";
     })
   ],
   providers: [],
+  exports: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {

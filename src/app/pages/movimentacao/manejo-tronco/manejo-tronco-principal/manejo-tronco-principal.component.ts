@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Location} from '@angular/common'
 import {AnimaisService} from "../../../../services/cadastros/animais.service";
 import {Animal} from "../../../../model/animal";
@@ -17,51 +17,112 @@ import {
   FiltroTronco,
   ModalFiltrosTroncoComponent
 } from "../../components/modal-filtros-tronco/modal-filtros-tronco.component";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {pesoValidator} from "../tronco-validators/peso-tronco-validator";
+import {sexoTroncoValidator} from "../tronco-validators/sexo-tronco-validator";
+import {RacaAnimalLookupFilterService} from "../../../../services/lookup/raca-animal-lookup-filter.service";
+import {racaTroncoValidator} from "../tronco-validators/raca-tronco-validator";
+import {faixaEtariaTroncoValidator} from "../tronco-validators/faixa-etaria-tronco-validator";
+import {FaixaEtariaService} from "../../../../services/cadastros/faixa-etaria.service";
+import {FaixaEtaria} from "../../../../model/faixa-etaria";
+import {liberadoAbateTroncoValidator} from "../tronco-validators/liberado-abate-tronco-validator";
+
+
+import * as moment from 'moment';
+import {LoteService} from "../../../../services/models/lote.service";
 
 @Component({
   selector: 'app-manejo-tronco-principal',
   templateUrl: './manejo-tronco-principal.component.html',
   styleUrls: ['./manejo-tronco-principal.component.scss']
 })
-export class ManejoTroncoPrincipalComponent implements OnInit {
+export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
 
   @ViewChild(ModalFiltrosTroncoComponent, {static: true}) modalFiltrosTronco: ModalFiltrosTroncoComponent;
 
+  //Property binds
+  aparteDisabled: boolean = false;
+
+  //models
+  animal: Animal = new Animal(); //animal a ser incluído no manejo
+  aparte: number; //aparte selecionado
+  pesoAnimal: number; //peso do animal informaod pelo usuário
+  movimentacao: Movimentacao = new Movimentacao();
+  animaisMovimento = [];
+  idMovimentacao;
+  filtroTronco: FiltroTronco = new FiltroTronco();
+  faixasEtarias: Array<FaixaEtaria> = [];
+  //Lookup columns
+  readonly racaAnimalLookupColumns = [
+    {property: 'id', label: 'Código'},
+    {property: 'descricao', label: 'Descrição'},
+    {property: 'codigoReduzido', label: 'Código Reduzido'}
+  ];
+  public troncoFormGroup = new FormGroup({
+    sisbov: new FormControl('', [Validators.required, liberadoAbateTroncoValidator(this.filtroTronco, this.animal)]),
+    peso: new FormControl('', [Validators.required, pesoValidator(this.filtroTronco)]),
+    aparte: new FormControl(''),
+    manejo: new FormControl(''),
+    codigoRaca: new FormControl(''),
+    raca: new FormControl('', [racaTroncoValidator(this.filtroTronco)]),
+    sexo: new FormControl('', [sexoTroncoValidator(this.filtroTronco)]),
+    idadeMeses: new FormControl(''),
+    dataNascimento: new FormControl('', [faixaEtariaTroncoValidator(this.filtroTronco, this.animal, this.faixasEtarias)]),
+    dataLimiteHilton: new FormControl(),
+    dataUltimaPesagem: new FormControl(),
+    codLoteOrigem: new FormControl(),
+    rfid: new FormControl(),
+    umbigo: new FormControl(),
+    frame: new FormControl()
+  });
   public columns: PoTableColumn[] = [
     {label: 'SISBOV', property: 'sisbov', type: 'number'},
     {label: 'Peso', property: 'peso', type: 'number'},
     {label: 'Aparte', property: 'aparte'},
     {label: 'Faixa Etária', property: 'faixaEtaria'}
   ];
-
   public items: Array<any> = [];
 
-  animal: Animal = new Animal();
-  aparte: number;
-  pesoAnimal: number;
-  movimentacao: Movimentacao = new Movimentacao();
-  animaisMovimento = [];
-  idMovimentacao;
-  filtroTronco: FiltroTronco = new FiltroTronco();
-
   constructor(
+    //angular
     private localtion: Location,
     private http: HttpClient,
-    private animalService: AnimaisService,
     private route: ActivatedRoute,
+    //services
+    private animalService: AnimaisService,
+    private faixaEtariaService: FaixaEtariaService,
     private movimentacaoService: MovimentacaoService,
+    private loteService: LoteService,
+    //portinari
     private poNotification: PoNotificationService,
-    private poDialog: PoDialogService
+    private poDialog: PoDialogService,
+    //lookup filters
+    public racaAnimalLookupFilterService: RacaAnimalLookupFilterService,
   ) {
+
+    //seta o moment para portugues
+    moment.locale('pt');
+
+    faixaEtariaService.getFaixaEtariaLocal().subscribe(result => {
+      for (let faixaEtaria of result['items']) {
+        this.faixasEtarias.push(faixaEtaria);
+      }
+    })
+
   }
 
   ngOnInit() {
+
     this.idMovimentacao = this.route.snapshot.paramMap.get('idMovimentacao');
     this.movimentacaoService.getMovimentacoesById(this.idMovimentacao, null).subscribe(movimento => {
-      console.log(movimento)
+      console.log(movimento);
       this.movimentacao = movimento['items'][0];
     });
     this.getAnimaisMovimento();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log('on changes', changes)
   }
 
   /**
@@ -124,9 +185,18 @@ export class ManejoTroncoPrincipalComponent implements OnInit {
   }
 
   /**
+   * @description função disparada no momento em que uma raça é selecionada no lookup
+   * @param raca
+   */
+  onRacaSelect(raca) {
+    this.animal.nomeRaca = raca.descricao ? raca.descricao : null;
+  }
+
+  /**
    * @description
    */
   addAnimal() {
+    this.validaFiltroTronco();
     if (this.aparte) {
       this.poDialog.confirm({
         title: 'Adicionar Animal',
@@ -163,9 +233,56 @@ export class ManejoTroncoPrincipalComponent implements OnInit {
     this.modalFiltrosTronco.open()
   }
 
-  aplicarFiltro(filtro: FiltroTronco) {
-    console.log(filtro)
-    this.filtroTronco = filtro
+  calculateIdadeMeses(): void {
+    let dataInicial = moment(this.animal.dataNascimento);
+    let dataAtual = moment();
+    let meses = dataInicial.diff(dataAtual, 'month');
+
+    this.animal.idadeMeses = meses === 0 || meses > 0 ? 1 : Math.abs(meses);
+
+  }
+
+  /**
+   * @description Aplica os filtros selecionados
+   * @param filtro
+   */
+  setFiltros(filtro: FiltroTronco) {
+    this.filtroTronco = filtro;
+    this.setCustomValidators();
+    //define o aparte conforme selecionado no filtro, impossibilitando a mudança do mesmo até o filtro ser retirado
+    if (filtro.aparte) {
+      this.aparteDisabled = true;
+      this.aparte = filtro.aparte
+    } else {
+      this.aparteDisabled = false;
+      this.aparte = null
+    }
+    this.troncoFormGroup.updateValueAndValidity();
+    Object.keys(this.troncoFormGroup.controls).forEach(field => {
+      const control = this.troncoFormGroup.get(field);
+      control.markAsUntouched({onlySelf: true});
+      control.markAsTouched({onlySelf: true});
+      control.updateValueAndValidity({onlySelf: false, emitEvent: true});
+      console.log(control);
+    });
+    console.log(this.troncoFormGroup)
+  }
+
+  private setCustomValidators() {
+    this.troncoFormGroup.controls['sexo'].setValidators([sexoTroncoValidator(this.filtroTronco)]);
+    this.troncoFormGroup.controls['peso'].setValidators([pesoValidator(this.filtroTronco)]);
+    this.troncoFormGroup.controls['raca'].setValidators([racaTroncoValidator(this.filtroTronco)]);
+    this.troncoFormGroup.controls['dataNascimento'].setValidators([faixaEtariaTroncoValidator(this.filtroTronco, this.animal, this.faixasEtarias)]);
+    this.troncoFormGroup.updateValueAndValidity();
+  }
+
+  private validaFiltroTronco(): boolean {
+    let isValid = true;
+    if (this.filtroTronco.sexo) {
+      isValid = this.filtroTronco.sexo === this.animal.sexo;
+    }
+    console.log(this.troncoFormGroup);
+    return isValid
   }
 
   private saveAnimalMovimentacao() {

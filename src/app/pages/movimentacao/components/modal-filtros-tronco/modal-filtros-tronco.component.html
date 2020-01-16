@@ -48,26 +48,27 @@
                  [(ngModel)]="filtroTroncoValues.validaCarenciaSanitaria"></po-select>
     </div>
     <hr>
-    <h3 class="pec-filtro-tronco-label">Cota Hilton</h3>
+    <h3 class="pec-filtro-tronco-label">Valida Cota Hilton?</h3>
     <div class="po-row">
       <po-select class="po-md-12" [p-options]="simNaoOptions" [(ngModel)]="filtroTroncoValues.cotaHilton"></po-select>
     </div>
     <hr>
-    <h3 class="pec-filtro-tronco-label">Peso Animal</h3>
-    <div class="po-row">
-      <po-number class="po-md-6" p-label="De"
+    <h3 class="pec-filtro-tronco-label">Peso Animal: </h3>
+<!--    todo criar um componente para validar    -->
+    <div class="po-row" appValidPeso>
+      <po-number class="po-md-6" p-label="De" id="peso_de"
                  [p-maxlength]="4"
                  [(ngModel)]="filtroTroncoValues.pesoAnimalDe"
-                 (p-change)="onPesoChange()"
+                 (p-change)="onPesoChange($event)"
       ></po-number>
-      <po-number class="po-md-6" p-label="Até"
+      <po-number class="po-md-6" p-label="Até" id="peso_ate"
                  [p-maxlength]="4"
                  (p-change)="onPesoChange($event)"
                  [(ngModel)]="filtroTroncoValues.pesoAnimalAte"
       ></po-number>
     </div>
     <hr>
-    <h3 class="pec-filtro-tronco-label">Aparte</h3>
+    <h3 class="pec-filtro-tronco-label">Aparte: </h3>
     <div class="po-row">
       <po-select class="po-md-12" [p-options]="aparteOptions" [(ngModel)]="filtroTroncoValues.aparte"></po-select>
     </div>

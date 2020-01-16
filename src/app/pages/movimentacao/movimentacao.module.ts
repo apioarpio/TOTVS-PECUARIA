@@ -18,6 +18,8 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ManejoTroncoPrincipalComponent} from "./manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component";
 import {CommonModule} from "@angular/common";
 import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/modal-filtros-tronco.component";
+import {AppModule} from "../../app.module";
+import {PecDirectivesModule} from "../../directives/directives.module";
 
 @NgModule({
   declarations: [
@@ -32,8 +34,10 @@ import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/mod
     ModalFiltrosTroncoComponent
   ],
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
+    PecDirectivesModule,
 
     //router module
     MovimentacaoRoutesModule,
@@ -46,8 +50,7 @@ import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/mod
     PoGridModule,
     PoFieldModule,
     PoTableModule,
-    PoModule,
-    CommonModule
+    PoModule
   ]
 })
 

@@ -4,9 +4,10 @@ import {SyncButton} from "../../../model/SyncButton";
 import {SyncService, TablesSync} from "../../../services/utils/sync.service";
 import {TiposMovimentoService} from "../../../pages/sincronismo/services/tipos-movimento.service";
 import {AnimaisService} from "../../../services/cadastros/animais.service";
-import {RacaAnimal} from "../../../model/raca-animal";
 import {RacaAnimalService} from "../../../services/cadastros/raca-animal.service";
 import {FaixaEtariaService} from "../../../services/cadastros/faixa-etaria.service";
+import {LoteService} from "../../../services/models/lote.service";
+import {AreaService} from "../../../services/models/area.service";
 
 @Component({
   selector: 'app-modal-sync',
@@ -49,7 +50,9 @@ export class ModalSyncComponent implements OnInit {
     private animaisService: AnimaisService,
     private syncService: SyncService,
     private racaAnimalService: RacaAnimalService,
-    private faixaEtariaService: FaixaEtariaService
+    private faixaEtariaService: FaixaEtariaService,
+    private areaService: AreaService,
+    private loteService: LoteService
   ) {
   }
 
@@ -152,5 +155,21 @@ export class ModalSyncComponent implements OnInit {
         console.log('Erro ao sincronizar ')
       })
 
+  }
+
+  sincronizarLotes() {
+
+    this.loteService.syncLotesProtheus(1)
+      .then(result => {
+        console.log(result)
+      })
+
+  }
+
+  sincronizarAreas() {
+    this.areaService.syncAreasProtheus()
+      .then(result => {
+        console.log(result)
+      })
   }
 }

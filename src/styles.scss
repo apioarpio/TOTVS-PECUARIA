@@ -7,14 +7,14 @@
   /* Pressed do Botão primário, Links, Cor da borda do botão secundário */
   --color-primary-dark-40: #5f332d;
 
-  --color-secondary: #2f3640;
+  --color-secondary: #7a493a;
   --color-tertiary: #44bd32;
 }
 
 .pecuaria-back-span {
 
   font-size: 30px;
-  color: #c9357d;
+  color: var(--color-primary);
   cursor: pointer;
 
 }

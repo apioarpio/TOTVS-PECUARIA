@@ -4,7 +4,13 @@ export default (req, res) => {
 
     const fields = req.query.fields;
 
-    FaixaEtariaPersistence.get(fields)
+    let idadeMeses = req.query.idadeMeses;
+
+    let filter = {
+        idadeMeses: idadeMeses
+    };
+
+    FaixaEtariaPersistence.get(fields, filter)
         .then(result => {
             res.status(200).json({items: result})
         })

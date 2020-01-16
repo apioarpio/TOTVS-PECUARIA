@@ -66,6 +66,7 @@ export class FaixaEtariaService {
   }
 
   createFaixaEtariaLocal(faixaEtaria) {
+    console.log(faixaEtaria);
 
     return this.http.post(`${this.serverService.sqlite}/faixaEtaria`, {
       faixaEtaria: {

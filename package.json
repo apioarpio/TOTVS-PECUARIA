@@ -33,6 +33,7 @@
     "body-parser": "^1.19.0",
     "component": "^1.1.0",
     "lokijs": "^1.5.7",
+    "moment": "^2.24.0",
     "ngx-electron": "^2.1.1",
     "pouchdb": "^7.1.1",
     "pouchdb-find": "^7.1.1",

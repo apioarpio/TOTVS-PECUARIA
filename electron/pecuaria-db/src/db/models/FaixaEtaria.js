@@ -31,10 +31,11 @@ export default {
             }
         })
     },
-    get: function (fields) {
+    get: function (fields, filter) {
         return new Promise((resolve, reject) => {
             const db = database();
             let fieldsFilter = '';
+            let query = '';
             if (fields) {
                 fields = fields.split(',');
                 console.log('tem fields');
@@ -52,10 +53,14 @@ export default {
             } else {
                 fieldsFilter = '*';
             }
+            if (filter['idadeMeses']) {
+                query += !query ? 'WHERE ' : 'AND ';
+                query += ` ${filter.idadeMeses} >= inicio AND ${filter.idadeMeses} <= fim`;
+            }
             console.log(fieldsFilter);
             console.log(`SELECT ${fieldsFilter} FROM faixa_etaria`);
             db.serialize(() => {
-                db.all(`SELECT ${fieldsFilter} FROM faixa_etaria`, (err, result) => {
+                db.all(`SELECT ${fieldsFilter} FROM faixa_etaria ${query}`, (err, result) => {
                     if (err) {
                         console.log(err);
                         reject(err)

@@ -7,6 +7,8 @@ import MovimentacaoAnimal from './MovimentacaoAnimal';
 import Contexto from './Contexto';
 import RacaAnimal from './RacaAnimal';
 import FaixaEtaria from './FaixaEtaria';
+import Area from './Area';
+import Lote from './Lote';
 
 export default (app) => {
     app.use('/entidade', Entidade);
@@ -17,5 +19,7 @@ export default (app) => {
     app.use('/movimentacaoAnimal', MovimentacaoAnimal);
     app.use('/contexto', Contexto);
     app.use('/racaAnimal', RacaAnimal);
-    app.use('/faixaEtaria', FaixaEtaria)
+    app.use('/faixaEtaria', FaixaEtaria);
+    app.use('/area', Area);
+    app.use('/lote', Lote);
 }
