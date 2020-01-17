@@ -102,7 +102,7 @@ export default {
             const db = database();
 
             db.serialize(() => {
-                console.log(idLote)
+                console.log(idLote);
                 db.all(
                     `SELECT * FROM lote WHERE id_lote = '${idLote}'`,
                     (err, result) => {

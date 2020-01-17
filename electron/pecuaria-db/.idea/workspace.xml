@@ -2,51 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="95f100ea-43a1-45df-ae99-d03730aee371" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/api/area/createArea.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/area/getArea.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/lote/createLote.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/lote/getAllLote.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/api/lote/getLoteById.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/db/models/Area.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/db/models/Lote.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/db/scripts/createAreaTable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/db/scripts/createLoteTable.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Area.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/Lote.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/directives/directives.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/aparte-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/carencia-sanitaria-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/cota-hilton-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/faixa-etaria-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/liberado-abate-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/peso-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/raca-tronco-validator.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/tronco-validators/sexo-tronco-validator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dist/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/../dist/main.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../dist/main.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/../dist/main.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../main.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/scripts/createSisbovXChipTable.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/db/scripts/createSolBrincoTable.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pecuaria-db" beforeDir="false" afterPath="$PROJECT_DIR$/pecuaria-db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/faixaEtaria/getFaixaEtaria.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/faixaEtaria/getFaixaEtaria.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/config/init.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/config/init.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/models/FaixaEtaria.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/FaixaEtaria.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/app.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/components/modals/modal-sync/modal-sync.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/components/modals/modal-sync/modal-sync.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/components/modals/modal-sync/modal-sync.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/components/modals/modal-sync/modal-sync.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/model/animal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/model/animal.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/pages/movimentacao/components/modal-filtros-tronco/modal-filtros-tronco.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/components/modal-filtros-tronco/modal-filtros-tronco.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/pages/movimentacao/components/modal-filtros-tronco/modal-filtros-tronco.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/components/modal-filtros-tronco/modal-filtros-tronco.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/pages/movimentacao/movimentacao.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/pages/movimentacao/movimentacao.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/services/cadastros/faixa-etaria.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/services/cadastros/faixa-etaria.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/app/services/utils/server.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/app/services/utils/server.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../src/styles.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../../src/styles.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/models/Lote.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/Lote.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -60,69 +19,13 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/lote/createLote.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/lote/getLoteById.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="14" selection-end-column="17" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/db/scripts/createSisbovXChipTable.js">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/db/models/Lote.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="276">
-              <caret line="114" column="43" selection-start-line="114" selection-start-column="43" selection-end-line="114" selection-end-column="43" />
-              <folding>
-                <element signature="e#90#1967#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/lote/getAllLote.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/area/createArea.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="11" column="27" selection-start-line="11" selection-start-column="27" selection-end-line="11" selection-end-column="27" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/api/area/getArea.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="189">
-              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/db/models/Area.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
-            </state>
-          </provider>
+        <entry file="file://$PROJECT_DIR$/src/db/scripts/createSolBrincoTable.js">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -174,8 +77,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/api/contexto/saveContexto.js" />
-        <option value="$PROJECT_DIR$/src/config/MacAddress.js" />
         <option value="$PROJECT_DIR$/src/config/MACAddress.js" />
         <option value="$PROJECT_DIR$/src/db/scripts/createContextoFazendaTable.js" />
         <option value="$PROJECT_DIR$/src/api/contexto/createEstacao.js" />
@@ -225,6 +126,8 @@
         <option value="$PROJECT_DIR$/src/api/area/createArea.js" />
         <option value="$PROJECT_DIR$/src/db/models/Area.js" />
         <option value="$PROJECT_DIR$/src/db/models/Lote.js" />
+        <option value="$PROJECT_DIR$/src/db/scripts/createSisbovXChipTable.js" />
+        <option value="$PROJECT_DIR$/src/db/scripts/createSolBrincoTable.js" />
       </list>
     </option>
   </component>
@@ -396,12 +299,12 @@
       <workItem from="1578574985911" duration="2007000" />
       <workItem from="1578815621254" duration="21720000" />
       <workItem from="1579042110883" duration="17121000" />
-      <workItem from="1579185401105" duration="531000" />
+      <workItem from="1579185401105" duration="2006000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="352122000" />
+    <option name="totallyTimeSpent" value="353597000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -414,8 +317,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -459,20 +363,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/api/movimentacaoAnimal/getMovimentacaoAnimal.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="9" column="64" lean-forward="true" selection-start-line="9" selection-start-column="64" selection-end-line="9" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/movimentacao/getMovimentacao.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="5" column="55" selection-start-line="5" selection-start-column="39" selection-end-line="5" selection-end-column="55" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/api/movimentacaoAnimal/createMovimentacaoAnimal.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="189">
@@ -807,10 +697,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/api/lote/createLote.js">
+    <entry file="file://$PROJECT_DIR$/src/db/models/Lote.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        <state relative-caret-position="190">
+          <caret line="98" column="6" lean-forward="true" selection-start-line="98" selection-start-column="6" selection-end-line="98" selection-end-column="6" />
+          <folding>
+            <element signature="e#90#1967#0" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -818,6 +711,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="252">
           <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="14" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/api/lote/createLote.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -844,20 +744,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/db/models/Area.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
+        <state relative-caret-position="612">
           <caret line="35" column="31" selection-start-line="35" selection-start-column="31" selection-end-line="35" selection-end-column="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/db/models/Lote.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="276">
-          <caret line="114" column="43" selection-start-line="114" selection-start-column="43" selection-end-line="114" selection-end-column="43" />
-          <folding>
-            <element signature="e#90#1967#0" />
-          </folding>
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/src/db/scripts/createSisbovXChipTable.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/db/scripts/createSolBrincoTable.js">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
