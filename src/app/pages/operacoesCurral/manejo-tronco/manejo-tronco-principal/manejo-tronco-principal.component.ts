@@ -1,6 +1,5 @@
 import {Component, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Location} from '@angular/common'
-import {AnimaisService} from "../../../../services/cadastros/animais.service";
 import {Animal} from "../../../../model/animal";
 import {MovimentacaoService} from "../../../../services/models/movimentacao.service";
 import {ActivatedRoute} from "@angular/router";
@@ -23,13 +22,15 @@ import {sexoTroncoValidator} from "../tronco-validators/sexo-tronco-validator";
 import {RacaAnimalLookupFilterService} from "../../../../services/lookup/raca-animal-lookup-filter.service";
 import {racaTroncoValidator} from "../tronco-validators/raca-tronco-validator";
 import {faixaEtariaTroncoValidator} from "../tronco-validators/faixa-etaria-tronco-validator";
-import {FaixaEtariaService} from "../../../../services/cadastros/faixa-etaria.service";
 import {FaixaEtaria} from "../../../../model/faixa-etaria";
 import {liberadoAbateTroncoValidator} from "../tronco-validators/liberado-abate-tronco-validator";
 
 
 import * as moment from 'moment';
 import {LoteService} from "../../../../services/models/lote.service";
+import {TiposMovimento} from "../../../../model/tipos-movimento";
+import {AnimaisService} from "../../../../services/models/animais.service";
+import {FaixaEtariaService} from "../../../../services/models/faixa-etaria.service";
 
 @Component({
   selector: 'app-manejo-tronco-principal',
@@ -41,12 +42,22 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   @ViewChild(ModalFiltrosTroncoComponent, {static: true}) modalFiltrosTronco: ModalFiltrosTroncoComponent;
 
   //Property binds
-  aparteDisabled: boolean = false;
-
+  disabledFields = {
+    aparte: "false",
+    manejo: "true",
+    sexo: "true",
+    codigoRaca: "true",
+    dataNascimento: "true",
+    dataLimiteHilton: "true",
+    dataUltimaPesagem: "true",
+    codLoteOrigem: "true",
+    rfid: "true",
+    umbigo: "true",
+    frame: "true"
+  };
   //models
   animal: Animal = new Animal(); //animal a ser incluído no manejo
   aparte: number; //aparte selecionado
-  pesoAnimal: number; //peso do animal informaod pelo usuário
   movimentacao: Movimentacao = new Movimentacao();
   animaisMovimento = [];
   idMovimentacao;
@@ -116,7 +127,32 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     this.idMovimentacao = this.route.snapshot.paramMap.get('idMovimentacao');
     this.movimentacaoService.getMovimentacoesById(this.idMovimentacao, null).subscribe(movimento => {
       console.log(movimento);
-      this.movimentacao = movimento['items'][0];
+      movimento = movimento['items'][0];
+      let tipoMov: TiposMovimento = new TiposMovimento();
+      tipoMov.idTm = movimento['tipoMovimento']['idTm'];
+      tipoMov.descricao = movimento['tipoMovimento']['descricao'];
+      tipoMov.tipo = movimento['tipoMovimento']['tipo'];
+      tipoMov.codigoCertificadora = movimento['tipoMovimento']['codigoCertificadora'];
+      tipoMov.status = movimento['tipoMovimento']['status'];
+      tipoMov.brincoEletronico = movimento['tipoMovimento']['brincoEletronico'];
+      tipoMov.incluiSisbov = movimento['tipoMovimento']['incluiSisbov'];
+      tipoMov.pesaAnimal = movimento['tipoMovimento']['pesaAnimal'];
+      tipoMov.sanitario = movimento['tipoMovimento']['sanitario'];
+      tipoMov.vinculaLote = movimento['tipoMovimento']['vinculaLote'];
+      tipoMov.vinculaArea = movimento['tipoMovimento']['vinculaArea'];
+      tipoMov.tipoSaida = movimento['tipoMovimento']['tipoSaida'];
+      tipoMov.tipoEntrada = movimento['tipoMovimento']['tipoEntrada'];
+
+      this.movimentacao.id = movimento['idMovimentacao'];
+      this.movimentacao.tipo = movimento['tipo'];
+      this.movimentacao.idFornecedor = movimento['idFornecedor'];
+      this.movimentacao.idFazenda = movimento['idFazenda'];
+      this.movimentacao.quantidadeAnimal = movimento['quantidadeAnimal'];
+      this.movimentacao.tipoMovimento = tipoMov;
+
+
+      this.validacoesMovimentacaoEntrada();
+
     });
     this.getAnimaisMovimento();
   }
@@ -142,46 +178,13 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
    * @param sisbov
    */
   getAnimal(sisbov: number) {
-    this.animalService.getAnimalBySisbov(sisbov).subscribe(result => {
-      let animal = result['animal'][0];
-      if (animal) {
-        this.animal = new Animal();
-        this.animal.id = animal.id_animal;
-        this.animal.sisbov = animal.sisbov;
-        this.animal.manejo = animal.manejo;
-        this.animal.raca = animal.raca;
-        this.animal.nomeRaca = animal.nomeRaca;
-        this.animal.sexo = animal.sexo;
-        this.animal.dataNascimento = animal.dataNascimento;
-        this.animal.dataIncSisbov = animal.dataIncSisbov;
-        this.animal.codFAixaEtaria = animal.codFAixaEtaria;
-        this.animal.peso = animal.peso;
-        this.animal.dataPesagem = animal.dataPesagem;
-        this.animal.codFazenda = animal.codFazenda;
-        this.animal.codFornecedor = animal.codFornecedor;
-        this.animal.numeroSolSisbov = animal.numeroSolSisbov;
-        this.animal.dataEntrada = animal.dataEntrada;
-        this.animal.movimentoOrigem = animal.movimentoOrigem;
-        this.animal.rfid = animal.rfid;
-        this.animal.lote = animal.lote;
-        this.animal.pasto = animal.pasto;
-        this.animal.dataLibAbateCertificadora = animal.dataLibAbateCertificadora;
-        this.animal.dataAbate = animal.dataAbate;
-        this.animal.dataLibAbateSanitario = animal.dataLibAbateSanitario;
-        this.animal.dataApontamentoMorte = animal.dataApontamentoMorte;
-        this.animal.controleWebservice = animal.controleWebservice;
-        this.animal.status = animal.status;
-        this.animal.dataLimiteCotaHilton = animal.dataLimiteCotaHilton;
-        this.animal.cadastro = animal.cadastro;
-        this.animal.dataAtualizacaoAnimal = animal.dataAtualizacaoAnimal;
-        this.animal.fazendaOrigem = animal.fazendaOrigem;
-        this.animal.certificadora = animal.certificadora;
-        this.animal.dataCertificadora = animal.dataCertificadora;
-        this.animal.controleTransferencia = animal.controleTransferencia;
-      } else {
-        this.animal = new Animal()
-      }
-    })
+    this.animalService.getAnimalBySisbov(sisbov)
+      .then(animal => {
+        this.animal = animal
+      })
+      .catch(err => {
+        console.log('erro ao buscar o animal: ', err);
+      })
   }
 
   /**
@@ -193,28 +196,10 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   }
 
   /**
-   * @description
+   * @description adiciona o animal ao manejo
    */
   addAnimal() {
-    this.validaFiltroTronco();
-    if (this.aparte) {
-      this.poDialog.confirm({
-        title: 'Adicionar Animal',
-        message: `Deseja confirmar o envio do animal ${this.animal.sisbov} para o aparte ${this.aparte}`,
-        confirm: () => this.saveAnimalMovimentacao()
-      });
-    } else {
-      this.poNotification.createToaster({
-        action: undefined,
-        actionLabel: '',
-        duration: 5000,
-        type: PoToasterType.Warning,
-        message: `Favor Selecionar o aparte de destino.`,
-        componentRef: null,
-        position: null,
-        orientation: PoToasterOrientation.Top
-      });
-    }
+    this.saveAnimalMovimentacao();
   }
 
   backRoute() {
@@ -251,10 +236,10 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     this.setCustomValidators();
     //define o aparte conforme selecionado no filtro, impossibilitando a mudança do mesmo até o filtro ser retirado
     if (filtro.aparte) {
-      this.aparteDisabled = true;
+      this.disabledFields.aparte = "true";
       this.aparte = filtro.aparte
     } else {
-      this.aparteDisabled = false;
+      this.disabledFields.aparte = "false";
       this.aparte = null
     }
     this.troncoFormGroup.updateValueAndValidity();
@@ -276,20 +261,15 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     this.troncoFormGroup.updateValueAndValidity();
   }
 
-  private validaFiltroTronco(): boolean {
-    let isValid = true;
-    if (this.filtroTronco.sexo) {
-      isValid = this.filtroTronco.sexo === this.animal.sexo;
-    }
-    console.log(this.troncoFormGroup);
-    return isValid
-  }
-
   private saveAnimalMovimentacao() {
+    console.log(this.movimentacao);
+    console.log(this.animal);
     this.movimentacaoService
-      .addAnimalMovimentacao(this.idMovimentacao, this.animal.id, this.aparte, this.pesoAnimal)
+      .addAnimalMovimentacao(this.animal, this.movimentacao)
       .subscribe(result => {
         this.getAnimaisMovimento();
+
+
         this.poNotification.createToaster({
           action: undefined,
           actionLabel: '',
@@ -334,6 +314,32 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
       this.items.push({sisbov: animal.sisbov, aparte: animal.aparte})
     }
 
+  }
+
+  /**
+   * @description verifica os parâmetros da movimentação e aplica as validações necessárias.
+   */
+  private validacoesMovimentacaoEntrada() {
+    //verifica se o tipo de entrada inclui sisbov e se é cadastro ou compra
+    console.log(this.movimentacao);
+    if (
+      this.movimentacao.tipoMovimento.incluiSisbov === 1 &&
+      (this.movimentacao.tipoMovimento.tipoEntrada === 2 || this.movimentacao.tipoMovimento.tipoEntrada === 3)
+    ) {
+      this.troncoFormGroup.controls['sexo'].setValidators([sexoTroncoValidator(this.filtroTronco), Validators.required]);
+      this.troncoFormGroup.controls['peso'].setValidators([pesoValidator(this.filtroTronco), Validators.required]);
+      this.troncoFormGroup.controls['raca'].setValidators([racaTroncoValidator(this.filtroTronco), Validators.required]);
+      this.troncoFormGroup.controls['dataNascimento'].setValidators([faixaEtariaTroncoValidator(this.filtroTronco, this.animal, this.faixasEtarias), Validators.required]);
+    } else if (this.movimentacao.tipoMovimento.tipoEntrada === 1) {
+      this.disabledFields.sexo = "true";
+      this.disabledFields.manejo = "true";
+      this.disabledFields.codigoRaca = "true";
+      this.disabledFields.dataNascimento = "true";
+      this.disabledFields.dataLimiteHilton = "true";
+      this.disabledFields.rfid = "true";
+      this.disabledFields.umbigo = "true";
+      this.disabledFields.frame = "true";
+    }
   }
 
 }

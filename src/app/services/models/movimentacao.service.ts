@@ -3,6 +3,7 @@ import {ServerService} from "../utils/server.service";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Movimentacao} from "../../model/movimentacao";
 import {Observable} from "rxjs";
+import {Animal} from "../../model/animal";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class MovimentacaoService {
   saveMovimentacao(movimentacao: Movimentacao) {
     return this.http.post(`${this.serverService.sqlite}/movimentacao`, {
       movimentacao: {
-        idTm: movimentacao.idTm,
+        idTm: movimentacao.id,
         quantidadeAnimal: movimentacao.quantidadeAnimal,
         tipo: movimentacao.tipo,
         observacao: movimentacao.observacao,
@@ -34,7 +35,7 @@ export class MovimentacaoService {
   }
 
   getMovimentacoes(tipoMovimentacao, fields: string) {
-    // return this.http.get(`${this.serverService.sqlite}/movimentacao?tipo=${tipoMovimentacao}&fields=${fields}`)
+    // return this.http.get(`${this.serverService.sqlite}/operacoesCurral?tipo=${tipoMovimentacao}&fields=${fields}`)
     return this.http.get(`${this.serverService.sqlite}/movimentacao`)
   }
 
@@ -50,17 +51,21 @@ export class MovimentacaoService {
     return this.http.get(`${this.serverService.sqlite}/movimentacao/${idMovimentacao}${queryParam}`)
   }
 
-  addAnimalMovimentacao(idMovimentacao, idAnimal, aparte, peso): Observable<any> {
+  addAnimalMovimentacao(animal: Animal, movimentacao: Movimentacao): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'X-Portinari-No-Error': 'true'
       })
     };
     return this.http.post(`${this.serverService.sqlite}/movimentacaoAnimal`, {
-      idMovimentacao: idMovimentacao,
-      idAnimal: idAnimal,
-      aparte: aparte,
-      peso: peso
+      movimentacaoAnimal: {
+        idMovimentacao: movimentacao.id,
+        idAnimal: animal.id,
+        aparte: animal.aparte,
+        peso: animal.peso,
+        tipoMovimentacao: movimentacao.tipo,
+        integrado: false
+      }
     }, httpOptions);
   }
 

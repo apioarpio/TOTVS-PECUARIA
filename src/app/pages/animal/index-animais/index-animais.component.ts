@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AnimaisService} from "../../../services/cadastros/animais.service";
+import {AnimaisService} from "../../../services/models/animais.service";
 
 @Component({
   selector: 'app-index-animais',

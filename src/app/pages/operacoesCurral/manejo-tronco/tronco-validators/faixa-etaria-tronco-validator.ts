@@ -1,7 +1,6 @@
 import {AbstractControl, ValidatorFn} from "@angular/forms";
 import {FiltroTronco} from "../../components/modal-filtros-tronco/modal-filtros-tronco.component";
 import {Animal} from "../../../../model/animal";
-import {FaixaEtariaService} from "../../../../services/cadastros/faixa-etaria.service";
 import {FaixaEtaria} from "../../../../model/faixa-etaria";
 
 export function faixaEtariaTroncoValidator(filtroTronco: FiltroTronco, animal: Animal, faixasEtarias: Array<FaixaEtaria>): ValidatorFn {

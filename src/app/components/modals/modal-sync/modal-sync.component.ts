@@ -3,11 +3,11 @@ import {IntegracaoLogService} from "../../../services/utils/integracao-log.servi
 import {SyncButton} from "../../../model/SyncButton";
 import {SyncService, TablesSync} from "../../../services/utils/sync.service";
 import {TiposMovimentoService} from "../../../pages/sincronismo/services/tipos-movimento.service";
-import {AnimaisService} from "../../../services/cadastros/animais.service";
-import {RacaAnimalService} from "../../../services/cadastros/raca-animal.service";
-import {FaixaEtariaService} from "../../../services/cadastros/faixa-etaria.service";
 import {LoteService} from "../../../services/models/lote.service";
 import {AreaService} from "../../../services/models/area.service";
+import {AnimaisService} from "../../../services/models/animais.service";
+import {RacaAnimalService} from "../../../services/models/raca-animal.service";
+import {FaixaEtariaService} from "../../../services/models/faixa-etaria.service";
 
 @Component({
   selector: 'app-modal-sync',
@@ -102,11 +102,11 @@ export class ModalSyncComponent implements OnInit {
 
     this.tiposMovimentoService.syncTMs()
       .then(result => {
-        console.log('tipos de movimentacao sincronizado com sucesso');
+        console.log('tipos de operacoesCurral sincronizado com sucesso');
         console.log(result);
       })
       .catch(err => {
-        console.log('erro aos sincronizar os tipos de movimentacao');
+        console.log('erro aos sincronizar os tipos de operacoesCurral');
         console.log(err)
       })
       .finally(() => {

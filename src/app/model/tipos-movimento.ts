@@ -1,42 +1,29 @@
 export class TiposMovimento {
 
-  private _codigo: number;
+  private _idTm: number;
   private _descricao: string;
   private _tipo: number;
-  private _cdCert: number;
+  private _codigoCertificadora: number;
   private _status: number;
-  private _brelet: number;
-  private _idTfsb: number;
-  private _pesani: number;
-  private _trasan: number;
-  private _vclote: number;
-  private _vcarea: number;
-  private _tpsaid: number;
-  private _tpentr: number;
+  private _brincoEletronico: number;
+  private _incluiSisbov: number;
+  private _pesaAnimal: number;
+  private _sanitario: number;
+  private _vinculaLote: number;
+  private _vinculaArea: number;
+  private _tipoSaida: number;
+  private _tipoEntrada: number;
+  private _dataIntegracao: Date;
 
-
-  constructor(codigo?: number, descricao?: string, tipo?: number, cdCert?: number, status?: number, brelet?: number, idTfsb?: number, pesani?: number, trasan?: number, vclote?: number, vcarea?: number, tpsaid?: number, tpentr?: number) {
-    this._codigo = codigo;
-    this._descricao = descricao;
-    this._tipo = tipo;
-    this._cdCert = cdCert;
-    this._status = status;
-    this._brelet = brelet;
-    this._idTfsb = idTfsb;
-    this._pesani = pesani;
-    this._trasan = trasan;
-    this._vclote = vclote;
-    this._vcarea = vcarea;
-    this._tpsaid = tpsaid;
-    this._tpentr = tpentr;
+  constructor() {
   }
 
-  get codigo(): number {
-    return this._codigo;
+  get idTm(): number {
+    return this._idTm;
   }
 
-  set codigo(value: number) {
-    this._codigo = value;
+  set idTm(value: number) {
+    this._idTm = value;
   }
 
   get descricao(): string {
@@ -55,12 +42,12 @@ export class TiposMovimento {
     this._tipo = value;
   }
 
-  get cdCert(): number {
-    return this._cdCert;
+  get codigoCertificadora(): number {
+    return this._codigoCertificadora;
   }
 
-  set cdCert(value: number) {
-    this._cdCert = value;
+  set codigoCertificadora(value: number) {
+    this._codigoCertificadora = value;
   }
 
   get status(): number {
@@ -71,68 +58,75 @@ export class TiposMovimento {
     this._status = value;
   }
 
-  get brelet(): number {
-    return this._brelet;
+  get brincoEletronico(): number {
+    return this._brincoEletronico;
   }
 
-  set brelet(value: number) {
-    this._brelet = value;
+  set brincoEletronico(value: number) {
+    this._brincoEletronico = value;
   }
 
-  get idTfsb(): number {
-    return this._idTfsb;
+  get incluiSisbov(): number {
+    return this._incluiSisbov;
   }
 
-  set idTfsb(value: number) {
-    this._idTfsb = value;
+  set incluiSisbov(value: number) {
+    this._incluiSisbov = value;
   }
 
-  get pesani(): number {
-    return this._pesani;
+  get pesaAnimal(): number {
+    return this._pesaAnimal;
   }
 
-  set pesani(value: number) {
-    this._pesani = value;
+  set pesaAnimal(value: number) {
+    this._pesaAnimal = value;
   }
 
-  get trasan(): number {
-    return this._trasan;
+  get sanitario(): number {
+    return this._sanitario;
   }
 
-  set trasan(value: number) {
-    this._trasan = value;
+  set sanitario(value: number) {
+    this._sanitario = value;
   }
 
-  get vclote(): number {
-    return this._vclote;
+  get vinculaLote(): number {
+    return this._vinculaLote;
   }
 
-  set vclote(value: number) {
-    this._vclote = value;
+  set vinculaLote(value: number) {
+    this._vinculaLote = value;
   }
 
-  get vcarea(): number {
-    return this._vcarea;
+  get vinculaArea(): number {
+    return this._vinculaArea;
   }
 
-  set vcarea(value: number) {
-    this._vcarea = value;
+  set vinculaArea(value: number) {
+    this._vinculaArea = value;
   }
 
-  get tpsaid(): number {
-    return this._tpsaid;
+  get tipoSaida(): number {
+    return this._tipoSaida;
   }
 
-  set tpsaid(value: number) {
-    this._tpsaid = value;
+  set tipoSaida(value: number) {
+    this._tipoSaida = value;
   }
 
-  get tpentr(): number {
-    return this._tpentr;
+  get tipoEntrada(): number {
+    return this._tipoEntrada;
   }
 
-  set tpentr(value: number) {
-    this._tpentr = value;
+  set tipoEntrada(value: number) {
+    this._tipoEntrada = value;
   }
 
+  get dataIntegracao(): Date {
+    return this._dataIntegracao;
+  }
+
+  set dataIntegracao(value: Date) {
+    this._dataIntegracao = value;
+  }
 }

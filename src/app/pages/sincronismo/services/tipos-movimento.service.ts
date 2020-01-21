@@ -27,20 +27,20 @@ export class TiposMovimentoService {
         let contador = 0;
         // @ts-ignore
         for (let tm of tms) {
-          let tipoMovimento: TiposMovimento = new TiposMovimento(
-            tm["CODIGO"],
-            tm["DESCRI"],
-            tm["TIPO"],
-            tm["CDCERT"],
-            tm["STATUS"],
-            tm["BRELET"],
-            tm["IDTFSB"],
-            tm["PESANI"],
-            tm["TRASAN"],
-            tm["VCLOTE"],
-            tm["VCAREA"],
-            tm["TPSAID"],
-            tm["TPENTR"]);
+          let tipoMovimento: TiposMovimento = new TiposMovimento();
+          tipoMovimento.idTm = tm["CODIGO"];
+          tipoMovimento.descricao = tm["DESCRI"];
+          tipoMovimento.tipo = tm["TIPO"];
+          tipoMovimento.codigoCertificadora = tm["CDCERT"];
+          tipoMovimento.status = tm["STATUS"];
+          tipoMovimento.brincoEletronico = tm["BRELET"];
+          tipoMovimento.incluiSisbov = tm["IDTFSB"];
+          tipoMovimento.pesaAnimal = tm["PESANI"];
+          tipoMovimento.sanitario = tm["TRASAN"];
+          tipoMovimento.vinculaLote = tm["VCLOTE"];
+          tipoMovimento.vinculaArea = tm["VCAREA"];
+          tipoMovimento.tipoSaida = tm["TPSAID"];
+          tipoMovimento.tipoEntrada = tm["TPENTR"];
           contador += 1;
 
           arrSync.push(
@@ -68,22 +68,23 @@ export class TiposMovimentoService {
     })
   }
 
-  saveTM(tipoMovimento: TiposMovimento) {
+  private saveTM(tipoMovimento: TiposMovimento) {
     if (tipoMovimento) {
+      console.log(tipoMovimento)
       let tipoMovimentoObj = {
-        codigo: tipoMovimento.codigo,
+        idTm: tipoMovimento.idTm,
         descricao: tipoMovimento.descricao,
         tipo: tipoMovimento.tipo,
-        cdCert: tipoMovimento.cdCert,
+        codigoCertificadora: tipoMovimento.codigoCertificadora,
         status: tipoMovimento.status,
-        brelet: tipoMovimento.brelet,
-        idTfsb: tipoMovimento.idTfsb,
-        pesani: tipoMovimento.pesani,
-        trasan: tipoMovimento.trasan,
-        vclote: tipoMovimento.vclote,
-        vcarea: tipoMovimento.vcarea,
-        tpsaid: tipoMovimento.tpsaid,
-        tpentr: tipoMovimento.tpentr
+        brincoEletronico: tipoMovimento.brincoEletronico,
+        incluiSisbov: tipoMovimento.incluiSisbov,
+        pesaAnimal: tipoMovimento.pesaAnimal,
+        sanitario: tipoMovimento.sanitario,
+        vinculaLote: tipoMovimento.vinculaLote,
+        vinculaArea: tipoMovimento.vinculaArea,
+        tipoSaida: tipoMovimento.tipoSaida,
+        tipoEntrada: tipoMovimento.tipoEntrada
       };
       return this.http.post(`${this.serverService.sqlite}/tiposMovimento`, {TM: tipoMovimentoObj})
     }
@@ -91,6 +92,10 @@ export class TiposMovimentoService {
 
   getTMsLocal() {
     return this.http.get(`${this.serverService.sqlite}/tiposMovimento`);
+  }
+
+  getEntradaTMsLocal() {
+    return this.http.get(`${this.serverService.sqlite}/tiposMovimento?tiposTm=entrada`);
   }
 
   getTMsServer() {

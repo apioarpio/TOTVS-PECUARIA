@@ -32,6 +32,6 @@ const manejoRoutes: Routes = [
   ]
 })
 
-export class MovimentacaoRoutesModule {
+export class OperacoesCurralRoutesModule {
 
 }

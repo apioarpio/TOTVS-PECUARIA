@@ -13,7 +13,7 @@ const homeRoutes: Routes = [
     children: [
       {path: 'entidade', loadChildren: '../entidade/entidade.module#EntidadeModule'},
       {path: 'animal', loadChildren: '../animal/animal.module#AnimalModule'},
-      {path: 'movimentacao', loadChildren: '../movimentacao/movimentacao.module#MovimentacaoModule'}
+      {path: 'operacoesCurral', loadChildren: '../operacoesCurral/operacoesCurral.module#OperacoesCurralModule'}
     ]
   }
 ];

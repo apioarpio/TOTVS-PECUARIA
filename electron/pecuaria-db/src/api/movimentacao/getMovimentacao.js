@@ -16,10 +16,23 @@ export default (req, res) => {
             let movimentacoes = [];
 
             for (let mov of result) {
-                console.log(result)
                 movimentacoes.push({
-                    idMovimentacao: mov.id_movimentacao,
-                    idTm: mov.id_tm,
+                    idMovimentacao: mov['id_movimentacao'],
+                    tipoMovimento: {
+                        idTm: mov['id_tm'],
+                        descricao: mov['descricao'],
+                        tipo: mov['tipo'],
+                        codigoCertificadora: mov['codigo_certificadora'],
+                        status: mov['status'],
+                        brincoEletronico: mov['brinco_eletronico'],
+                        incluiSisbov: mov['inclui_sisbov'],
+                        pesaAnimal: mov['pesa_animal'],
+                        sanitario: mov['sanitario'],
+                        vinculaLote: mov['vincula_lote'],
+                        vinculaArea: mov['vincula_area'],
+                        tipoSaida: mov['tipo_saida'],
+                        tipoEntrada: mov['tipo_entrada']
+                    },
                     idFazenda: mov.id_fazenda,
                     quantidadeAnimal: mov.quantidade_animal,
                     tipo: mov.tipo,
@@ -34,6 +47,8 @@ export default (req, res) => {
                     dataCadastro: mov.data_cadastro
                 })
             }
+
+            console.log(movimentacoes)
 
             res.status(200).json({items: movimentacoes})
         })

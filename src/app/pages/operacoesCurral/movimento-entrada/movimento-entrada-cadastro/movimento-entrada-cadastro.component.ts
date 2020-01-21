@@ -3,9 +3,11 @@ import {Location} from "@angular/common";
 import {PoTableColumn} from "@portinari/portinari-ui";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PecModalFormAnimalComponent} from "../../components/pec-modal-form-animal/pec-modal-form-animal.component";
-import {TiposMovimentoLookupService} from "../../../../services/cadastros/tipos-movimento-lookup.service";
 import {Movimentacao} from "../../../../model/movimentacao";
 import {MovimentacaoService} from "../../../../services/models/movimentacao.service";
+import {TiposMovimentoLookupService} from "../../../../services/lookup/tipos-movimento-lookup.service";
+import {TiposMovimento} from "../../../../model/tipos-movimento";
+import {TiposMovimentoEntradaLookupService} from "../../../../services/lookup/tipos-movimento-entrada-lookup.service";
 
 @Component({
   selector: 'app-manejo-entrada',
@@ -16,8 +18,8 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
 
   @ViewChild(PecModalFormAnimalComponent, {static: true}) pecModal;
   readonly lookupColumns = [
-    {property: 'CODIGO', label: 'Codigo'},
-    {property: 'DESCRICAO', label: 'Descrição'}
+    {property: 'idTm', label: 'Codigo'},
+    {property: 'descricao', label: 'Descrição'}
   ];
   public manejoEntradaForm = new FormGroup({
     codTM: new FormControl('', [Validators.required]),
@@ -58,7 +60,7 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
   constructor(
     private location: Location,
     private movimentacaoService: MovimentacaoService,
-    public tiposMovimentoLookupService: TiposMovimentoLookupService
+    public tiposMovimentoLookupService: TiposMovimentoEntradaLookupService
   ) {
   }
 
@@ -81,7 +83,9 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
   saveMovimentacao(): void {
     console.log(this.manejoEntradaForm);
     let movimentacao: Movimentacao = new Movimentacao();
-    movimentacao.idTm = this.manejoEntradaForm.controls['codTM'].value;
+    let tm: TiposMovimento = new TiposMovimento();
+    movimentacao.tipoMovimento = tm;
+    movimentacao.tipoMovimento.idTm = this.manejoEntradaForm.controls['codTM'].value;
     movimentacao.descricaoTm = this.manejoEntradaForm.controls['descTM'].value;
     movimentacao.tipo = 1;
     movimentacao.observacao = this.manejoEntradaForm.controls['observacao'].value;
@@ -108,7 +112,7 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
   }
 
   /**
-   * @description função chamada no momento em que um tipo de movimentacao é selecionado
+   * @description função chamada no momento em que um tipo de operacoesCurral é selecionado
    * @param event
    */
   lookupSelected(event) {

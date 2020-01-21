@@ -1,0 +1,136 @@
+<div class="po-row" class="pec-header-toolbar">
+  <div class="pec-header-toolbar-back">
+    <span class="po-icon po-icon-arrow-left pecuaria-back-span" (click)="backRoute()"></span>
+  </div>
+  <div class="pec-header-toolbar-title">
+    <h3>Movimentação - {{idMovimentacao}}</h3>
+  </div>
+  <div class="pec-header-toolbar-add-button">
+    <po-button
+      p-icon="po-icon-plus"
+      p-label="Salvar"
+      p-type="primary">
+    </po-button>
+  </div>
+</div>
+
+<po-tabs>
+  <po-tab p-label="Tronco" [p-active]="true">
+    <po-container class="po-md-12">
+      <div class="movimentacao-form-tronco">
+        <form [formGroup]="troncoFormGroup">
+          <div class="po-row">
+            <div class="pec-input-tronco-header">
+              <label for="sisbov">SISBOV/Manejo *</label>
+              <input id="sisbov" maxlength="15" (focusout)="onFocusOutManejo($event)" type="number"
+                     formControlName="sisbov" [(ngModel)]="animal.sisbov">
+            </div>
+            <div class="pec-input-tronco-header">
+              <label for="peso">Peso *</label>
+              <input type="number" id="peso" maxlength="4" [(ngModel)]="animal.peso" formControlName="peso">
+            </div>
+            <div class="po-row">
+              <div class="po-md-12">
+                <po-button p-label="Adicionar Animal" (p-click)="addAnimal()"
+                           [p-disabled]="!troncoFormGroup.valid"></po-button>
+                <po-button p-label="teste modal filtros" (p-click)="abrirModalFiltros()"></po-button>
+              </div>
+            </div>
+          </div>
+          <div class="po-row">
+            <po-divider class="po-md-12" p-label="Aparte"></po-divider>
+            <po-select class="po-md-12"
+                       p-label="Aparte"
+                       formControlName="aparte"
+                       [(ngModel)]="animal.aparte"
+                       [p-disabled]="disabledFields.aparte"
+                       [p-options]="[
+               {label: 'Sem Aparte', value:''},
+               {label: 'Aparte 1', value: '1'},
+               {label: 'Aparte 2', value: '2'},
+               {label: 'Aparte 3', value: '3'},
+               {label: 'Aparte 4', value: '4'}
+               ]">
+            </po-select>
+          </div>
+          <po-divider class="po-md-12" p-label="Informações do animal"></po-divider>
+          <po-divider></po-divider>
+          <div class="po-row">
+            <po-input p-label="Manejo" class="po-md-6"
+                      [(ngModel)]="animal.manejo"
+                      [p-disabled]="disabledFields.manejo"
+                      formControlName="manejo"></po-input>
+            <po-select class="po-md-6" p-label="Sexo"
+                       formControlName="sexo"
+                       [(ngModel)]="animal.sexo"
+                       [p-disabled]="disabledFields.sexo"
+                       [p-options]="[{label: 'Macho', value: '1'},{label: 'Fêmea', value: '2'}]"
+            >
+            </po-select>
+          </div>
+          <div class="po-row">
+            <po-lookup p-label="Código Raça" class="po-md-4" [(ngModel)]="animal.raca"
+                       [p-filter-service]="racaAnimalLookupFilterService"
+                       [p-columns]="racaAnimalLookupColumns"
+                       (p-selected)="onRacaSelect($event)"
+                       (change)="onRacaSelect($event)"
+                       [p-disabled]="disabledFields.codigoRaca"
+                       p-field-label="id"
+                       p-field-value="id"
+                       formControlName="codigoRaca"
+            ></po-lookup>
+            <po-input p-label="Raça" class="po-md-8" [(ngModel)]="animal.nomeRaca" formControlName="raca"
+                      p-disabled="true"></po-input>
+          </div>
+          <div class="po-row">
+            <po-input p-label="idade(meses)" class="po-md-3"
+                      p-disabled="true"
+                      [(ngModel)]="animal.idadeMeses"
+                      formControlName="idadeMeses"></po-input>
+            <po-datepicker p-label="Dt. Nascimento" class="po-md-3"
+                           p-format="dd/mm/yyyy"
+                           p-locale="pt"
+                           [p-disabled]="disabledFields.dataNascimento"
+                           (p-change)="calculateIdadeMeses()"
+                           [(ngModel)]="animal.dataNascimento"
+                           formControlName="dataNascimento"></po-datepicker>
+            <po-input
+              p-label="Dt. Limite Hilton" class="po-md-3"
+              [p-disabled]="disabledFields.dataLimiteHilton"
+            ></po-input>
+            <po-input
+              p-label="Dt. Ult Pesagem" class="po-md-3"
+              [p-disabled]="disabledFields.dataUltimaPesagem"
+            ></po-input>
+            <po-input p-label="Cód lote Origem" class="po-md-3"
+                      [(ngModel)]="animal.lote"
+                      [p-disabled]="disabledFields.codLoteOrigem"
+                      formControlName="codLoteOrigem"></po-input>
+            <po-input p-label="RFID" class="po-md-3"
+                      [(ngModel)]="animal.rfid"
+                      [p-disabled]="disabledFields.rfid"
+                      formControlName="rfid"></po-input>
+            <po-input
+              p-label="Umbigo" class="po-md-3"
+              [p-disabled]="disabledFields.umbigo"
+            ></po-input>
+            <po-input p-label="Frame" class="po-md-3"
+                      [p-disabled]="disabledFields.frame"></po-input>
+          </div>
+        </form>
+      </div>
+      <div class="movimentacao-info-tronco">
+        <pec-informacoes-animal-tronco [formGroup]="troncoFormGroup" [animal]="animal"></pec-informacoes-animal-tronco>
+      </div>
+    </po-container>
+  </po-tab>
+  <po-tab p-label="Animais Tronco">
+    <po-container>
+      <po-table class="po-md-12" [p-columns]="columns" [p-items]="items"></po-table>
+    </po-container>
+  </po-tab>
+</po-tabs>
+
+
+<pec-modal-filtros-tronco [filtroTroncoInput]="filtroTronco"
+                          (filtrosTroncoEvent)="setFiltros($event)"></pec-modal-filtros-tronco>

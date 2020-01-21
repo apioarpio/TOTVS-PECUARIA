@@ -5,7 +5,7 @@ export default () => {
         const db = database();
         db.serialize(() => {
             /**
-             * tipos de movimentacao: 1 - entrada, 2 - saída, 3 - interno
+             * tipos de operacoesCurral: 1 - entrada, 2 - saída, 3 - interno
              */
             db.run(`
                 CREATE TABLE IF NOT EXISTS

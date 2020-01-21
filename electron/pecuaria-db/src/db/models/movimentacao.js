@@ -53,17 +53,33 @@ export default {
                                 $dataValidadeGta,
                                 $dataSaidaGta,
                                 $dataChegadaGta,
-                                $dataCadastro)
+                                $dataCadastro
+                                )
                         `);
-                        stmt.run(movimentacao, (err, result) => {
+                        stmt.run({
+                            $idMovimentacao: movimentacao['idMovimentacao'],
+                            $idTm: movimentacao['idTm'],
+                            $idFornecedor: movimentacao['idFornecedor'],
+                            $codFazendaAtual: movimentacao['codFazendaAtual'],
+                            $quantidadeAnimal: movimentacao['quantidadeAnimal'],
+                            $tipo: movimentacao['tipo'],
+                            $observacao: movimentacao['observacao'],
+                            $numeroGta: movimentacao['numeroGta'],
+                            $serieGta: movimentacao['serieGta'],
+                            $dataEmissaoGta: movimentacao['dataEmissaoGta'],
+                            $dataValidadeGta: movimentacao['dataValidadeGta'],
+                            $dataSaidaGta: movimentacao['dataSaidaGta'],
+                            $dataChegadaGta: movimentacao['dataChegadaGta'],
+                            $dataCadastro: movimentacao['dataCadastro']
+                        }, (err, result) => {
                             console.log('teste');
                             console.log(err, result);
                             if (err) {
-                                console.log('erro ao incluir uma movimentacao');
+                                console.log('erro ao incluir uma operacoesCurral');
                                 console.log(err);
                                 reject(err);
                             } else {
-                                console.log('movimentacao incluído com sucesso', result);
+                                console.log('operacoesCurral incluído com sucesso', result);
                                 resolve(result)
                             }
                         });
@@ -72,7 +88,7 @@ export default {
 
             } catch (e) {
                 console.log('CATCH');
-                console.log('erro ao incluir um movimentacao');
+                console.log('erro ao incluir um operacoesCurral');
                 console.log(e);
                 reject(e)
             }
@@ -100,13 +116,14 @@ export default {
                     query += `movimentacao.data_cadastro like '${filters.dataCadastro}%' `;
                 }
             }
-            console.log(`SELECT ${fieldsFilter} FROM movimentacao INNER JOIN TIPOSMOVIMENTO TM ON TM.CODIGO = movimentacao.id_tm ${query}`)
-            db.all(`SELECT ${fieldsFilter} FROM movimentacao INNER JOIN TIPOSMOVIMENTO TM ON TM.CODIGO = movimentacao.id_tm ${query}`, (err, results) => {
+            console.log(`SELECT ${fieldsFilter} FROM movimentacao INNER JOIN tipo_movimento TM ON TM.id_tm = movimentacao.id_tm ${query}`)
+            db.all(`SELECT ${fieldsFilter} FROM movimentacao INNER JOIN tipo_movimento TM ON TM.id_tm = movimentacao.id_tm ${query}`, (err, results) => {
                 if (err) {
+                    console.log('erro')
                     reject(err);
+                } else {
+                    resolve(results);
                 }
-                console.log(results)
-                resolve(results);
             })
         })
     }

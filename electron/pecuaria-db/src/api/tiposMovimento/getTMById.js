@@ -21,7 +21,7 @@ export default (req, res) => {
             })
     } else {
         res.status(400).json({
-            mensagem: 'Código do tipo de movimentacao não informado'
+            mensagem: 'Código do tipo de operacoesCurral não informado'
         })
     }
 

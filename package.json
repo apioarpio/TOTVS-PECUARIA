@@ -10,7 +10,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "electron": "ng build --base-href ./ && tsc --p electron && electron ."
+    "electron": "ng build --base-href ./ && tsc --p electron && electron .",
+    "electron-lr": "wait-on http://localhost:4200 && electron .",
+    "prestart": "npm run clean",
+    "start-e": "concurrently -k \"ng serve\" \"npm run electron-lr\""
   },
   "private": true,
   "dependencies": {
@@ -32,6 +35,7 @@
     "bluetooth-serial-port": "^2.2.6",
     "body-parser": "^1.19.0",
     "component": "^1.1.0",
+    "concurrently": "^5.0.2",
     "lokijs": "^1.5.7",
     "moment": "^2.24.0",
     "ngx-electron": "^2.1.1",
@@ -40,6 +44,7 @@
     "rxjs": "~6.5.2",
     "sqlite3": "^4.1.0",
     "tslib": "^1.9.0",
+    "wait-on": "^4.0.0",
     "worker-pouch": "^2.1.0"
   },
   "devDependencies": {

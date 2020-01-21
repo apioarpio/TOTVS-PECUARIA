@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Entidade} from "../../../model/entidade";
-import {EntidadeService} from "../../../services/cadastros/entidade.service";
 import {IntegracaoLogService} from "../../../services/utils/integracao-log.service";
+import {EntidadeService} from "../../../services/models/entidade.service";
 
 
 @Component({

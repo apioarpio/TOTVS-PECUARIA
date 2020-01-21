@@ -1,13 +1,25 @@
 import animalDAO from '../../db/models/animal';
+import historicoPesoDAO from '../../db/models/historicoPeso';
 
 export default async (req, res) => {
     try {
         if (req.body.animais) {
-            console.log(req.body.animais);
             const animais = req.body.animais;
             const animaisInseridos = [];
             for (let animal of animais) {
                 let animalCriado = await animalDAO.createAnimal(animal);
+                console.log(animalCriado)
+                if (animal.dataPesagem && animal.peso) {
+                    console.log('criando Historico');
+                    let hp = await historicoPesoDAO.create({
+                        idAnimal: animalCriado,
+                        idMovimentacao: null,
+                        tipoMovimentacao: null,
+                        peso: animal.peso,
+                        dataPesagem: animal.dataPesagem,
+                        integrado: false,
+                    });
+                }
                 animaisInseridos.push(animalCriado);
             }
             res.status(201).json({message: 'registros criados com sucesso', animais: animaisInseridos})

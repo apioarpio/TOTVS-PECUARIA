@@ -1,12 +1,15 @@
+import {TiposMovimento} from "./tipos-movimento";
+
 export class Movimentacao {
 
   id: number;
-  idTm: number;
+  tipoMovimento: TiposMovimento;
   descricaoTm: string;
   quantidadeAnimal: number;
   tipo: TipoMovimentacao; // 1 - entrada, 2 - saida, 3 - interno
   observacao: string;
   idFornecedor: number;
+  idFazenda: number;
   nomeFantasiaFornecedor: string;
   numeroGta: number;
   serieGta: number;

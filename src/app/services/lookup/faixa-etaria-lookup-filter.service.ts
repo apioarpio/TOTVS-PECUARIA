@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ServerService} from "../utils/server.service";
 import {PoLookupFilter, PoLookupFilteredItemsParams} from "@portinari/portinari-ui";
 import {Observable} from "rxjs";
-import {FaixaEtariaService} from "../cadastros/faixa-etaria.service";
+import {FaixaEtariaService} from "../models/faixa-etaria.service";
 
 @Injectable({
   providedIn: 'root'

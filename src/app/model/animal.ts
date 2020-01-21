@@ -1,3 +1,5 @@
+import {HistoricoPeso} from "./historico-peso";
+
 export class Animal {
 
   private _id;
@@ -18,7 +20,7 @@ export class Animal {
   private _movimentoOrigem;
   private _rfid;
   private _lote;
-  private _pasto;
+  private _area;
   private _dataLibAbateCertificadora;
   private _dataAbate;
   private _dataLibAbateSanitario;
@@ -34,13 +36,15 @@ export class Animal {
   private _controleTransferencia;
   private _dataSync;
   private _idadeMeses;
+  private _aparte
+  private _historicoPeso: HistoricoPeso
 
   constructor() {
 
   }
 
   createAnimal(sisbov, manejo, raca, sexo, dataNascimento, dataIncSisbov, codFAixaEtaria, peso, dataPesagem,
-               codFazenda, codFornecedor, numeroSolSisbov, dataEntrada, movimentoOrigem, rfid, lote, pasto, dataLibAbateCertificadora,
+               codFazenda, codFornecedor, numeroSolSisbov, dataEntrada, movimentoOrigem, rfid, lote, area, dataLibAbateCertificadora,
                dataAbate, dataLibAbateSanitario, dataApontamentoMorte, controleWebservice, status, dataLimiteCotaHilton, cadastro,
                dataAtualizacaoAnimal, fazendaOrigem, certificadora, dataCertificadora, controleTransferencia) {
 
@@ -60,7 +64,7 @@ export class Animal {
     this._movimentoOrigem = movimentoOrigem;
     this._rfid = rfid;
     this._lote = lote;
-    this._pasto = pasto;
+    this._area = area;
     this._dataLibAbateCertificadora = dataLibAbateCertificadora;
     this._dataAbate = dataAbate;
     this._dataLibAbateSanitario = dataLibAbateSanitario;
@@ -95,7 +99,7 @@ export class Animal {
       "movimentoOrigem": this._movimentoOrigem,
       "rfid": this._rfid,
       "lote": this._lote,
-      "pasto": this._pasto,
+      "area": this._area,
       "dataLibAbateCertificadora": this._dataLibAbateCertificadora,
       "dataAbate": this._dataAbate,
       "dataLibAbateSanitario": this._dataLibAbateSanitario,
@@ -193,12 +197,12 @@ export class Animal {
     this._lote = value;
   }
 
-  get pasto() {
-    return this._pasto;
+  get area() {
+    return this._area;
   }
 
-  set pasto(value) {
-    this._pasto = value;
+  set area(value) {
+    this._area = value;
   }
 
   get dataLibAbateCertificadora() {
@@ -385,5 +389,21 @@ export class Animal {
 
   set idadeMeses(value) {
     this._idadeMeses = value;
+  }
+
+  get aparte() {
+    return this._aparte;
+  }
+
+  set aparte(value) {
+    this._aparte = value;
+  }
+
+  get historicoPeso(): HistoricoPeso {
+    return this._historicoPeso;
+  }
+
+  set historicoPeso(value: HistoricoPeso) {
+    this._historicoPeso = value;
   }
 }

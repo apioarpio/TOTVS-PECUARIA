@@ -7,7 +7,7 @@ export default (req, res) => {
         if (sisbov) {
             animalDAO.getAnimalBySisbov(sisbov).then((result) => {
                 console.log(result);
-                res.status(201).json({animal: result})
+                res.status(201).json(result)
             })
         } else {
             req.status(400).json()

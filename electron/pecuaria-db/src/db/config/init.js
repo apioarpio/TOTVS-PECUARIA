@@ -11,6 +11,8 @@ import scriptRacaAnimalTable from '../scripts/createRacaAnimalTable';
 import scriptFaixaEtariaTable from '../scripts/createFaixaEtariaTable';
 import scriptLoteTable from '../scripts/createLoteTable';
 import scriptAreaTable from '../scripts/createAreaTable';
+import scriptSolicitacaoBrincosTable from '../scripts/createSolicitacaoBrincosTable';
+import scriptSisbovChipTable from '../scripts/createSisbovChipTable';
 
 export default async () => {
     try {
@@ -28,6 +30,8 @@ export default async () => {
         await scriptFaixaEtariaTable();
         await scriptLoteTable();
         await scriptAreaTable();
+        scriptSolicitacaoBrincosTable();
+        scriptSisbovChipTable();
 
     } catch (e) {
         throw new Error(e);

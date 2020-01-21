@@ -20,7 +20,7 @@ export class MovimentoEntradaListComponent implements OnInit {
 
   public columns: PoTableColumn[] = [
     {label: 'Código', property: 'id', type: 'number'},
-    {label: 'Cod TM', property: 'codTM', type: 'number'},
+    {label: 'Cod TM', property: 'idTm', type: 'number'},
     {label: 'Quantidade Animais', property: 'qtdAnimais'},
     {label: 'Data Movimento', property: 'data'}
   ];
@@ -56,7 +56,7 @@ export class MovimentoEntradaListComponent implements OnInit {
       for (const movimentacao of result["items"]) {
         this.items.push({
           id: movimentacao.idMovimentacao,
-          codTM: movimentacao.idTm,
+          idTm: movimentacao.tipoMovimento.idTm,
           qtdAnimais: movimentacao.quantidadeAnimal,
           data: movimentacao.dataCadastro
         })

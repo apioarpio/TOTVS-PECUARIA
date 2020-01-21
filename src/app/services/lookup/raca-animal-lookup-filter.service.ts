@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {PoLookupFilter, PoLookupFilteredItemsParams, PoLookupResponseApi} from "@portinari/portinari-ui";
 import {Observable} from "rxjs";
-import {RacaAnimalService} from "../cadastros/raca-animal.service";
+import {RacaAnimalService} from "../models/raca-animal.service";
 
 @Injectable({
   providedIn: 'root'

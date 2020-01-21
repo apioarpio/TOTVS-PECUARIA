@@ -24,7 +24,7 @@ export default () => {
                 movimento_origem TEXT,
                 rfid TEXT,
                 lote TEXT,
-                pasto TEXT,
+                area TEXT,
                 data_lib_abate_certificadora DATE,
                 data_abate DATE,
                 data_lib_abate_sanitario TEXT,
@@ -32,12 +32,13 @@ export default () => {
                 controle_webservice TEXT,
                 status INTEGER,
                 data_limite_cota_hilton DATE,
-                cadastro DATE,
+                data_cadastro DATE,
                 data_atualizacao_animal DATE,
                 fazenda_origem TEXT,
                 certificadora TEXT,
                 data_certificadora DATE,
                 controle_transferencia TEXT,
+                deletado BOOLEAN,
                 data_sync DATE
                 )
             `,

@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {IndexManejoComponent} from "./index-manejo/index-manejo.component";
-import {MovimentacaoRoutesModule} from "./movimentacao-routes.module";
+import {OperacoesCurralRoutesModule} from "./operacoesCurral-routes.module";
 import {
   PoButtonGroupModule,
   PoButtonModule,
@@ -20,6 +20,8 @@ import {CommonModule} from "@angular/common";
 import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/modal-filtros-tronco.component";
 import {AppModule} from "../../app.module";
 import {PecDirectivesModule} from "../../directives/directives.module";
+import {InformacoesAnimalTroncoComponent} from "./manejo-tronco/components/informacoes-animal-tronco/informacoes-animal-tronco.component";
+import {InformacoesTroncoComponent} from "./manejo-tronco/components/informacoes-tronco/informacoes-tronco.component";
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import {PecDirectivesModule} from "../../directives/directives.module";
     ManejoMovimentacaoInternaComponent,
     ManejoTroncoPrincipalComponent,
     PecModalFormAnimalComponent,
-    ModalFiltrosTroncoComponent
+    ModalFiltrosTroncoComponent,
+    InformacoesAnimalTroncoComponent,
+    InformacoesTroncoComponent
   ],
   imports: [
     CommonModule,
@@ -40,7 +44,7 @@ import {PecDirectivesModule} from "../../directives/directives.module";
     PecDirectivesModule,
 
     //router module
-    MovimentacaoRoutesModule,
+    OperacoesCurralRoutesModule,
 
     //portinari
     PoButtonGroupModule,
@@ -54,5 +58,5 @@ import {PecDirectivesModule} from "../../directives/directives.module";
   ]
 })
 
-export class MovimentacaoModule {
+export class OperacoesCurralModule {
 }

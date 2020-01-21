@@ -3,6 +3,10 @@ import {ServerService} from "../utils/server.service";
 import {HttpClient} from "@angular/common/http";
 import {Animal} from "../../model/animal";
 import {IntegracaoLogService} from "../utils/integracao-log.service";
+import {Movimentacao} from "../../model/movimentacao";
+import {Observable} from "rxjs";
+
+import * as moment from 'moment'
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +38,8 @@ export class AnimaisService {
             let animal: Animal = new Animal();
             animal.createAnimal(
               animalServer['SISBOV'], animalServer['MANEJO'], animalServer['RACA'], animalServer['SEXO'],
-              animalServer['DTNASC'], animalServer['DTSBOV'], animalServer['FXEERA'], animalServer['PESO'], animalServer['DTPSGE'],
+              animalServer['DTNASC'], animalServer['DTSBOV'], animalServer['FXEERA'], animalServer['PESO'],
+              animalServer['DTPSGE'] ? moment(animalServer['DTPSGE'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
               animalServer['CODFAZ'], animalServer['CODFOR'], animalServer['NUMSOL'], animalServer['DTENTR'], animalServer['MOVORI'],
               animalServer['CDRFID'], animalServer['LOTE'], animalServer['pasto'], animalServer['dtLbab'], animalServer['DTABAT'],
               animalServer['DLBAB2'], animalServer['dtMort'], animalServer['ctrlws'], animalServer['STATUS'],
@@ -75,8 +80,51 @@ export class AnimaisService {
     return this.http.get(`${this.serverService.serverAddress}/rest/animaispec${queryString}`)
   }
 
-  getAnimalBySisbov(sisbov: number) {
-    return this.http.get(`${this.serverService.sqlite}/animal/${sisbov}`)
+  getAnimalBySisbov(sisbov: number): Promise<Animal> {
+    return new Promise<Animal>((resolve, reject) => {
+      this.http.get(`${this.serverService.sqlite}/animal/${sisbov}`)
+        .subscribe(animal => {
+          let animalReturn = new Animal();
+          animalReturn.id = animal['idAnimal'];
+          animalReturn.sisbov = animal['sisbov'];
+          animalReturn.manejo = animal['manejo'];
+          animalReturn.raca = animal['raca'];
+          animalReturn.nomeRaca = animal['nomeRaca'];
+          animalReturn.sexo = animal['sexo'];
+          animalReturn.dataNascimento = animal['dataNascimento'];
+          animalReturn.dataIncSisbov = animal['dataIncSisbov'];
+          animalReturn.codFAixaEtaria = animal['codFAixaEtaria'];
+          animalReturn.dataPesagem = animal['dataPesagem'];
+          animalReturn.codFazenda = animal['codFazenda'];
+          animalReturn.codFornecedor = animal['codFornecedor'];
+          animalReturn.numeroSolSisbov = animal['numeroSolSisbov'];
+          animalReturn.dataEntrada = animal['dataEntrada'];
+          animalReturn.movimentoOrigem = animal['movimentoOrigem'];
+          animalReturn.rfid = animal['rfid'];
+          animalReturn.lote = animal['lote'];
+          animalReturn.area = animal['pasto'];
+          animalReturn.dataLibAbateCertificadora = animal['dataLibAbateCertificadora'];
+          animalReturn.dataAbate = animal['dataAbate'];
+          animalReturn.dataLibAbateSanitario = animal['dataLibAbateSanitario'];
+          animalReturn.dataApontamentoMorte = animal['dataApontamentoMorte'];
+          animalReturn.controleWebservice = animal['controleWebservice'];
+          animalReturn.status = animal['status'];
+          animalReturn.dataLimiteCotaHilton = animal['dataLimiteCotaHilton'];
+          animalReturn.cadastro = animal['cadastro'];
+          animalReturn.dataAtualizacaoAnimal = animal['dataAtualizacaoAnimal'];
+          animalReturn.fazendaOrigem = animal['fazendaOrigem'];
+          animalReturn.certificadora = animal['certificadora'];
+          animalReturn.dataCertificadora = animal['dataCertificadora'];
+          animalReturn.controleTransferencia = animal['controleTransferencia'];
+
+          if (animal['historicoPeso']) {
+            animalReturn.historicoPeso.dataPesagem = animal['historicoPeso'].dataPesagem;
+            animalReturn.historicoPeso.peso = animal['historicoPeso'].peso;
+          }
+
+          resolve(animalReturn)
+        }, err => err ? reject(err) : null)
+    })
   }
 
   private saveAnimaisLocal(animais: Animal[]) {
@@ -85,9 +133,21 @@ export class AnimaisService {
       if (animal.sisbov) {
         console.log(`adicionando o animal ${animal.sisbov} ao array`);
         arrAnimais.push(animal.getAnimalObject());
-        
+
       }
     }
     return this.http.post(`${this.serverService.sqlite}/animal`, {animais: arrAnimais});
+  }
+
+  private createHistoricoPeso(animal: Animal, movimentacao: Movimentacao, integrado: boolean): Observable<any> {
+
+    return this.http.post(`${this.serverService.sqlite}/historicoPeso`, {
+      sisbov: animal.sisbov,
+      idMovimentacao: movimentacao.id,
+      tipoMovimentacao: movimentacao.tipo,
+      peso: animal.peso,
+      integrado: integrado
+    })
+
   }
 }

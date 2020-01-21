@@ -12,8 +12,12 @@ export default () => {
                 historico_peso(
                     id_historico_peso INTEGER PRIMARY KEY AUTOINCREMENT ,
                     id_animal INTEGER NOT NULL,
+                    id_movimentacao INTEGER,
+                    tipo_movimentacao VARCHAR(2), 
                     peso INTEGER NOT NULL,
-                    data_pesagem DATE NOT NULL
+                    integrado BOOLEAN NOT NULL,
+                    data_pesagem DATE NOT NULL,
+                    data_criacao DATE NOT NULL
                 )
             `, (err, result) => {
                 if (err) {
