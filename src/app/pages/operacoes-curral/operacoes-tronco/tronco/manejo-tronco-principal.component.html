@@ -3,7 +3,14 @@
     <span class="po-icon po-icon-arrow-left pecuaria-back-span" (click)="backRoute()"></span>
   </div>
   <div class="pec-header-toolbar-title">
-    <h3>Movimentação - {{idMovimentacao}}</h3>
+    <h3>Movimentação - {{idMovimentacao}}
+      <po-button #buttonSettings p-icon="po-icon-settings" p-type="link" (p-click)="popSettings.toggle()"></po-button>
+    </h3>
+    <po-popup #popSettings
+              [p-target]="buttonSettingsRef"
+              [p-actions]="actionsSettings"
+              p-position="bottom"
+    ></po-popup>
   </div>
   <div class="pec-header-toolbar-add-button">
     <po-button
@@ -22,7 +29,9 @@
           <div class="po-row">
             <div class="pec-input-tronco-header">
               <label for="sisbov">SISBOV/Manejo *</label>
-              <input id="sisbov" maxlength="15" (focusout)="onFocusOutManejo($event)" type="number"
+              <input id="sisbov" maxlength="15" type="number"
+                     (focusout)="onFocusOut($event)"
+                     (keydown)="onKeyDown($event)"
                      formControlName="sisbov" [(ngModel)]="animal.sisbov">
             </div>
             <div class="pec-input-tronco-header">
@@ -33,7 +42,6 @@
               <div class="po-md-12">
                 <po-button p-label="Adicionar Animal" (p-click)="addAnimal()"
                            [p-disabled]="!troncoFormGroup.valid"></po-button>
-                <po-button p-label="teste modal filtros" (p-click)="abrirModalFiltros()"></po-button>
               </div>
             </div>
           </div>
@@ -121,6 +129,7 @@
       </div>
       <div class="movimentacao-info-tronco">
         <pec-informacoes-animal-tronco [formGroup]="troncoFormGroup" [animal]="animal"></pec-informacoes-animal-tronco>
+        <pec-informacoes-tronco [movimentacao]="movimentacao"></pec-informacoes-tronco>
       </div>
     </po-container>
   </po-tab>
@@ -131,6 +140,7 @@
   </po-tab>
 </po-tabs>
 
+<pec-aparte-destino [modalControl]="modalAparteDestino" [movimentacao]="movimentacao"></pec-aparte-destino>
 
 <pec-modal-filtros-tronco [filtroTroncoInput]="filtroTronco"
                           (filtrosTroncoEvent)="setFiltros($event)"></pec-modal-filtros-tronco>

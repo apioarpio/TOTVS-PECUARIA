@@ -1,11 +1,11 @@
-import {Component, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, ElementRef, EventEmitter, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {Location} from '@angular/common'
 import {Animal} from "../../../../model/animal";
 import {MovimentacaoService} from "../../../../services/models/movimentacao.service";
 import {ActivatedRoute} from "@angular/router";
 import {
-  PoDialogService,
-  PoNotificationService,
+  PoDialogService, PoModalComponent,
+  PoNotificationService, PoPopupAction,
   PoTableColumn,
   PoToasterOrientation,
   PoToasterType
@@ -31,6 +31,7 @@ import {LoteService} from "../../../../services/models/lote.service";
 import {TiposMovimento} from "../../../../model/tipos-movimento";
 import {AnimaisService} from "../../../../services/models/animais.service";
 import {FaixaEtariaService} from "../../../../services/models/faixa-etaria.service";
+import {PoStorageService} from "@portinari/portinari-storage";
 
 @Component({
   selector: 'app-manejo-tronco-principal',
@@ -40,7 +41,10 @@ import {FaixaEtariaService} from "../../../../services/models/faixa-etaria.servi
 export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
 
   @ViewChild(ModalFiltrosTroncoComponent, {static: true}) modalFiltrosTronco: ModalFiltrosTroncoComponent;
+  @ViewChild('buttonSettings', {read: ElementRef, static: true}) buttonSettingsRef: ElementRef;
 
+  //input binds
+  modalAparteDestino: EventEmitter<boolean> = new EventEmitter<boolean>();
   //Property binds
   disabledFields = {
     aparte: "false",
@@ -57,17 +61,25 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   };
   //models
   animal: Animal = new Animal(); //animal a ser incluído no manejo
-  aparte: number; //aparte selecionado
+  animalValido: boolean = false;
   movimentacao: Movimentacao = new Movimentacao();
   animaisMovimento = [];
   idMovimentacao;
   filtroTronco: FiltroTronco = new FiltroTronco();
   faixasEtarias: Array<FaixaEtaria> = [];
   //Lookup columns
-  readonly racaAnimalLookupColumns = [
+  public readonly racaAnimalLookupColumns = [
     {property: 'id', label: 'Código'},
     {property: 'descricao', label: 'Descrição'},
     {property: 'codigoReduzido', label: 'Código Reduzido'}
+  ];
+  public readonly actionsSettings: Array<PoPopupAction> = [
+    {label: 'Filtro do Tronco', action: this.abrirModalFiltros},
+    {
+      label: 'Aparte x Area/Lote', action: () => {
+        this.modalAparteDestino.emit(true)
+      }
+    }
   ];
   public troncoFormGroup = new FormGroup({
     sisbov: new FormControl('', [Validators.required, liberadoAbateTroncoValidator(this.filtroTronco, this.animal)]),
@@ -107,23 +119,20 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     //portinari
     private poNotification: PoNotificationService,
     private poDialog: PoDialogService,
+    private poStorageService: PoStorageService,
     //lookup filters
     public racaAnimalLookupFilterService: RacaAnimalLookupFilterService,
   ) {
-
     //seta o moment para portugues
     moment.locale('pt');
-
     faixaEtariaService.getFaixaEtariaLocal().subscribe(result => {
       for (let faixaEtaria of result['items']) {
         this.faixasEtarias.push(faixaEtaria);
       }
     })
-
   }
 
   ngOnInit() {
-
     this.idMovimentacao = this.route.snapshot.paramMap.get('idMovimentacao');
     this.movimentacaoService.getMovimentacoesById(this.idMovimentacao, null).subscribe(movimento => {
       console.log(movimento);
@@ -162,25 +171,15 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   }
 
   /**
-   * @description função chamada no momento em que o focus do campo "SISBOV" termina. extraindo o valor do campo
-   * e realizando a chamada da função getAnimal()
-   * @param event
-   */
-  onFocusOutManejo(event) {
-    let sisbov = event.target.valueAsNumber;
-    if (sisbov) {
-      this.getAnimal(sisbov)
-    }
-  }
-
-  /**
    * @description busca o animal na base offline com base no sisbov informado
    * @param sisbov
    */
-  getAnimal(sisbov: number) {
+  validaAnimal(sisbov: number) {
     this.animalService.getAnimalBySisbov(sisbov)
       .then(animal => {
-        this.animal = animal
+        if (animal) {
+          this.animal = animal
+        }
       })
       .catch(err => {
         console.log('erro ao buscar o animal: ', err);
@@ -198,8 +197,17 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   /**
    * @description adiciona o animal ao manejo
    */
-  addAnimal() {
-    this.saveAnimalMovimentacao();
+  async addAnimal() {
+    try {
+      //verifica se existe algum destino pré selecionado para este aparte
+      let destino = await this.poStorageService.getItemByField(`movimentacao.${this.movimentacao.id}`, 'aparte', this.animal.aparte);
+      if (destino) {
+        console.log(destino);
+        this.saveAnimalMovimentacao(destino['codigoArea'], destino['codigoLote']);
+      }
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   backRoute() {
@@ -237,10 +245,10 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     //define o aparte conforme selecionado no filtro, impossibilitando a mudança do mesmo até o filtro ser retirado
     if (filtro.aparte) {
       this.disabledFields.aparte = "true";
-      this.aparte = filtro.aparte
+      this.animal.aparte = filtro.aparte
     } else {
       this.disabledFields.aparte = "false";
-      this.aparte = null
+      this.animal.aparte = null
     }
     this.troncoFormGroup.updateValueAndValidity();
     Object.keys(this.troncoFormGroup.controls).forEach(field => {
@@ -261,11 +269,9 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     this.troncoFormGroup.updateValueAndValidity();
   }
 
-  private saveAnimalMovimentacao() {
-    console.log(this.movimentacao);
-    console.log(this.animal);
+  private saveAnimalMovimentacao(area, lote) {
     this.movimentacaoService
-      .addAnimalMovimentacao(this.animal, this.movimentacao)
+      .addAnimalMovimentacao(this.animal, this.movimentacao, area, lote)
       .subscribe(result => {
         this.getAnimaisMovimento();
 
@@ -340,6 +346,34 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
       this.disabledFields.umbigo = "true";
       this.disabledFields.frame = "true";
     }
+  }
+
+  // ================================ EVENTOS ================================
+  /**
+   * @description função para handler dos eventos de focusOut
+   * @param event
+   */
+  onFocusOut(event) {
+    console.log(event);
+    let valor = event.target.valueAsNumber;
+    let campo = event.target.id;
+    if (campo === "sisbov") {
+      console.log(valor);
+      console.log(campo);
+      this.validaAnimal(valor)
+    }
+  }
+
+  onKeyUp(event) {
+    console.log(event)
+  }
+
+  onKeyDown(event) {
+    console.log(event)
+  }
+
+  onKeyPress(event) {
+    console.log(event)
   }
 
 }

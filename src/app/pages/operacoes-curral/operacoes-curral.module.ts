@@ -1,6 +1,6 @@
 import {NgModule} from "@angular/core";
 import {IndexManejoComponent} from "./index-manejo/index-manejo.component";
-import {OperacoesCurralRoutesModule} from "./operacoesCurral-routes.module";
+import {OperacoesCurralRoutesModule} from "./operacoes-curral-routes.module";
 import {
   PoButtonGroupModule,
   PoButtonModule,
@@ -18,10 +18,11 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {ManejoTroncoPrincipalComponent} from "./manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component";
 import {CommonModule} from "@angular/common";
 import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/modal-filtros-tronco.component";
-import {AppModule} from "../../app.module";
 import {PecDirectivesModule} from "../../directives/directives.module";
 import {InformacoesAnimalTroncoComponent} from "./manejo-tronco/components/informacoes-animal-tronco/informacoes-animal-tronco.component";
 import {InformacoesTroncoComponent} from "./manejo-tronco/components/informacoes-tronco/informacoes-tronco.component";
+import {PoStorageModule} from "@portinari/portinari-storage";
+import {AparteDestinoComponent} from "./components/aparte-destino/aparte-destino.component";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {InformacoesTroncoComponent} from "./manejo-tronco/components/informacoes
     PecModalFormAnimalComponent,
     ModalFiltrosTroncoComponent,
     InformacoesAnimalTroncoComponent,
-    InformacoesTroncoComponent
+    InformacoesTroncoComponent,
+    AparteDestinoComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +56,11 @@ import {InformacoesTroncoComponent} from "./manejo-tronco/components/informacoes
     PoGridModule,
     PoFieldModule,
     PoTableModule,
+    PoStorageModule.forRoot({
+      name: 'pecStorage',
+      storeName: '_pecStorage',
+      driverOrder: ['lokijs']
+    }),
     PoModule
   ]
 })

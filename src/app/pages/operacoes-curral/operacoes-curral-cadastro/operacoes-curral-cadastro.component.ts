@@ -2,19 +2,20 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {Location} from "@angular/common";
 import {PoTableColumn} from "@portinari/portinari-ui";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {PecModalFormAnimalComponent} from "../../components/pec-modal-form-animal/pec-modal-form-animal.component";
-import {Movimentacao} from "../../../../model/movimentacao";
-import {MovimentacaoService} from "../../../../services/models/movimentacao.service";
-import {TiposMovimentoLookupService} from "../../../../services/lookup/tipos-movimento-lookup.service";
-import {TiposMovimento} from "../../../../model/tipos-movimento";
-import {TiposMovimentoEntradaLookupService} from "../../../../services/lookup/tipos-movimento-entrada-lookup.service";
+import {PecModalFormAnimalComponent} from "../components/pec-modal-form-animal/pec-modal-form-animal.component";
+import {Movimentacao} from "../../../model/movimentacao";
+import {MovimentacaoService} from "../../../services/models/movimentacao.service";
+import {TiposMovimentoLookupService} from "../../../services/lookup/tipos-movimento-lookup.service";
+import {TiposMovimento} from "../../../model/tipos-movimento";
+import {TiposMovimentoEntradaLookupService} from "../../../services/lookup/tipos-movimento-entrada-lookup.service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-manejo-entrada',
-  templateUrl: './movimento-entrada-cadastro.component.html',
-  styleUrls: ['./movimento-entrada-cadastro.component.scss']
+  templateUrl: './operacoes-curral-cadastro.component.html',
+  styleUrls: ['./operacoes-curral-cadastro.component.scss']
 })
-export class MovimentoEntradaCadastroComponent implements OnInit {
+export class OperacoesCurralCadastroComponent implements OnInit {
 
   @ViewChild(PecModalFormAnimalComponent, {static: true}) pecModal;
   readonly lookupColumns = [
@@ -56,15 +57,19 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
   ];
   TMTipo: number;
   animais: Array<any> = [];
+  tipoMovimentacao;
 
   constructor(
     private location: Location,
     private movimentacaoService: MovimentacaoService,
+    private route: ActivatedRoute,
     public tiposMovimentoLookupService: TiposMovimentoEntradaLookupService
   ) {
   }
 
   ngOnInit() {
+    this.tipoMovimentacao = this.route.snapshot.paramMap.get('tipoMovimentacao');
+    console.log(this.tipoMovimentacao);
     console.log(this.manejoEntradaForm.controls['cdTM']);
   }
 
@@ -87,7 +92,7 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
     movimentacao.tipoMovimento = tm;
     movimentacao.tipoMovimento.idTm = this.manejoEntradaForm.controls['codTM'].value;
     movimentacao.descricaoTm = this.manejoEntradaForm.controls['descTM'].value;
-    movimentacao.tipo = 1;
+    movimentacao.tipo = this.tipoMovimentacao;
     movimentacao.observacao = this.manejoEntradaForm.controls['observacao'].value;
     movimentacao.quantidadeAnimal = this.manejoEntradaForm.controls['quantidadeAnimais'].value;
     movimentacao.idFornecedor = this.manejoEntradaForm.controls['codFornecedor'].value;
@@ -112,7 +117,7 @@ export class MovimentoEntradaCadastroComponent implements OnInit {
   }
 
   /**
-   * @description função chamada no momento em que um tipo de operacoesCurral é selecionado
+   * @description função chamada no momento em que um tipo de operacoes-curral é selecionado
    * @param event
    */
   lookupSelected(event) {
