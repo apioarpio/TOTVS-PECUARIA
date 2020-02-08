@@ -23,11 +23,11 @@ export class OperacoesCurralCadastroComponent implements OnInit {
     {property: 'descricao', label: 'Descrição'}
   ];
   public manejoEntradaForm = new FormGroup({
-    codTM: new FormControl('', [Validators.required]),
-    descTM: new FormControl(''),
+    idTm: new FormControl('', [Validators.required]),
+    descricaoTm: new FormControl(''),
     observacao: new FormControl(''),
     quantidadeAnimais: new FormControl('', [Validators.required]),
-    codFornecedor: new FormControl(),
+    idFornecedor: new FormControl(),
     fornecedor: new FormControl(),
     nGta: new FormControl(),
     serieGta: new FormControl(),
@@ -45,7 +45,7 @@ export class OperacoesCurralCadastroComponent implements OnInit {
     {label: 'Idade', property: 'idade'},
     {label: 'Faixa Etária', property: 'faixaEtaria'},
     {
-      property: 'favorite', label: 'Actions', type: 'icon', icons: [
+      property: 'favorite', label: 'Actions', type: 'icon2.png', icons: [
         {
           action: this.editAnimal.bind(this),
           icon: 'po-icon-edit',
@@ -59,6 +59,9 @@ export class OperacoesCurralCadastroComponent implements OnInit {
   animais: Array<any> = [];
   tipoMovimentacao;
 
+  public movimentacao: Movimentacao = new Movimentacao();
+  public tm: TiposMovimento = new TiposMovimento();
+
   constructor(
     private location: Location,
     private movimentacaoService: MovimentacaoService,
@@ -69,8 +72,9 @@ export class OperacoesCurralCadastroComponent implements OnInit {
 
   ngOnInit() {
     this.tipoMovimentacao = this.route.snapshot.paramMap.get('tipoMovimentacao');
+    this.movimentacao.tipo = parseInt(this.route.snapshot.paramMap.get('tipoMovimentacao'));
     console.log(this.tipoMovimentacao);
-    console.log(this.manejoEntradaForm.controls['cdTM']);
+    console.log(this.movimentacao.tipo);
   }
 
   backRoute() {
@@ -87,24 +91,8 @@ export class OperacoesCurralCadastroComponent implements OnInit {
 
   saveMovimentacao(): void {
     console.log(this.manejoEntradaForm);
-    let movimentacao: Movimentacao = new Movimentacao();
-    let tm: TiposMovimento = new TiposMovimento();
-    movimentacao.tipoMovimento = tm;
-    movimentacao.tipoMovimento.idTm = this.manejoEntradaForm.controls['codTM'].value;
-    movimentacao.descricaoTm = this.manejoEntradaForm.controls['descTM'].value;
-    movimentacao.tipo = this.tipoMovimentacao;
-    movimentacao.observacao = this.manejoEntradaForm.controls['observacao'].value;
-    movimentacao.quantidadeAnimal = this.manejoEntradaForm.controls['quantidadeAnimais'].value;
-    movimentacao.idFornecedor = this.manejoEntradaForm.controls['codFornecedor'].value;
-    movimentacao.nomeFantasiaFornecedor = this.manejoEntradaForm.controls['fornecedor'].value;
-    movimentacao.numeroGta = this.manejoEntradaForm.controls['nGta'].value;
-    movimentacao.serieGta = this.manejoEntradaForm.controls['serieGta'].value;
-    movimentacao.dataEmissaoGta = this.manejoEntradaForm.controls['emissaoGta'].value;
-    movimentacao.dataValidadeGta = this.manejoEntradaForm.controls['validadeGta'].value;
-    movimentacao.dataChegadaGta = this.manejoEntradaForm.controls['chegadaGta'].value;
-    movimentacao.dataSaidaGta = this.manejoEntradaForm.controls['saidaGta'].value;
-
-    this.movimentacaoService.saveMovimentacao(movimentacao).subscribe(response => {
+    this.movimentacao.tipoMovimento = this.tm;
+    this.movimentacaoService.saveMovimentacao(this.movimentacao).subscribe(response => {
       if (response) {
         this.location.back();
       }
@@ -121,8 +109,11 @@ export class OperacoesCurralCadastroComponent implements OnInit {
    * @param event
    */
   lookupSelected(event) {
-    this.manejoEntradaForm.controls['descTM'].setValue(event.DESCRICAO);
-    this.TMTipo = event.TIPO;
+    this.manejoEntradaForm.controls['descricaoTm'].setValue(event.descricao);
+    this.TMTipo = event.tipo;
   }
 
+  onLookupError(err) {
+    console.log(err)
+  }
 }

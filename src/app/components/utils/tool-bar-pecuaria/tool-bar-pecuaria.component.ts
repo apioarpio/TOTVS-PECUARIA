@@ -1,6 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PoModalAction, PoModalComponent, PoToolbarAction} from "@portinari/portinari-ui";
 import {BluetoothComponent} from "../bluetooth/bluetooth.component";
+import {SelecaoContextoComponent} from "../../contexto/selecao-contexto/selecao-contexto.component";
 
 @Component({
   selector: 'app-tool-bar-pecuaria',
@@ -11,11 +12,15 @@ export class ToolBarPecuariaComponent implements OnInit {
 
   @ViewChild(PoModalComponent, {static: true}) poModal: PoModalComponent;
   @ViewChild('modalSync', {static: true}) poModalSync: PoModalComponent;
+  @ViewChild('contexto', {static: true}) poModalContexto: SelecaoContextoComponent;
+  @ViewChild('configServer', {static: true}) poModalConfigServer: PoModalComponent;
 
 
   bluetoothActions: Array<PoToolbarAction> = [
     {icon: 'po-icon-bluetooth', label: 'bluetooth', action: item => this.onClickBluetooth(item)},
-    {icon: 'po-icon-bluetooth', label: 'Sincronização', action: item => this.openModalSync(item)}
+    {icon: 'po-icon-bluetooth', label: 'Sincronização', action: item => this.openModalSync(item)},
+    {icon: 'po-icon-bluetooth', label: 'Contexto', action: item => this.openModalContexto(item)},
+    {icon: 'po-icon-bluetooth', label: 'Servidor', action: item => this.openModalConfigServer(item)}
   ];
 
   close: PoModalAction = {
@@ -50,4 +55,12 @@ export class ToolBarPecuariaComponent implements OnInit {
     this.poModalSync.open();
   }
 
+  openModalContexto(item) {
+    this.poModalContexto.openModal()
+  }
+
+  openModalConfigServer(item) {
+    this.poModalConfigServer.open()
+
+  }
 }

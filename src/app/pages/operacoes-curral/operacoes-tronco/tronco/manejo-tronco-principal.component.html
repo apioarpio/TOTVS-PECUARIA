@@ -30,13 +30,18 @@
             <div class="pec-input-tronco-header">
               <label for="sisbov">SISBOV/Manejo *</label>
               <input id="sisbov" maxlength="15" type="number"
+                     #sisbovInput
                      (focusout)="onFocusOut($event)"
                      (keydown)="onKeyDown($event)"
                      formControlName="sisbov" [(ngModel)]="animal.sisbov">
             </div>
             <div class="pec-input-tronco-header">
               <label for="peso">Peso *</label>
-              <input type="number" id="peso" maxlength="4" [(ngModel)]="animal.peso" formControlName="peso">
+              <input type="number" id="peso" maxlength="4"
+                     #pesoInput
+                     [attr.disabled]="!animalValido ? '' : null"
+                     [(ngModel)]="animal.peso"
+                     formControlName="peso">
             </div>
             <div class="po-row">
               <div class="po-md-12">
@@ -51,7 +56,7 @@
                        p-label="Aparte"
                        formControlName="aparte"
                        [(ngModel)]="animal.aparte"
-                       [p-disabled]="disabledFields.aparte"
+                       [p-disabled]="disabledFields.aparte && !animalValido"
                        [p-options]="[
                {label: 'Sem Aparte', value:''},
                {label: 'Aparte 1', value: '1'},
@@ -128,7 +133,9 @@
         </form>
       </div>
       <div class="movimentacao-info-tronco">
-        <pec-informacoes-animal-tronco [formGroup]="troncoFormGroup" [animal]="animal"></pec-informacoes-animal-tronco>
+        <pec-informacoes-animal-tronco [formGroup]="troncoFormGroup"
+                                       [animal]="animal"
+                                       [animalValido]="animalValido"></pec-informacoes-animal-tronco>
         <pec-informacoes-tronco [movimentacao]="movimentacao"></pec-informacoes-tronco>
       </div>
     </po-container>

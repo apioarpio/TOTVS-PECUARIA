@@ -18,59 +18,51 @@
 <form [formGroup]="manejoEntradaForm">
   <div class="po-row">
     <po-lookup class="po-md-4"
-               name="codTM"
-               p-field-label="CODIGO"
-               p-field-value="CODIGO"
+               name="idTm"
+               p-field-label="idTm"
+               p-field-value="idTm"
                p-label="Código Tipo de Movimento"
+               [(ngModel)]="tm.idTm"
                [p-filter-service]="tiposMovimentoLookupService"
+               [p-filter-params]="{tipoTm: tipoMovimentacao}"
                [p-columns]="lookupColumns"
                (p-selected)="lookupSelected($event)"
                [p-no-autocomplete]="true"
-               formControlName="codTM"
+               (p-error)="onLookupError($event)"
+               formControlName="idTm"
     ></po-lookup>
-    <po-input class="po-md-6" p-label="Tipo de Movimento" formControlName="descTM" p-disabled="true"></po-input>
-    <po-input class="po-md-2" p-label="Quantidade Animais" formControlName="quantidadeAnimais"></po-input>
+    <po-input class="po-md-6" p-label="Tipo de Movimento" formControlName="descricaoTm" p-disabled="true"
+              [(ngModel)]="tm.descricao"></po-input>
+    <po-input class="po-md-2" p-label="Quantidade Animais" formControlName="quantidadeAnimais"
+              [(ngModel)]="movimentacao.quantidadeAnimal"></po-input>
   </div>
   <div class="po-row">
-    <po-textarea class="po-md-12" p-label="Observação" formControlName="observacao"></po-textarea>
+    <po-textarea class="po-md-12" p-label="Observação" formControlName="observacao"
+                 [(ngModel)]="movimentacao.observacao"></po-textarea>
   </div>
   <!--  campos GTA-->
   <div *ngIf="TMTipo === 1">
     <po-divider p-label="GTA"></po-divider>
     <div class="po-row">
-      <po-input class="po-md-4" p-label="Código Fornecedor"></po-input>
+      <po-input class="po-md-4" p-label="Código Fornecedor" formControlName="idFornecedor"
+                [(ngModel)]="movimentacao.idFornecedor"></po-input>
       <po-input class="po-md-8" p-label="Fornecedor"></po-input>
     </div>
     <div class="po-row">
-      <po-input class="po-md-4" p-label="Número GTA"></po-input>
-      <po-input class="po-md-4" p-label="Série GTA"></po-input>
-      <po-datepicker class="po-md-4" p-label="Emissão GTA"></po-datepicker>
+      <po-input class="po-md-4" p-label="Número GTA" formControlName="nGta"
+                [(ngModel)]="movimentacao.numeroGta"></po-input>
+      <po-input class="po-md-4" p-label="Série GTA" formControlName="serieGta"
+                [(ngModel)]="movimentacao.serieGta"></po-input>
+      <po-datepicker class="po-md-4" p-label="Emissão GTA" formControlName="emissaoGta"
+                     [(ngModel)]="movimentacao.dataEmissaoGta"></po-datepicker>
     </div>
     <div class="po-row">
-      <po-datepicker class="po-md-4" p-label="Validade GTA"></po-datepicker>
-      <po-datepicker class="po-md-4" p-label="Chegada GTA"></po-datepicker>
-      <po-datepicker class="po-md-4" p-label="Saída GTA"></po-datepicker>
+      <po-datepicker class="po-md-4" p-label="Validade GTA" formControlName="validadeGta"
+                     [(ngModel)]="movimentacao.dataValidadeGta"></po-datepicker>
+      <po-datepicker class="po-md-4" p-label="Chegada GTA" formControlName="chegadaGta"
+                     [(ngModel)]="movimentacao.dataChegadaGta"></po-datepicker>
+      <po-datepicker class="po-md-4" p-label="Saída GTA" formControlName="saidaGta"
+                     [(ngModel)]="movimentacao.dataSaidaGta"></po-datepicker>
     </div>
   </div>
-  <!--  <po-divider></po-divider>-->
-  <!--  <div class="po-row">-->
-  <!--    <pec-modal-form-animal-->
-  <!--      buttonIcon="po-icon-plus"-->
-  <!--      buttonType="primary"-->
-  <!--      buttonLabel="Adicionar Animal"-->
-  <!--      class="po-md-12" (pecAnimalEmitter)="addAnimal($event)"-->
-  <!--    ></pec-modal-form-animal>-->
-  <!--  </div>-->
-  <!--  <div class="po-row">-->
-  <!--    <po-table-->
-  <!--      class="po-md-12"-->
-  <!--      p-container-->
-  <!--      p-hide-text-overflow-->
-  <!--      p-sort="true"-->
-  <!--      p-striped="true"-->
-  <!--      [p-columns]="columns"-->
-  <!--      [p-items]="animais"-->
-  <!--    >-->
-  <!--    </po-table>-->
-  <!--  </div>-->
 </form>

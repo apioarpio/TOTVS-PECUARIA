@@ -35,10 +35,6 @@ export class IndexEntidadesComponent implements OnInit {
 
     // this.intLog.lastDateSync('entidade').then( result => console.log(result));
     let arr = []
-    for (let i = 0; i < 200; i++) {
-      arr.push(this.entidadeService.getEntidadeStorageById('000003'))
-      // .then(result => console.log('entidade encontrada', new Date().toLocaleString()))
-    }
     console.log(new Date().toLocaleString());
     Promise.all(arr).then(() => console.log(new Date().toLocaleString()))
 
@@ -49,12 +45,6 @@ export class IndexEntidadesComponent implements OnInit {
 
   set() {
     this.entidadeService.syncEntidades().then(result => console.log(result));
-  }
-
-  getQuery() {
-    this.entidadeService.getEntidadeStorageById('00002')
-      .then(result => console.log(result))
-      .catch(result => console.log(result))
   }
 
   getAllEntidades() {

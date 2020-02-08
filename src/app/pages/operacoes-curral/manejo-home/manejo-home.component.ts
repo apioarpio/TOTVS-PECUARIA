@@ -44,6 +44,11 @@ export class ManejoHomeComponent implements OnInit {
   ngOnInit() {
   }
 
+  backRoute() {
+    // this.location.back();
+    this.router.navigate(['/home/info'])
+  }
+
   goManejoEntrada() {
     this.router.navigate(['../manejoEntradaList'], {relativeTo: this.route});
   }

@@ -10,10 +10,10 @@ export class SideMenuPecuariaComponent implements OnInit {
 
   readonly menus: Array<PoMenuItem> = [
     {label: 'Home', shortLabel: 'Home', link: '/home', icon: 'po-icon-home'},
-    {label: 'Operações de Curral', shortLabel: 'Op.', link: './operacoesCurral', icon: 'po-icon-home'},
-    {label: 'Entidade', shortLabel: 'Entidade', link: './entidade', icon: 'po-icon-home'},
-    {label: 'Animal', shortLabel: 'Animal', link: './animal', icon: 'po-icon-home'},
-    {label: 'Raças Animais', shortLabel: 'Raças', link: './racasAnimais', icon: 'po-icon-home'}
+    {label: 'Operações de Curral', shortLabel: 'Op.', link: './operacoes-curral', icon: 'po-icon-home'},
+    // {label: 'Entidade', shortLabel: 'Entidade', link: './entidade', icon: 'po-icon-home'},
+    // {label: 'Animal', shortLabel: 'Animal', link: './animal', icon: 'po-icon-home'},
+    // {label: 'Raças Animais', shortLabel: 'Raças', link: './racasAnimais', icon: 'po-icon-home'}
   ];
 
   constructor() {

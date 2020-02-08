@@ -21,6 +21,7 @@ export class MovimentoEntradaListComponent implements OnInit {
   public columns: PoTableColumn[] = [
     {label: 'Código', property: 'id', type: 'number'},
     {label: 'Cod TM', property: 'idTm', type: 'number'},
+    {label: 'Descrição TM', property: 'descricaoTm', type: 'number'},
     {label: 'Quantidade Animais', property: 'qtdAnimais'},
     {label: 'Data Movimento', property: 'data'}
   ];
@@ -42,7 +43,7 @@ export class MovimentoEntradaListComponent implements OnInit {
   }
 
   goManejoEntradaCadastro() {
-    this.router.navigate(['../manejoEntradaCadastro'], {relativeTo: this.route})
+    this.router.navigate(['../operacaoCadastro/1'], {relativeTo: this.route})
   }
 
   backRoute() {
@@ -57,6 +58,7 @@ export class MovimentoEntradaListComponent implements OnInit {
         this.items.push({
           id: movimentacao.idMovimentacao,
           idTm: movimentacao.tipoMovimento.idTm,
+          descricaoTm: movimentacao.tipoMovimento.descricao,
           qtdAnimais: movimentacao.quantidadeAnimal,
           data: movimentacao.dataCadastro
         })

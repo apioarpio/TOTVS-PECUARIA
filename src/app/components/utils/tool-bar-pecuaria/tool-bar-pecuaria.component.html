@@ -7,8 +7,14 @@
 </po-modal>
 
 <po-modal #modalSync
-  p-title="Painel de sincronização"
-  [p-primary-action]="confirm"
-  [p-secondary-action]="close">
+          p-title="Painel de sincronização"
+          [p-primary-action]="confirm"
+          [p-secondary-action]="close">
   <app-modal-sync></app-modal-sync>
+</po-modal>
+
+  <pec-selecao-contexto #contexto></pec-selecao-contexto>
+<po-modal #configServer
+          p-title="Configurações de servidor">
+  <pec-configuracao-servidor></pec-configuracao-servidor>
 </po-modal>

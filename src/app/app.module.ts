@@ -13,7 +13,7 @@ import {ComponentsModule} from "./components/components.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,8 +32,8 @@ import {ComponentsModule} from "./components/components.module";
     PoModule,
     PoStorageModule.forRoot({
       name: 'pecuariaStorage',
-      storeName: 'pecuariaStore',
-      driverOrder: ['indexeddb']
+      storeName: '_pecuariaStore',
+      driverOrder: ['lokijs']
     })
   ],
   providers: [],

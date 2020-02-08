@@ -2,6 +2,8 @@ import {Injectable} from '@angular/core';
 import {ServerService} from "../utils/server.service";
 import {HttpClient} from "@angular/common/http";
 import {Area} from "../../model/area";
+import {Observable} from "rxjs";
+import {ContextoService} from "../contexto.service";
 
 @Injectable({
   providedIn: 'root'
@@ -10,43 +12,40 @@ export class AreaService {
 
   constructor(
     private serverService: ServerService,
-    private http: HttpClient
+    private http: HttpClient,
+    private contextoService: ContextoService
   ) {
   }
 
   syncAreasProtheus(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.getAreasProtheus(1)
-        .then(result => {
-          let arrPromises = [];
-          const registrosTotais: number = result.length;
-          let registrosSalvos: number = 0;
-          let registrosComErro: number = 0;
+    return new Promise(async (resolve, reject) => {
+      try {
 
-          for (let area of result) {
-            arrPromises.push(
-              this.saveAreaLocal(area).toPromise()
-                .then(result => {
-                  registrosSalvos += 1;
-                })
-                .catch(err => {
-                  registrosComErro += 1;
-                })
-            )
-          }
-          Promise.all(arrPromises)
-            .then(result => {
-              console.log(registrosTotais);
-              console.log(registrosSalvos);
-              console.log(registrosComErro);
+        const fazenda = await this.contextoService.getFazenda();
+        const areasProtheus = await this.getAreasProtheus(fazenda);//busca as áreas cadastradas no ERP protheus
+        let arrPromises = []; // cria um array de promises, esse array irá abrigar todas as promises de inclusão de área na base local.
 
-              resolve(result)
-            })
-            .catch(err => {
-              console.log(err);
-              reject(err)
-            })
-        })
+        const registrosTotais: number = areasProtheus.length;
+        let registrosSalvos: number = 0;
+        let registrosComErro: number = 0;
+        //para cada area retornada do protheus, cria uma requisição de inclusão na base local
+        for (let area of areasProtheus) {
+          arrPromises.push(
+            this.saveAreaLocal(area).toPromise()
+              .then(() => {
+                registrosSalvos += 1;
+              })
+              .catch(() => {
+                registrosComErro += 1;
+              })
+          )
+        }
+        //espera todas as inclusões serem processadas
+        let resultAllPromises = await Promise.all(arrPromises);
+        resolve(resultAllPromises)
+      } catch (e) {
+        reject(e)
+      }
     })
   }
 
@@ -104,6 +103,14 @@ export class AreaService {
         }
       })
     })
+  }
+
+  getAreaLocal(idFazenda): Observable<any> {
+    return this.http.get(`${this.serverService.sqlite}/area?idFazenda=${idFazenda}`);
+  }
+
+  getAreaLocalById(idArea, idFazenda): Observable<any> {
+    return this.http.get(`${this.serverService.sqlite}/area/${idArea}?idFazenda=${idFazenda}`)
   }
 
 }

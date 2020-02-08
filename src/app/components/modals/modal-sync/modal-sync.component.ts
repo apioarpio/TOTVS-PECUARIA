@@ -8,6 +8,9 @@ import {AreaService} from "../../../services/models/area.service";
 import {AnimaisService} from "../../../services/models/animais.service";
 import {RacaAnimalService} from "../../../services/models/raca-animal.service";
 import {FaixaEtariaService} from "../../../services/models/faixa-etaria.service";
+import {EntidadeService} from "../../../services/models/entidade.service";
+import {SolicitacaoBrincos} from "../../../model/solicitacao-brincos";
+import {SolicitacaoBrincosService} from "../../../services/models/solicitacao-brincos.service";
 
 @Component({
   selector: 'app-modal-sync',
@@ -24,13 +27,18 @@ export class ModalSyncComponent implements OnInit {
     type: "link",
     icon: "po-icon-upload",
   };
+  entidadesButtonSync: SyncButton = {
+    loading: false,
+    label: "Sincronizar",
+    type: "link",
+    icon: "po-icon-upload"
+  };
   tiposMovimentoSyncBtn: SyncButton = {
     loading: false,
     label: "Sincronizar",
     type: "link",
     icon: "po-icon-upload",
   };
-
   racaAnimalSyncBtn: SyncButton = {
     loading: false,
     label: "Sincronizar",
@@ -46,29 +54,19 @@ export class ModalSyncComponent implements OnInit {
 
   constructor(
     private integracaoLogService: IntegracaoLogService,
+    private entidadeSErvice: EntidadeService,
     private tiposMovimentoService: TiposMovimentoService,
     private animaisService: AnimaisService,
     private syncService: SyncService,
     private racaAnimalService: RacaAnimalService,
     private faixaEtariaService: FaixaEtariaService,
     private areaService: AreaService,
-    private loteService: LoteService
+    private loteService: LoteService,
+    private solicitacaoBrincosService: SolicitacaoBrincosService
   ) {
   }
 
   ngOnInit() {
-    this.integracaoLogService.getLastSync('animal')
-      .subscribe(result => {
-        if (result) {
-          this.lastSyncAnimal = result
-        }
-      });
-    this.integracaoLogService.getLastSync('tiposMovimento')
-      .subscribe(result => {
-        if (result) {
-          this.lastSyncTM = result;
-        }
-      });
   }
 
   /**
@@ -76,17 +74,29 @@ export class ModalSyncComponent implements OnInit {
    * @author Apioarpio Phellipe Ferreira de Oliveira
    * @description inicia o sincornismo dos animais alocados no servidor, para a base local
    */
-  sincronizarAnimais() {
-    this.animalSyncBtn.loading = true;
-    this.animalSyncBtn.label = 'Sincronizando';
+  sincronizarAnimais(): void {
+    this.startLoadingButton(this.animalSyncBtn);
     this.syncService.setStartSyncTable(TablesSync.ANIMAL);
 
     this.animaisService.syncAnimais()
       .finally(() => {
-        this.animalSyncBtn.loading = false;
-        this.animalSyncBtn.label = 'Sincronizar';
+        this.stopLoadingButton(this.animalSyncBtn);
         this.syncService.setStopSynctable(TablesSync.ANIMAL);
       });
+  }
+
+  sincronizarEntidades(): void {
+    this.startLoadingButton(this.entidadesButtonSync);
+    this.entidadeSErvice.syncEntidades()
+      .then(result => {
+        console.log('sincronizado')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      .finally(() => {
+        this.stopLoadingButton(this.entidadesButtonSync);
+      })
   }
 
   /**
@@ -102,11 +112,11 @@ export class ModalSyncComponent implements OnInit {
 
     this.tiposMovimentoService.syncTMs()
       .then(result => {
-        console.log('tipos de operacoesCurral sincronizado com sucesso');
+        console.log('tipos de operacoes-curral sincronizado com sucesso');
         console.log(result);
       })
       .catch(err => {
-        console.log('erro aos sincronizar os tipos de operacoesCurral');
+        console.log('erro aos sincronizar os tipos de operacoes-curral');
         console.log(err)
       })
       .finally(() => {
@@ -136,7 +146,7 @@ export class ModalSyncComponent implements OnInit {
       .finally(() => {
         this.racaAnimalSyncBtn.label = 'Sincronizar';
         this.racaAnimalSyncBtn.loading = false;
-        // this.syncService.setStopSynctable(TablesSync.TM);
+        this.syncService.setStopSynctable(TablesSync.TM);
       })
   }
 
@@ -159,7 +169,7 @@ export class ModalSyncComponent implements OnInit {
 
   sincronizarLotes() {
 
-    this.loteService.syncLotesProtheus(1)
+    this.loteService.syncLotesProtheus()
       .then(result => {
         console.log(result)
       })
@@ -172,4 +182,26 @@ export class ModalSyncComponent implements OnInit {
         console.log(result)
       })
   }
+
+  sincronizarSolicitacoesBrinco() {
+    this.solicitacaoBrincosService.syncProtheus()
+      .then(result => {
+      })
+      .catch(() => {
+      })
+  }
+
+  /**
+   * @description
+   */
+  private startLoadingButton(btn: SyncButton): void {
+    btn.loading = true;
+    btn.label = 'Sincronizando';
+  }
+
+  private stopLoadingButton(btn: SyncButton): void {
+    btn.loading = false;
+    btn.label = 'Sincronizar';
+  }
+
 }

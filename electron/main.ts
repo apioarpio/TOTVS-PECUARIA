@@ -1,44 +1,20 @@
 import {app, BrowserWindow} from 'electron';
+import * as bodyParser from 'body-parser'
 import * as path from 'path';
 import * as url from 'url';
-import {global} from "@angular/compiler/src/util";
-
-var exec = require('child_process').exec;
+import * as express from 'express'
+import routers from './src/routes';
+import initDb from './src/db/config/init';
 
 let win: BrowserWindow;
 
-console.log(__dirname);
-console.log(path.join(__dirname, 'dist', 'electron'));
-
-require('electron-reload')(__dirname, {
-  electron: path.join(__dirname, 'dist', 'electron'),
-});
-
 app.on('ready', () => {
-  console.log('criando janela');
   createWindow();
-  // var child = exec('npm start --prefix ./electron/pecuaria-db/');
-  //
-  // child.stdout.on('data', (data) => {
-  //   console.log(`stdout: ${data}`);
-  // });
-  //
-  // child.stderr.on('data', (data) => {
-  //   console.error(`stderr: ${data}`);
-  // });
-  //
-  // child.on('close', (code) => {
-  //   console.log(`child process exited with code ${code}`);
-  //   console.log('fechando a janela');
-  //   win.close();
-  // });
 });
 
 app.on('activate', () => {
   if (win === null) {
-    // console.warn('global variable');
-    // console.log(global);
-    createWindow();
+    // createWindow();
   }
 });
 
@@ -54,11 +30,34 @@ function createWindow() {
 
   win.loadURL(
     url.format({
-      pathname: path.join(__dirname, `../../dist/totvs-gestao-pecuaria/index.html`),
+      // pathname: path.join(__dirname, `../../dist/totvs-gestao-pecuaria/index.html`),
+      pathname: path.join(__dirname, `../totvs-gestao-pecuaria/index.html`),
       protocol: 'file:',
       slashes: true
     })
-  );
+  )
+    .then(result => {
+      console.log('criando janela');
+      const exp = express();
+      const hostname = '127.0.0.1';
+      const port = 3000;
+      exp.use(bodyParser.json({limit: '50mb'}));
+      exp.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+      routers(exp);
+      initDb()
+        .then(result => {
+          exp.listen(port, hostname, () => {
+            console.log(`Server running at http://${hostname}:${port}/`);
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      console.log('loadURL result', result)
+    })
+    .catch(err => {
+      console.log('loadURL Error', err)
+    });
 
   win.webContents.openDevTools();
 

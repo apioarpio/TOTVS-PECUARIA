@@ -7,6 +7,8 @@ import {Movimentacao} from "../../model/movimentacao";
 import {Observable} from "rxjs";
 
 import * as moment from 'moment'
+import {HistoricoPeso} from "../../model/historico-peso";
+import {ContextoService} from "../contexto.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class AnimaisService {
   constructor(
     private serverService: ServerService,
     private integracaoLogService: IntegracaoLogService,
+    private contextoService: ContextoService,
     private http: HttpClient
   ) {
   }
@@ -28,9 +31,11 @@ export class AnimaisService {
     let contSync = true; //informa se a sincronização deve continuar
     const promiseArr: Promise<any>[] = []; //array de promises de inclusão
     try {
+      const idFazenda: number = await this.contextoService.getFazenda();
+      console.log(idFazenda)
       while (contSync) {
         //busca os animais no servidor
-        const animaisServer = await this.getAnimaisServer('16', '01', '', 1000).toPromise();
+        const animaisServer = await this.getAnimaisServer(idFazenda, '', 1000);
         console.log(animaisServer);
         if (animaisServer['animais']) {
           const animaisInclusao: Animal[] = [];
@@ -55,29 +60,33 @@ export class AnimaisService {
         }
       }
 
-      await this.integracaoLogService.saveSync('animal', 1000).toPromise();
+      await this.integracaoLogService.saveSync('animal.ts', 1000).toPromise();
 
     } catch (e) {
       console.log(e);
     }
   }
 
-  private getAnimaisServer(empresa, codFaz, recno, maxRecords) {
-    const queryStringArr = [];
-    let queryString = empresa || codFaz || recno || maxRecords ? "?" : "";
-    empresa ? queryStringArr.push(`empresa=${empresa}`) : null;
-    codFaz ? queryStringArr.push(`codFaz=${codFaz}`) : null;
-    recno ? queryStringArr.push(`recno=${recno}`) : null;
-    maxRecords ? queryStringArr.push(`maxRecord=${maxRecords}`) : null;
+  private getAnimaisServer(codFaz, recno, maxRecords): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const queryStringArr = [];
+      let queryString = codFaz || recno || maxRecords ? "?" : "";
+      let protheusServer = await this.serverService.getProtheusServerAddress();
+      codFaz ? queryStringArr.push(`codFaz=${codFaz}`) : null;
+      recno ? queryStringArr.push(`recno=${recno}`) : null;
+      maxRecords ? queryStringArr.push(`maxRecord=${maxRecords}`) : null;
 
-    for (let i = 0; i < queryStringArr.length; i++) {
-      if (i > 0) {
-        queryString += `&${queryStringArr[i]}`;
-      } else {
-        queryString += queryStringArr[i];
+      for (let i = 0; i < queryStringArr.length; i++) {
+        if (i > 0) {
+          queryString += `&${queryStringArr[i]}`;
+        } else {
+          queryString += queryStringArr[i];
+        }
       }
-    }
-    return this.http.get(`${this.serverService.serverAddress}/rest/animaispec${queryString}`)
+
+      let result = await this.http.get(`${protheusServer}/pecAnimal${queryString}`).toPromise();
+      resolve(result);
+    })
   }
 
   getAnimalBySisbov(sisbov: number): Promise<Animal> {
@@ -118,10 +127,11 @@ export class AnimaisService {
           animalReturn.controleTransferencia = animal['controleTransferencia'];
 
           if (animal['historicoPeso']) {
-            animalReturn.historicoPeso.dataPesagem = animal['historicoPeso'].dataPesagem;
-            animalReturn.historicoPeso.peso = animal['historicoPeso'].peso;
+            let historicoPeso = new HistoricoPeso();
+            historicoPeso.dataPesagem = animal['historicoPeso'].dataPesagem;
+            historicoPeso.peso = animal['historicoPeso'].peso;
+            animalReturn.historicoPeso = historicoPeso;
           }
-
           resolve(animalReturn)
         }, err => err ? reject(err) : null)
     })

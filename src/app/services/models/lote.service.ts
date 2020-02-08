@@ -4,7 +4,6 @@ import {HttpClient} from "@angular/common/http";
 import {Lote} from "../../model/lote";
 import {Observable} from "rxjs";
 import {ContextoService} from "../contexto.service";
-import {error} from "selenium-webdriver";
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +17,10 @@ export class LoteService {
   ) {
   }
 
-  syncLotesProtheus(fazenda) {
-    return new Promise((resolve, reject) => {
-      this.getAllLotesProtheus(fazenda)
+  syncLotesProtheus() {
+    return new Promise(async (resolve, reject) => {
+      let idFazenda = await this.contextoService.getFazenda();
+      this.getAllLotesProtheus(idFazenda)
         .then(result => {
           const quantidadeLotes = result.length;
           let arrPromisesSave = [];
@@ -54,13 +54,81 @@ export class LoteService {
           reject()
         })
     })
+  }
 
+  getAllLotes(idFazenda: number): Promise<Array<Lote> | Lote> {
+    return new Promise((resolve, reject) => {
+      this.http.get(`${this.serverService.sqlite}/lote?idFazenda=${idFazenda}`)
+        .subscribe(result => {
+          let lotes: Array<Lote> = [];
+          if (Array.isArray(result)) {
+            for (let l of result) {
+              let lote: Lote = new Lote();
+              lote.idLote = l['id_lote'];
+              lote.idFazenda = l['id_fazenda'];
+              lote.idArea = l['id_area'];
+              lote.nome = l['nome'];
+              lote.tipoLote = l['tipo_lote'];
+              lote.status = l['status'];
+              lote.quantidadeAnimais = l['quantidade_animais'];
+              lote.ano = l['ano'];
+              lote.mes = l['mes'];
+              lote.sexo = l['sexo'];
+              lote.observacao = l['observacao'];
+              lotes.push(lote)
+            }
+            resolve(lotes)
+          } else {
+            let lote: Lote = new Lote();
+            lote.idLote = result['id_lote'];
+            lote.idFazenda = result['id_fazenda'];
+            lote.idArea = result['id_area'];
+            lote.nome = result['nome'];
+            lote.tipoLote = result['tipo_lote'];
+            lote.status = result['status'];
+            lote.quantidadeAnimais = result['quantidade_animais'];
+            lote.ano = result['ano'];
+            lote.mes = result['mes'];
+            lote.sexo = result['sexo'];
+            lote.observacao = result['observacao'];
+            resolve(lote);
+          }
+        })
+    })
+  }
+
+  getAllLotesSubscribe(): Observable<any> {
+    return new Observable((observe) => {
+      this.contextoService.getFazenda().then(idFazenda => {
+        this.http.get(`${this.serverService.sqlite}/lote?idFazenda=${idFazenda}`).subscribe(result => {
+          observe.next(result)
+        }, err => {
+          observe.error(err);
+        })
+      })
+    })
+  }
+
+  getLoteLocalByIdSubscribe(id: string): Observable<any> {
+    return new Observable((observe) => {
+      this.contextoService.getFazenda().then(idFazenda => {
+        this.http.get(`${this.serverService.sqlite}/lote/${id}?idFazenda=${idFazenda}`)
+          .subscribe(result => {
+            observe.next(result)
+          }, err => {
+            observe.error(err)
+          })
+      })
+        .catch(err => {
+          observe.error(err)
+        })
+    });
   }
 
   getLoteLocalById(id: number): Promise<Lote> {
 
     return new Promise((resolve, reject) => {
-      let getLote = this.http.get(`${this}/area/${id}`)
+      let getLote = this.http.get(`${this.serverService.sqlite}/lote/${id}`)
     })
 
   }
@@ -78,8 +146,7 @@ export class LoteService {
   getAllLotesProtheus(idFazenda): Promise<Lote[]> {
     return new Promise((resolve, reject) => {
         let lotes: Lote[] = [];
-        let getLotes = this.http.get(`${this.serverService.protheusAddress}/rest/pecLoteAnimal?codArea=${idFazenda}`);
-
+        let getLotes = this.http.get(`${this.serverService.protheusAddress}/rest/pecLoteAnimal?codArea=1&codFazenda=${idFazenda}`);
         getLotes.subscribe(result => {
           if (Array.isArray(result)) {
             if (result.length) {

@@ -23,7 +23,7 @@ export class RacaAnimalService {
         let promiseArr: Array<Promise<any>> = [];
         for (let raca of racasAnimaisProtheus) {
           let racaAnimal = new RacaAnimal()
-            .createRacaAnimal(raca.codigo, raca.nome, raca.tipo, raca.intCer, raca.status, raca.dtAtua, raca.delet)
+            .createRacaAnimal(raca.codigo, raca.nome, raca.tipo, raca.intCer, raca.status, raca.dtAtua, raca.delet);
           console.log('incluindo a raca', racaAnimal);
           promiseArr.push(this.saveRacaAnimal(racaAnimal).toPromise());
         }
@@ -34,12 +34,15 @@ export class RacaAnimalService {
           reject()
         })
 
+      }, error1 => {
+        console.log(error1);
+        reject()
       })
     })
   }
 
   getProtheusRacasAnimal(): Observable<any> {
-    return this.http.get(`${this.serverService.serverAddress}/rest/racaAnimal`)
+    return this.http.get(`${this.serverService.protheusAddress}/pecRacaAnimal1`)
 
   }
 

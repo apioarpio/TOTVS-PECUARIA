@@ -1,7 +1,8 @@
 {
-  "name": "totvs-gestao-pecuaria",
-  "version": "0.0.0",
-  "main": "electron/dist/main.js",
+  "name": "totvs-pecuaria",
+  "version": "0.0.1-beta",
+  "main": "./dist/electron/main.js",
+  "author": "Apioarpio Ferreira",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,40 +10,89 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
     "e2e": "ng e2e",
     "electron": "ng build --base-href ./ && tsc --p electron && electron .",
     "electron-lr": "wait-on http://localhost:4200 && electron .",
+    "rebuild": "electron-rebuild -f -w sqlite3",
     "prestart": "npm run clean",
     "start-e": "concurrently -k \"ng serve\" \"npm run electron-lr\""
+  },
+  "build": {
+    "appId": "com.totvsmt.gestao-pecuaria",
+    "extraResources": [
+      "pecuaria.db"
+    ],
+    "directories": {
+      "buildResources": "build",
+      "output": "app-dest"
+    },
+    "mac": {
+      "icon": "electron/icons/icon.png",
+      "publich": [
+        "github"
+      ]
+    }
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "TOTVS PECUARIA"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   },
   "private": true,
   "dependencies": {
     "@angular/animations": "~8.2.2",
     "@angular/common": "~8.2.2",
     "@angular/compiler": "^8.2.2",
-    "@angular/core": "~8.2.2",
+    "@angular/core": "^8.2.2",
     "@angular/forms": "~8.2.2",
     "@angular/platform-browser": "~8.2.2",
     "@angular/platform-browser-dynamic": "~8.2.2",
     "@angular/platform-server": "~8.2.2",
     "@angular/router": "~8.2.2",
-    "@manekinekko/angular-web-bluetooth": "^7.0.0",
-    "@portinari/portinari-storage": "^1.9.0",
-    "@portinari/portinari-ui": "^1.14.0",
-    "@types/pouchdb": "^6.4.0",
-    "@types/sqlite3": "^3.1.5",
-    "@types/web-bluetooth": "0.0.4",
+    "@portinari/portinari-storage": "^1.24.0",
+    "@portinari/portinari-ui": "^1.24.0",
+    "@types/express": "^4.17.2",
+    "@types/sqlite3": "^3.1.6",
     "bluetooth-serial-port": "^2.2.6",
     "body-parser": "^1.19.0",
+    "chart.js": "^2.9.3",
     "component": "^1.1.0",
     "concurrently": "^5.0.2",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.1",
+    "getmac": "^5.1.0",
+    "knex": "^0.20.8",
     "lokijs": "^1.5.7",
     "moment": "^2.24.0",
+    "ng2-charts": "^2.3.0",
     "ngx-electron": "^2.1.1",
-    "pouchdb": "^7.1.1",
-    "pouchdb-find": "^7.1.1",
     "rxjs": "~6.5.2",
-    "sqlite3": "^4.1.0",
+    "sqlite3": "^4.1.1",
     "tslib": "^1.9.0",
     "wait-on": "^4.0.0",
     "worker-pouch": "^2.1.0"
@@ -53,13 +103,19 @@
     "@angular/cli": "~8.2.2",
     "@angular/compiler-cli": "~8.2.2",
     "@angular/language-service": "~8.2.2",
+    "@electron-forge/cli": "6.0.0-beta.47",
+    "@electron-forge/maker-deb": "6.0.0-beta.47",
+    "@electron-forge/maker-rpm": "6.0.0-beta.47",
+    "@electron-forge/maker-squirrel": "6.0.0-beta.47",
+    "@electron-forge/maker-zip": "6.0.0-beta.47",
     "@types/electron": "^1.6.10",
     "@types/jasmine": "~3.4.0",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~12.7.2",
     "codelyzer": "~5.1.0",
-    "electron": "^6.0.2",
-    "electron-rebuild": "^1.8.6",
+    "electron": "^5.0.2",
+    "electron-builder": "^22.3.2",
+    "electron-rebuild": "^1.10.0",
     "electron-reload": "^1.5.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",

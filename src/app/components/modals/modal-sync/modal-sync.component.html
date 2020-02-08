@@ -17,7 +17,12 @@
     <div class="po-md-12 pecuaria-sync-card">
       <po-container>
         <h3 class="pecuaria-sync-card-title">Entidade</h3>
-        <po-button p-label="Sincronizar" p-type="link" p-icon="po-icon-upload"></po-button>
+        <po-button
+          [p-label]="entidadesButtonSync.label"
+          [p-type]="entidadesButtonSync.type"
+          [p-icon]="entidadesButtonSync.icon"
+          [p-loading]="entidadesButtonSync.loading"
+          (p-click)="sincronizarEntidades()"></po-button>
         <p>Ultima Sincronização: {{lastSyncAnimal["DATESYNC"]}}</p>
       </po-container>
     </div>
@@ -62,6 +67,12 @@
       <po-container>
         <h3 class="pecuaria-sync-card-title">Lotes</h3>
         <po-button p-label="Sincronizar" (p-click)="sincronizarLotes()"></po-button>
+      </po-container>
+    </div>
+    <div class="po-md-12 pecuaria-sync-card">
+      <po-container>
+        <h3 class="pecuaria-sync-card-title">Solicitações de Brincos</h3>
+        <po-button p-label="Sincronizar" (p-click)="sincronizarSolicitacoesBrinco()"></po-button>
       </po-container>
     </div>
   </div>

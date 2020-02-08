@@ -19,11 +19,12 @@ export class MovimentacaoService {
   saveMovimentacao(movimentacao: Movimentacao) {
     return this.http.post(`${this.serverService.sqlite}/movimentacao`, {
       movimentacao: {
-        idTm: movimentacao.id,
+        idTm: movimentacao.tipoMovimento.idTm,
+        idFazendaAtua: movimentacao.idFazenda,
+        idFornecedor: movimentacao.idFornecedor,
         quantidadeAnimal: movimentacao.quantidadeAnimal,
         tipo: movimentacao.tipo,
         observacao: movimentacao.observacao,
-        idFornecedor: movimentacao.idFornecedor,
         numeroGta: movimentacao.numeroGta,
         serieGta: movimentacao.serieGta,
         dataEmissaoGta: movimentacao.dataEmissaoGta,
@@ -35,8 +36,8 @@ export class MovimentacaoService {
   }
 
   getMovimentacoes(tipoMovimentacao, fields: string) {
-    // return this.http.get(`${this.serverService.sqlite}/operacoesCurral?tipo=${tipoMovimentacao}&fields=${fields}`)
-    return this.http.get(`${this.serverService.sqlite}/movimentacao`)
+    // return this.http.get(`${this.serverService.sqlite}/operacoes-curral?tipo=${tipoMovimentacao}&fields=${fields}`)
+    return this.http.get(`${this.serverService.sqlite}/movimentacao?tipoMovimentacao=${tipoMovimentacao}`)
   }
 
   getMovimentacoesById(idMovimentacao: number, fields: string) {
@@ -51,7 +52,7 @@ export class MovimentacaoService {
     return this.http.get(`${this.serverService.sqlite}/movimentacao/${idMovimentacao}${queryParam}`)
   }
 
-  addAnimalMovimentacao(animal: Animal, movimentacao: Movimentacao): Observable<any> {
+  addAnimalMovimentacao(animal: Animal, movimentacao: Movimentacao, area, lote): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'X-Portinari-No-Error': 'true'
@@ -59,11 +60,23 @@ export class MovimentacaoService {
     };
     return this.http.post(`${this.serverService.sqlite}/movimentacaoAnimal`, {
       movimentacaoAnimal: {
-        idMovimentacao: movimentacao.id,
-        idAnimal: animal.id,
-        aparte: animal.aparte,
-        peso: animal.peso,
-        tipoMovimentacao: movimentacao.tipo,
+        movimentacao: {
+          idMovimentacao: movimentacao.id,
+          tipoMovimentacao: movimentacao.tipo,
+          aparte: animal.aparte
+        },
+        animal: {
+          idAnimal: animal.id,
+          sisbov: animal.sisbov,
+          dataNascimento: animal.dataNascimento,
+          raca: animal.raca,
+          sexo: animal.sexo,
+          peso: animal.peso,
+          area: animal.area,
+          lote: animal.lote
+        },
+        areaAtual: area ? area : null,
+        loteAtual: lote ? lote : null,
         integrado: false
       }
     }, httpOptions);

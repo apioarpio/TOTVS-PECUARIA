@@ -11,23 +11,24 @@ import {
 import {ManejoHomeComponent} from "./manejo-home/manejo-home.component";
 import {ManejoSaidaComponent} from "./manejo-saida/manejo-saida.component";
 import {ManejoMovimentacaoInternaComponent} from "./manejo-movimentacao-interna/manejo-movimentacao-interna.component";
-import {MovimentoEntradaCadastroComponent} from "./movimento-entrada/movimento-entrada-cadastro/movimento-entrada-cadastro.component";
+import {OperacoesCurralCadastroComponent} from "./operacoes-curral-cadastro/operacoes-curral-cadastro.component";
 import {MovimentoEntradaListComponent} from "./movimento-entrada/movimento-entrada-list/movimento-entrada-list.component";
 import {PecModalFormAnimalComponent} from "./components/pec-modal-form-animal/pec-modal-form-animal.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {ManejoTroncoPrincipalComponent} from "./manejo-tronco/manejo-tronco-principal/manejo-tronco-principal.component";
+import {ManejoTroncoPrincipalComponent} from "./operacoes-tronco/tronco/manejo-tronco-principal.component";
 import {CommonModule} from "@angular/common";
 import {ModalFiltrosTroncoComponent} from "./components/modal-filtros-tronco/modal-filtros-tronco.component";
 import {PecDirectivesModule} from "../../directives/directives.module";
-import {InformacoesAnimalTroncoComponent} from "./manejo-tronco/components/informacoes-animal-tronco/informacoes-animal-tronco.component";
-import {InformacoesTroncoComponent} from "./manejo-tronco/components/informacoes-tronco/informacoes-tronco.component";
+import {InformacoesAnimalTroncoComponent} from "./operacoes-tronco/components/informacoes-animal-tronco/informacoes-animal-tronco.component";
+import {InformacoesTroncoComponent} from "./operacoes-tronco/components/informacoes-tronco/informacoes-tronco.component";
 import {PoStorageModule} from "@portinari/portinari-storage";
 import {AparteDestinoComponent} from "./components/aparte-destino/aparte-destino.component";
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [
     IndexManejoComponent,
-    MovimentoEntradaCadastroComponent,
+    OperacoesCurralCadastroComponent,
     MovimentoEntradaListComponent,
     ManejoHomeComponent,
     ManejoSaidaComponent,
@@ -61,7 +62,8 @@ import {AparteDestinoComponent} from "./components/aparte-destino/aparte-destino
       storeName: '_pecStorage',
       driverOrder: ['lokijs']
     }),
-    PoModule
+    PoModule,
+    ComponentsModule
   ]
 })
 

@@ -10,7 +10,7 @@ import {
   PoToasterOrientation,
   PoToasterType
 } from "@portinari/portinari-ui";
-import {Movimentacao} from "../../../../model/movimentacao";
+import {Movimentacao, TipoMovimentacao} from "../../../../model/movimentacao";
 import {HttpClient} from "@angular/common/http";
 import {
   FiltroTronco,
@@ -32,6 +32,7 @@ import {TiposMovimento} from "../../../../model/tipos-movimento";
 import {AnimaisService} from "../../../../services/models/animais.service";
 import {FaixaEtariaService} from "../../../../services/models/faixa-etaria.service";
 import {PoStorageService} from "@portinari/portinari-storage";
+import {SolicitacaoBrincosService} from "../../../../services/models/solicitacao-brincos.service";
 
 @Component({
   selector: 'app-manejo-tronco-principal',
@@ -42,6 +43,8 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
 
   @ViewChild(ModalFiltrosTroncoComponent, {static: true}) modalFiltrosTronco: ModalFiltrosTroncoComponent;
   @ViewChild('buttonSettings', {read: ElementRef, static: true}) buttonSettingsRef: ElementRef;
+  @ViewChild('sisbovInput', {read: ElementRef, static: true}) sisbovInput: ElementRef;
+  @ViewChild('pesoInput', {read: ElementRef, static: true}) pesoInput: ElementRef;
 
   //input binds
   modalAparteDestino: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -116,6 +119,7 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     private faixaEtariaService: FaixaEtariaService,
     private movimentacaoService: MovimentacaoService,
     private loteService: LoteService,
+    private solicitacaoBrincoService: SolicitacaoBrincosService,
     //portinari
     private poNotification: PoNotificationService,
     private poDialog: PoDialogService,
@@ -171,19 +175,34 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   }
 
   /**
-   * @description busca o animal na base offline com base no sisbov informado
+   * @description adiciona o animal informado para validação no tronco
    * @param sisbov
    */
-  validaAnimal(sisbov: number) {
-    this.animalService.getAnimalBySisbov(sisbov)
-      .then(animal => {
-        if (animal) {
-          this.animal = animal
+  async setAnimalMovimentacao(sisbov: number) {
+    try {
+      let sisbovValido = ManejoTroncoPrincipalComponent.validaSisbov(sisbov.toString());
+      let inputSisbov: HTMLInputElement = this.sisbovInput.nativeElement;
+
+      if (sisbovValido) {
+        //busca o animal pelo sisbov informado
+        let animal: Animal = await this.animalService.getAnimalBySisbov(sisbov);
+        //chama a função de acordo com o tipo da movimentacao
+        if (this.movimentacao.tipo === 1) { // entrada
+          this.validacoesAnimalEntrada(animal)
+        } else if (this.movimentacao.tipo === 2) { // movimentacao interna
+          this.validacoesAnimalManejo(animal)
+        } else if (this.movimentacao.tipo === 3) { // saida
+          this.validacoesAnimalSaida(animal)
         }
-      })
-      .catch(err => {
-        console.log('erro ao buscar o animal: ', err);
-      })
+        this.validaHabilitacaoDeCampos()
+      } else {
+        this.sendWarningNotificationTop(`SISBOV ${sisbov} Inválido.`);
+        this.animal.sisbov = null;
+        inputSisbov.focus()
+      }
+    } catch (e) {
+      console.log('erro ao buscar o animal: ', e);
+    }
   }
 
   /**
@@ -200,10 +219,14 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
   async addAnimal() {
     try {
       //verifica se existe algum destino pré selecionado para este aparte
-      let destino = await this.poStorageService.getItemByField(`movimentacao.${this.movimentacao.id}`, 'aparte', this.animal.aparte);
-      if (destino) {
-        console.log(destino);
-        this.saveAnimalMovimentacao(destino['codigoArea'], destino['codigoLote']);
+      let existeAparteDestino = await this.poStorageService.exists(`movimentacao.${this.movimentacao.id}`);
+      if (existeAparteDestino) {
+        let destino = await this.poStorageService.getItemByField(`movimentacao.${this.movimentacao.id}`, 'aparte', this.animal.aparte);
+        if (destino) {
+          this.saveAnimalMovimentacao(destino['codigoArea'], destino['codigoLote']);
+        }
+      } else {
+        this.saveAnimalMovimentacao(null, null);
       }
     } catch (e) {
       console.log(e)
@@ -322,6 +345,113 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
 
   }
 
+  // ================================ Validações ================================
+
+  /**
+   * @description verifica se o número do sisbov é válido, com base nas regras de calculo comparadas com o seu digito verificador
+   * @param sisbov
+   */
+  static validaSisbov(sisbov: string) {
+    if (sisbov.length === 15) {
+      let digitoVerificador = parseInt(sisbov.substr(14, 1)); // digito verificador, ultimo número do sisbov
+      let digitosMultiplicadores = [9, 8, 7, 6, 5, 4, 3, 2];
+      let codigoManejo = sisbov.substr(6, 8); //manejo do sisbov, equivale aos ultimos 8 digitos, excluindo o digitor verificador
+      let valorManejo = 0;
+      let valorMult = 0;
+
+      for (let i = 0; i < 8; i++) {
+        valorManejo = parseInt(codigoManejo.substr(i, 1));
+        valorMult += valorManejo * digitosMultiplicadores[i];
+      }
+      valorMult = (valorMult * 10) % 11;
+      if (valorMult > 9) {
+        valorMult = 0;
+      }
+      return valorMult === digitoVerificador;
+    } else {
+      return false
+    }
+  }
+
+  /**
+   * @description valida solicitação de brinco do sisbov informado. caso haja uma solicitação,
+   * preenche o campo da solicitação dos brincos e retorna a solicitação. caso não não exista
+   * uma solicitação, rejeita a promisse.
+   * @param sisbov
+   * @param idFazenda
+   */
+  validaSolicitacaoSisbov(sisbov: string, idFazenda: number) {
+    return new Promise((resolve, reject) => {
+      this.solicitacaoBrincoService
+        .validaSolicitacaoBrinco(sisbov).subscribe(result => {
+        if (result) {
+
+          this.animal.numeroSolSisbov = result['idSolicitacao'];
+
+          resolve(result)
+        } else {
+          reject(false)
+        }
+      }, err => {
+        console.log(err);
+        reject(false)
+      })
+    });
+  }
+
+  /**
+   * @description Validações realizadas ao informar um sisbov animal, caso o tipo da movimenação seja uma entrada
+   */
+  validacoesAnimalEntrada(animalBusca: Animal) {
+
+    // caso seja uma compra ou cadastro
+    if (this.movimentacao.tipoMovimento.tipoEntrada === 2 || this.movimentacao.tipoMovimento.tipoEntrada === 3) {
+      //se o animal já existe
+      if (animalBusca.sisbov) {
+        this.sendWarningNotificationTop('Animal já cadastrado');
+        this.animal.sisbov = null;
+      } else {
+        //valida requisição brinco
+        this.validaSolicitacaoSisbov(this.animal.sisbov, 1)
+          .then(result => {
+            this.animalValido = true;
+            this.validaHabilitacaoDeCampos();
+          })
+          .catch(err => {
+            this.animalValido = false;
+            this.sendWarningNotificationTop('Solicitação de Brinco não encontrada para o sisbov informado.')
+          });
+      }
+    } else { // caso seja transferencia
+      if (animalBusca.hasOwnProperty('sisbov')) {
+        //TODO retificar para criar um novo animal como objeto e atribuir para o animal da classe;
+        this.animal = animalBusca;
+      } else {
+        this.sendWarningNotificationTop('Animal não cadastrado');
+      }
+    }
+  }
+
+  /**
+   * @description Validações realizadas ao informar um sisbov animal, caso o tipo da movimenação seja uma saida
+   */
+  validacoesAnimalSaida(animalBusca) {
+    if (animalBusca) {
+      this.animal = animalBusca
+    } else {
+    }
+  }
+
+  /**
+   * @description Validações realizadas ao informar um sisbov animal, caso o tipo da movimenação seja um manejo
+   */
+  validacoesAnimalManejo(animalBusca) {
+    if (animalBusca) {
+      this.animal = animalBusca
+    } else {
+    }
+  }
+
   /**
    * @description verifica os parâmetros da movimentação e aplica as validações necessárias.
    */
@@ -348,19 +478,43 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
     }
   }
 
+  /**
+   * @description verifica quais campos devem ser habilitados ou desabilidatos com base nos parâmetros da movimentacao.
+   * Ex:
+   *  Caso a movimentação for do tipo entrada e o tipo da movimentação for cadastro, deve ser liberado todos os campos para preenchimento.
+   */
+  private validaHabilitacaoDeCampos() {
+    if (this.movimentacao.tipo === TipoMovimentacao.ENTRADA && this.animalValido) {
+      if (this.movimentacao.tipoMovimento.tipoEntrada === 2 || this.movimentacao.tipoMovimento.tipoEntrada === 3) {
+        this.disabledFields.sexo = "false";
+        this.disabledFields.codigoRaca = "false";
+        this.disabledFields.dataNascimento = "false";
+      }
+    } else {
+      this.disabledFields.sexo = "true";
+      this.disabledFields.codigoRaca = "true";
+      this.disabledFields.dataNascimento = "true";
+    }
+  }
+
   // ================================ EVENTOS ================================
   /**
    * @description função para handler dos eventos de focusOut
    * @param event
    */
   onFocusOut(event) {
-    console.log(event);
-    let valor = event.target.valueAsNumber;
-    let campo = event.target.id;
+    let valor = event.target.value; // valor do campo que ocorreu o evento
+    let campo = event.target.id; //id do campo onde ocorreu o evento
+
+    console.log(parseInt(valor));
+
     if (campo === "sisbov") {
-      console.log(valor);
-      console.log(campo);
-      this.validaAnimal(valor)
+      if (valor) {
+        this.setAnimalMovimentacao(parseInt(valor))
+      } else {
+        this.animalValido = false;
+        this.animal.peso = null;
+      }
     }
   }
 
@@ -374,6 +528,34 @@ export class ManejoTroncoPrincipalComponent implements OnInit, OnChanges {
 
   onKeyPress(event) {
     console.log(event)
+  }
+
+  //==================================== Funções Genéricos ====================================
+
+  sendNotificationTop(notificação) {
+    this.poNotification.createToaster({
+      action: undefined,
+      actionLabel: '',
+      duration: 5000,
+      type: PoToasterType.Information,
+      message: notificação,
+      componentRef: null,
+      position: null,
+      orientation: PoToasterOrientation.Top
+    })
+  }
+
+  sendWarningNotificationTop(notificação) {
+    this.poNotification.createToaster({
+      action: undefined,
+      actionLabel: '',
+      duration: 5000,
+      type: PoToasterType.Warning,
+      message: notificação,
+      componentRef: null,
+      position: null,
+      orientation: PoToasterOrientation.Top
+    })
   }
 
 }

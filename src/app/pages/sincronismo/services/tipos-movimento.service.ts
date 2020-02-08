@@ -3,6 +3,7 @@ import {ServerService} from "../../../services/utils/server.service";
 import {TiposMovimento} from "../../../model/tipos-movimento";
 import {HttpClient} from "@angular/common/http";
 import {IntegracaoLogService} from "../../../services/utils/integracao-log.service";
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -70,7 +71,7 @@ export class TiposMovimentoService {
 
   private saveTM(tipoMovimento: TiposMovimento) {
     if (tipoMovimento) {
-      console.log(tipoMovimento)
+      console.log(tipoMovimento);
       let tipoMovimentoObj = {
         idTm: tipoMovimento.idTm,
         descricao: tipoMovimento.descricao,
@@ -94,18 +95,34 @@ export class TiposMovimentoService {
     return this.http.get(`${this.serverService.sqlite}/tiposMovimento`);
   }
 
-  getEntradaTMsLocal() {
-    return this.http.get(`${this.serverService.sqlite}/tiposMovimento?tiposTm=entrada`);
+  getTMsLocalByTipo(tipoTm) {
+    return this.http.get(`${this.serverService.sqlite}/tiposMovimento?tiposTm=${tipoTm}`);
   }
 
   getTMsServer() {
-
-    return this.http.get(`${this.serverService.serverAddress}/rest/TIPOSMOVIMENTO`)
-
+    return new Observable(subscriber => {
+      this.serverService.getProtheusServerAddress()
+        .then(protheusServer => {
+          this.http.get(`${protheusServer}/pecTiposMovimento`)
+            .subscribe(tms => {
+                subscriber.next(tms);
+                subscriber.complete();
+              },
+              err => {
+                subscriber.error(err);
+                subscriber.complete();
+              }
+            )
+        })
+        .catch(err => {
+          subscriber.error(err);
+          subscriber.complete();
+        })
+    })
   }
 
-  getTMById() {
-
+  getTMById(id) {
+    return this.http.get(`${this.serverService.sqlite}/tiposMovimento/${id}`)
   }
 
 }

@@ -1,0 +1,22 @@
+.pecuaria-manejo-entrada-list-toolbar {
+  .pecuaria-manejo-list-back {
+    width: 25%;
+    display: inline-block;
+    text-align: start;
+    overflow-x: auto;
+  }
+
+  .pecuaria-manejo-list-header {
+    width: 50%;
+    display: inline-block;
+    text-align: center;
+    overflow-x: auto;
+  }
+
+  .pecuaria-manejo-list-add-button {
+    width: 25%;
+    display: inline-block;
+    text-align: end;
+    overflow-x: auto;
+  }
+}

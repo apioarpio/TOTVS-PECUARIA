@@ -3,10 +3,9 @@ import {SideMenuPecuariaComponent} from "./utils/side-menu-pecuaria/side-menu-pe
 import {ToolBarPecuariaComponent} from "./utils/tool-bar-pecuaria/tool-bar-pecuaria.component";
 import {ToolBarSyncComponent} from "./utils/tool-bar-sync/tool-bar-sync.component";
 import {BluetoothComponent} from "./utils/bluetooth/bluetooth.component";
-import {WebBluetoothModule} from "@manekinekko/angular-web-bluetooth";
 import {
   PoButtonModule,
-  PoContainerModule,
+  PoContainerModule, PoFieldModule,
   PoListViewModule,
   PoMenuModule,
   PoModalModule,
@@ -14,7 +13,13 @@ import {
 } from "@portinari/portinari-ui";
 import {ModalSyncComponent} from "./modals/modal-sync/modal-sync.component";
 import {CommonModule} from "@angular/common";
-import { PecGridComponent } from './pec-grid/pec-grid.component';
+import {PecGridComponent} from './pec-grid/pec-grid.component';
+import {AnimaisRacaDetailComponent} from './chats/animais-raca-detail/animais-raca-detail.component';
+import {ChartsModule} from "ng2-charts";
+import {ConfiguracaoServidorComponent} from "./contexto/configuracao-servidor/configuracao-servidor.component";
+import {SelecaoContextoComponent} from "./contexto/selecao-contexto/selecao-contexto.component";
+import {FormsModule} from "@angular/forms";
+import { SelecaoFazendaComponent } from './contexto/selecao-fazenda/selecao-fazenda.component';
 
 @NgModule({
   declarations: [
@@ -23,10 +28,15 @@ import { PecGridComponent } from './pec-grid/pec-grid.component';
     ToolBarSyncComponent,
     BluetoothComponent,
     ModalSyncComponent,
-    PecGridComponent
+    PecGridComponent,
+    AnimaisRacaDetailComponent,
+    ConfiguracaoServidorComponent,
+    SelecaoContextoComponent,
+    SelecaoFazendaComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
     //Portinari Modules
     PoMenuModule,
     PoModalModule,
@@ -34,17 +44,20 @@ import { PecGridComponent } from './pec-grid/pec-grid.component';
     PoListViewModule,
     PoButtonModule,
     PoContainerModule,
+    ChartsModule,
     //BluetoothModule
-    WebBluetoothModule.forRoot({
-      enableTracing: true // or false, this will enable logs in the browser's console
-    })
+    PoFieldModule
   ],
   exports: [
     SideMenuPecuariaComponent,
     ToolBarPecuariaComponent,
     ToolBarSyncComponent,
     BluetoothComponent,
-    ModalSyncComponent
+    ModalSyncComponent,
+    AnimaisRacaDetailComponent,
+    ConfiguracaoServidorComponent,
+    SelecaoContextoComponent,
+    SelecaoFazendaComponent
   ]
 })
 
