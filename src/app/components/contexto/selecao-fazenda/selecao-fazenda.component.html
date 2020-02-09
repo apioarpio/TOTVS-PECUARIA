@@ -1,0 +1,10 @@
+<div class="po-row">
+  <po-select
+    class="po-md-12"
+    name="fazendas"
+    [(ngModel)]="fazendaSelecionada"
+    (p-change)="onSelectFazenda($event)"
+    [p-options]="fazendas"
+    p-label="Fazenda Selecionada">
+  </po-select>
+</div>
