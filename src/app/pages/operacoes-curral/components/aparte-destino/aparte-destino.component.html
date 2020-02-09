@@ -1,0 +1,68 @@
+<po-modal
+  p-title="Aparte X Destino"
+  [p-primary-action]="close"
+>
+  <div class="po-row">
+    <po-table
+      [p-columns]="columns"
+      [p-items]="items"
+      [p-actions]="actions"
+      p-sort="true"
+      class="po-md-12"
+      [p-striped]="true">
+    </po-table>
+  </div>
+
+  <form [formGroup]="formGroup">
+    <div class="po-row">
+      <po-select
+        p-label="Aparte"
+        class="po-md-12"
+        [(ngModel)]="aparte"
+        [p-options]="[
+               {label: 'Sem Aparte', value:''},
+               {label: 'Aparte 1', value: '1'},
+               {label: 'Aparte 2', value: '2'},
+               {label: 'Aparte 3', value: '3'},
+               {label: 'Aparte 4', value: '4'}
+               ]"
+        formControlName="aparte">
+        >
+      </po-select>
+      <po-lookup class="po-md-4" p-label="Código Area"
+                 [(ngModel)]="codigoArea"
+                 [p-filter-service]="areaLookupService"
+                 [p-columns]="areaLookupColumns"
+                 (p-selected)="onSelectArea($event)"
+                 (p-error)="onSelectAreaError($event)"
+                 formControlName="codigoArea"
+                 p-field-label="idArea"
+                 p-field-value="idArea"
+      ></po-lookup>
+      <po-input class="po-md-8" p-label="Area"
+                [(ngModel)]="area"
+                formControlName="area"
+                p-disabled="true"
+      ></po-input>
+      <po-lookup class="po-md-4" p-label="Código Lote"
+                 [(ngModel)]="codigoLote"
+                 [p-filter-service]="loteLookupService"
+                 [p-columns]="loteLookupColumns"
+                 (p-selected)="onSelectLote($event)"
+                 (p-error)="onSelectLoteError($event)"
+                 formControlName="codigoLote"
+                 p-field-value="idLote"
+                 p-field-label="idLote"
+      ></po-lookup>
+      <po-input class="po-md-8" p-label="Lote"
+                [(ngModel)]="lote"
+                p-disabled="true"
+                formControlName="lote"
+      ></po-input>
+      <po-button p-label="Adicionar destino" (p-click)="save($event)" [p-disabled]="!formGroup.valid"></po-button>
+    </div>
+    <div class="po-row">
+
+    </div>
+  </form>
+</po-modal>

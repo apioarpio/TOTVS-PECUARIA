@@ -1,0 +1,63 @@
+<div class="po-row">
+  <po-divider class="po-md-12" p-label="Contadores Animais"></po-divider>
+  <po-widget
+    class="po-md-12 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">{{movimentacao.quantidadeAnimal}}</div>
+    <div class="po-text-center"><b>Quantidade Animais</b></div>
+  </po-widget>
+  <po-widget
+    class="po-md-6 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">2</div>
+    <div class="po-text-center"><b>Quantidade Conferida</b></div>
+  </po-widget>
+  <po-widget
+    class="po-md-6 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">5</div>
+    <div class="po-text-center"><b>Quantidade Pendente</b></div>
+  </po-widget>
+</div>
+<div class="po-row">
+  <po-widget
+    class="po-md-6 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">1</div>
+    <div class="po-text-center"><b>Macho</b></div>
+  </po-widget>
+  <po-widget
+    class="po-md-6 po-sm-12 po-text-center"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">2</div>
+    <div class="po-text-center"><b>Fêmea</b></div>
+  </po-widget>
+</div>
+<div class="po-row">
+  <po-divider></po-divider>
+  <po-widget
+    class="po-md-12 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">100</div>
+    <div class="po-text-center"><b>Total conferido no dia</b></div>
+  </po-widget>
+  <po-widget
+    class="po-md-6 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">5000,00</div>
+    <div class="po-text-center"><b>Peso Total</b></div>
+  </po-widget>
+  <po-widget
+    class="po-md-6 po-sm-12"
+    p-primary="true">
+    <div class="po-font-subtitle po-text-center">870,00</div>
+    <div class="po-text-center"><b>Peso Médio</b></div>
+  </po-widget>
+</div>
+<div class="po-row">
+  <po-divider class="po-md-12" p-label="Aparte Animal"></po-divider>
+  <po-table
+    class="po-md-12"
+    [p-items]="[{ aparte: 'aparte 1',qntAnimais:'10',pesoMedio: '120' }]">
+  </po-table>
+</div>

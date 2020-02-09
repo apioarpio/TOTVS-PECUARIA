@@ -1,0 +1,36 @@
+<div class="row">
+  <po-button class="po-md-12" type="link" p-label="Funções de Curral" (p-click)="goOperacoesCurral()"></po-button>
+</div>
+<!--  <po-menu [p-menus]="menus"></po-menu>-->
+<div class="po-row">
+  <po-widget
+    class="po-md-12 po-lg-4 po-mt-2"
+    p-title="Operações Realizadas no dia">
+
+    <div class="po-font-subtitle po-text-center">20</div>
+    <div class="po-text-center">27/01/2019</div>
+  </po-widget>
+
+  <po-widget
+    class="po-md-12 po-lg-4 po-mt-2"
+    p-title="Animais Novos">
+
+    <div class="po-font-subtitle po-text-center">150</div>
+    <div class="po-text-center">01/01/2020 - 01/02/2020</div>
+  </po-widget>
+
+  <po-widget
+    class="po-md-12 po-lg-4 po-mt-2"
+    p-title="Peso médio por lote">
+
+    <div class="po-font-subtitle po-text-center">450 Kg</div>
+    <div class="po-text-center">Engorda - Macho 12/2019</div>
+  </po-widget>
+</div>
+<div class="po-row">
+  <po-widget
+    class="po-md-12 po-lg-6 po-mt-2"
+    p-title="Animais por Raça">
+    <pecChart-animais-raca-detail></pecChart-animais-raca-detail>
+  </po-widget>
+</div>

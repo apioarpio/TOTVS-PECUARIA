@@ -1,0 +1,44 @@
+<div class="po-row">
+  <div class="pec-info-liberacao-animal-bull"
+       [ngClass]="{
+              'bull-valid': animal.sisbov && troncoFormGroup.valid && animalValido,
+              'bull-invalid': animal.sisbov && !troncoFormGroup.valid && animalValido,
+              'bull-default': !animal.sisbov || !animalValido
+              }">
+    <span class="flaticon-bull"></span>
+  </div>
+  <div class="pec-info-liberacao-animal" [ngClass]="{
+            'lib-animal-div-default-valid': animal.sisbov && troncoFormGroup.valid && animalValido,
+            'lib-animal-div-default-invalid': animal.sisbov && !troncoFormGroup.valid && animalValido,
+            'lib-animal-div-default-default': !animal.sisbov || !animalValido
+            }">
+    <div [ngClass]="{
+            'pec-info-liberacao-animal-header-valid': animal.sisbov && troncoFormGroup.valid && animalValido,
+            'pec-info-liberacao-animal-header-invalid': animal.sisbov && !troncoFormGroup.valid && animalValido,
+            'pec-info-liberacao-animal-header': !animal.sisbov || !animalValido
+            }">
+      <p *ngIf="animal.sisbov && troncoFormGroup.valid && animalValido">Animal {{animal.sisbov}} Liberado</p>
+      <p *ngIf="animal.sisbov && !troncoFormGroup.valid && animalValido">Animal {{animal.sisbov}} não liberado.</p>
+      <p *ngIf="!animal.sisbov || !animalValido"> Animal não informado.</p>
+    </div>
+    <div class="pec-info-liberacao-animal-errors">
+      <!--                Erros Peso-->
+      <div *ngIf="troncoFormGroup.controls['peso'].errors && troncoFormGroup.controls['peso'].touched">
+        <p *ngFor="let erro of troncoFormGroup.controls['peso'].errors['pecError']">{{erro}}</p>
+      </div>
+      <!--                Erros Sexo-->
+      <div *ngIf="troncoFormGroup.controls['sexo'].errors && troncoFormGroup.controls['sexo'].touched">
+        <p *ngFor="let erro of troncoFormGroup.controls['sexo'].errors['pecError']">{{erro}}</p>
+      </div>
+      <!--                Erros Raça-->
+      <div *ngIf="troncoFormGroup.controls['raca'].errors && troncoFormGroup.controls['raca'].touched">
+        <p *ngFor="let erro of troncoFormGroup.controls['raca'].errors['pecError']">{{erro}}</p>
+      </div>
+      <!--                Erros Faixa Etaria-->
+      <div
+        *ngIf="troncoFormGroup.controls['dataNascimento'].errors && troncoFormGroup.controls['dataNascimento'].dirty">
+        <p *ngFor="let erro of troncoFormGroup.controls['dataNascimento'].errors['pecError']">{{erro}}</p>
+      </div>
+    </div>
+  </div>
+</div>
