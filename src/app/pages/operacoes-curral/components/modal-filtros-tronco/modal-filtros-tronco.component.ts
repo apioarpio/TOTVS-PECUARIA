@@ -122,6 +122,7 @@ export class ModalFiltrosTroncoComponent implements OnInit, OnChanges {
   //change events
   onPesoChange(field) {
     console.log(field);
+    console.log(field);
     console.log(this.filtroTroncoValues.pesoAnimalDe);
     console.log(this.filtroTroncoValues.pesoAnimalAte);
   }
