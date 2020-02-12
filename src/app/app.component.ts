@@ -1,7 +1,6 @@
 import {Component} from '@angular/core';
 
 import {ElectronService} from "ngx-electron";
-import {GenericBluetoothService} from "./services/bluetooth/generic-bluetooth.service";
 
 @Component({
   selector: 'app-root',
@@ -14,13 +13,8 @@ export class AppComponent {
 
   constructor(
     private electronService: ElectronService,
-    private bluetoothService: GenericBluetoothService
   ) {
 
-  }
-
-  onClick() {
-    this.bluetoothService.getDevices()
   }
 
 }

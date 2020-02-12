@@ -5,6 +5,17 @@
   <title>ElectronPortinari</title>
   <base href="./">
 
+  <script>
+    const { ipcRenderer } = require('electron');
+    const version = document.getElementById('version');
+    ipcRenderer.send('app_version');
+    ipcRenderer.on('app_version', (event, arg) => {
+      ipcRenderer.removeAllListeners('app_version');
+      version.innerText = 'Version ' + arg.version;
+    });
+  </script>
+
+
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>

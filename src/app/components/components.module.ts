@@ -2,7 +2,6 @@ import {NgModule} from "@angular/core";
 import {SideMenuPecuariaComponent} from "./utils/side-menu-pecuaria/side-menu-pecuaria.component";
 import {ToolBarPecuariaComponent} from "./utils/tool-bar-pecuaria/tool-bar-pecuaria.component";
 import {ToolBarSyncComponent} from "./utils/tool-bar-sync/tool-bar-sync.component";
-import {BluetoothComponent} from "./utils/bluetooth/bluetooth.component";
 import {
   PoButtonModule,
   PoContainerModule, PoFieldModule,
@@ -19,14 +18,13 @@ import {ChartsModule} from "ng2-charts";
 import {ConfiguracaoServidorComponent} from "./contexto/configuracao-servidor/configuracao-servidor.component";
 import {SelecaoContextoComponent} from "./contexto/selecao-contexto/selecao-contexto.component";
 import {FormsModule} from "@angular/forms";
-import { SelecaoFazendaComponent } from './contexto/selecao-fazenda/selecao-fazenda.component';
+import {SelecaoFazendaComponent} from './contexto/selecao-fazenda/selecao-fazenda.component';
 
 @NgModule({
   declarations: [
     SideMenuPecuariaComponent,
     ToolBarPecuariaComponent,
     ToolBarSyncComponent,
-    BluetoothComponent,
     ModalSyncComponent,
     PecGridComponent,
     AnimaisRacaDetailComponent,
@@ -52,7 +50,6 @@ import { SelecaoFazendaComponent } from './contexto/selecao-fazenda/selecao-faze
     SideMenuPecuariaComponent,
     ToolBarPecuariaComponent,
     ToolBarSyncComponent,
-    BluetoothComponent,
     ModalSyncComponent,
     AnimaisRacaDetailComponent,
     ConfiguracaoServidorComponent,

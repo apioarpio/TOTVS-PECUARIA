@@ -2,10 +2,6 @@
   p-title="TOTVS Pecuaria"
   [p-actions]="bluetoothActions"></po-toolbar>
 
-<po-modal>
-  <app-bluetooth></app-bluetooth>
-</po-modal>
-
 <po-modal #modalSync
           p-title="Painel de sincronização"
           [p-primary-action]="confirm"
@@ -13,7 +9,7 @@
   <app-modal-sync></app-modal-sync>
 </po-modal>
 
-  <pec-selecao-contexto #contexto></pec-selecao-contexto>
+<pec-selecao-contexto #contexto></pec-selecao-contexto>
 <po-modal #configServer
           p-title="Configurações de servidor">
   <pec-configuracao-servidor></pec-configuracao-servidor>

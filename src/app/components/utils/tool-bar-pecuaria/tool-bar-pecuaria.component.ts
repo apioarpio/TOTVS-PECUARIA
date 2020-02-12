@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {PoModalAction, PoModalComponent, PoToolbarAction} from "@portinari/portinari-ui";
-import {BluetoothComponent} from "../bluetooth/bluetooth.component";
 import {SelecaoContextoComponent} from "../../contexto/selecao-contexto/selecao-contexto.component";
 
 @Component({
@@ -17,7 +16,7 @@ export class ToolBarPecuariaComponent implements OnInit {
 
 
   bluetoothActions: Array<PoToolbarAction> = [
-    {icon: 'po-icon-bluetooth', label: 'bluetooth', action: item => this.onClickBluetooth(item)},
+    // {icon: 'po-icon-bluetooth', label: 'bluetooth', action: item => this.onClickBluetooth(item)},
     {icon: 'po-icon-bluetooth', label: 'Sincronização', action: item => this.openModalSync(item)},
     {icon: 'po-icon-bluetooth', label: 'Contexto', action: item => this.openModalContexto(item)},
     {icon: 'po-icon-bluetooth', label: 'Servidor', action: item => this.openModalConfigServer(item)}

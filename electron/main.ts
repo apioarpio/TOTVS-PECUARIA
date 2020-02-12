@@ -1,21 +1,29 @@
-import {app, BrowserWindow} from 'electron';
+import {app, BrowserWindow, ipcRenderer, ipcMain} from 'electron';
 import * as bodyParser from 'body-parser'
 import * as path from 'path';
 import * as url from 'url';
 import * as express from 'express'
 import routers from './src/routes';
 import initDb from './src/db/config/init';
+import appUpdater from "./src/auto-updater/update";
 
 let win: BrowserWindow;
 
 app.on('ready', () => {
   createWindow();
+
+  appUpdater(null, null, null);
 });
 
 app.on('activate', () => {
   if (win === null) {
     // createWindow();
   }
+});
+
+ipcMain.on('app_version', (event) => {
+  console.log(event);
+  console.log(app.getVersion());
 });
 
 function createWindow() {
@@ -64,4 +72,5 @@ function createWindow() {
   win.on('close', () => {
     win = null;
   });
+
 }
