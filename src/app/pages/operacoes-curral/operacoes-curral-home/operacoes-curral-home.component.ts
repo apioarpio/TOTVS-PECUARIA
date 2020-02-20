@@ -5,10 +5,10 @@ import {Location} from "@angular/common";
 
 @Component({
   selector: 'app-manejo-home',
-  templateUrl: './manejo-home.component.html',
+  templateUrl: './operacoes-curral-home.component.html',
   styleUrls: ['./manejo-home.component.scss']
 })
-export class ManejoHomeComponent implements OnInit {
+export class OperacoesCurralHomeComponent implements OnInit {
   botoesManejo: Array<PoButtonGroupItem> = [
     {label: 'Entrada', action: this.goManejoEntrada},
     {label: 'Saída', action: this.goManejoSaida},
