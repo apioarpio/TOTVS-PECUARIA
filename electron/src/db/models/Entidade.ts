@@ -39,7 +39,7 @@ export default {
     getEntidadeById(idEntidade) {
         return new Promise((resolve, reject) => {
             const database = db();
-            database.all(`SELECT * FROM entidade WHERE id_entidade = ${idEntidade}`, function (err, row) {
+            database.get(`SELECT * FROM entidade WHERE id_entidade = ${idEntidade}`, function (err, row) {
                 console.log(`terminou de ler ${new Date().toLocaleString()}`);
                 resolve(row);
             });

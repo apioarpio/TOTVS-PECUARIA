@@ -1,4 +1,4 @@
-import ContextoPersistence from '../../db/models/contexto';
+import ContextoPersistence from '../../db/models/Contexto';
 
 export default (req, res) => {
 

@@ -1,4 +1,4 @@
-import animalDAO from '../../db/models/animal';
+import animalDAO from '../../db/models/Animal';
 import historicoPesoDAO from '../../db/models/historicoPeso';
 
 export default async (req, res) => {

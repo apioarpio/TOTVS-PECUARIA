@@ -1,4 +1,4 @@
-import Animal from '../../db/models/animal';
+import Animal from '../../db/models/Animal';
 
 export default (req, res) => {
 

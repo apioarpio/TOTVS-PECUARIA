@@ -67,26 +67,8 @@ export class AnimaisService {
     }
   }
 
-  private getAnimaisServer(codFaz, recno, maxRecords): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      const queryStringArr = [];
-      let queryString = codFaz || recno || maxRecords ? "?" : "";
-      let protheusServer = await this.serverService.getProtheusServerAddress();
-      codFaz ? queryStringArr.push(`codFaz=${codFaz}`) : null;
-      recno ? queryStringArr.push(`recno=${recno}`) : null;
-      maxRecords ? queryStringArr.push(`maxRecord=${maxRecords}`) : null;
-
-      for (let i = 0; i < queryStringArr.length; i++) {
-        if (i > 0) {
-          queryString += `&${queryStringArr[i]}`;
-        } else {
-          queryString += queryStringArr[i];
-        }
-      }
-
-      let result = await this.http.get(`${protheusServer}/pecAnimal${queryString}`).toPromise();
-      resolve(result);
-    })
+  getAnimaisLocal(): Observable<any> {
+    return this.http.get(`${this.serverService.sqlite}/animal`)
   }
 
   getAnimalBySisbov(sisbov: number): Promise<Animal> {
@@ -137,6 +119,32 @@ export class AnimaisService {
     })
   }
 
+  getIndicadoresAnimais(): Observable<any> {
+    return this.http.get(`${this.serverService.sqlite}/animal/indicadores`);
+  }
+
+  private getAnimaisServer(codFaz, recno, maxRecords): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+      const queryStringArr = [];
+      let queryString = codFaz || recno || maxRecords ? "?" : "";
+      let protheusServer = await this.serverService.getProtheusServerAddress();
+      codFaz ? queryStringArr.push(`codFaz=${codFaz}`) : null;
+      recno ? queryStringArr.push(`recno=${recno}`) : null;
+      maxRecords ? queryStringArr.push(`maxRecord=${maxRecords}`) : null;
+
+      for (let i = 0; i < queryStringArr.length; i++) {
+        if (i > 0) {
+          queryString += `&${queryStringArr[i]}`;
+        } else {
+          queryString += queryStringArr[i];
+        }
+      }
+
+      let result = await this.http.get(`${protheusServer}/pecAnimal${queryString}`).toPromise();
+      resolve(result);
+    })
+  }
+
   private saveAnimaisLocal(animais: Animal[]) {
     let arrAnimais = [];
     for (let animal of animais) {
@@ -160,4 +168,5 @@ export class AnimaisService {
     })
 
   }
+
 }

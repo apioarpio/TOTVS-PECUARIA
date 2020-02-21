@@ -87,7 +87,7 @@ export default {
                                     sexo: result['sexo'],
                                     dataNascimento: result['data_nascimento'],
                                     dataIncSisbov: result['data_inclusao_sisbov'],
-                                    codFAixaEtaria: result['codigo_faixa_etaria'],
+                                    codFaixaEtaria: result['codigo_faixa_etaria'],
                                     historicoPeso: result['peso_historico'] ? {
                                         peso: result['peso_historico'],
                                         dataPesagem: result['historico_data_pesagem']
@@ -127,13 +127,13 @@ export default {
             db.close();
         })
     },
-    getAnimais(rowId, records) {
+    getAnimais(rowId, records, idFazenda) {
         return new Promise((resolve, reject) => {
 
             let queryPaginate = "";
 
             if (!records) {
-                records = 50;
+                records = 10;
             }
 
             const queryMaxRecords = `LIMIT ${records}`;
@@ -146,12 +146,20 @@ export default {
             console.log(queryPaginate);
 
             const db = database();
-
+            console.log(`
+                    SELECT 
+                        *
+                     FROM ANIMAL  
+                     INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal
+                     ${queryPaginate}
+                     ORDER BY ANIMAL.ROWID DESC ${queryMaxRecords}
+                `)
             db.all(`
                     SELECT 
                         *
-                     FROM ANIMAL ${queryPaginate} 
+                     FROM ANIMAL
                      INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal
+                     ${queryPaginate} 
                      ORDER BY ANIMAL.ROWID DESC ${queryMaxRecords}
                 `, (err, result) => {
                 if (err) {
@@ -162,41 +170,41 @@ export default {
                 for (let animal of result) {
                     //adiciona ao array de animais, o objeto animal compativel com o padrão do JSON de requisição
                     arrAnimais.push({
-                        idAnimal: result['id_animal'],
-                        sisbov: result['sisbov'],
-                        manejo: result['manejo'],
+                        idAnimal: animal['id_animal'],
+                        sisbov: animal['sisbov'],
+                        manejo: animal['manejo'],
                         raca: {
-                            id: result['raca'],
-                            descricao: result['descricao']
+                            id: animal['raca'],
+                            descricao: animal['descricao']
                         },
-                        sexo: result['sexo'],
-                        dataNascimento: result['data_nascimento'],
-                        dataIncSisbov: result['data_inclusao_sisbov'],
-                        codFAixaEtaria: result['codigo_faixa_etaria'],
-                        peso: result['peso'],
-                        dataPesagem: result['data_pesagem'],
-                        codFazenda: result['codigo_fazenda'],
-                        codFornecedor: result['codigo_fornecedor'],
-                        numeroSolSisbov: result['numero_solicitacao_sisbov'],
-                        dataEntrada: result['data_entrada'],
-                        movimentoOrigem: result['movimento_origem'],
-                        rfid: result['rfid'],
-                        lote: result['lote'],
-                        pasto: result['pasto'],
-                        dataLibAbateCertificadora: result['data_lib_abate_certificadora'],
-                        dataAbate: result['data_abate'],
-                        dataLibAbateSanitario: result['data_lib_abate_sanitario'],
-                        dataApontamentoMorte: result['data_apontamento_morte'],
-                        controleWebservice: result['controle_webservice'],
-                        status: result['status'],
-                        dataLimiteCotaHilton: result['data_limite_cota_hilton'],
-                        cadastro: result['cadastro'],
-                        dataAtualizacaoAnimal: result['data_atualizacao_animal'],
-                        fazendaOrigem: result['fazenda_origem'],
-                        certificadora: result['certificadora'],
-                        dataCertificadora: result['data_certificadora'],
-                        controleTransferencia: result['controle_transferencia'],
-                        dataSync: result['data_sync']
+                        sexo: animal['sexo'],
+                        dataNascimento: animal['data_nascimento'],
+                        dataIncSisbov: animal['data_inclusao_sisbov'],
+                        codFaixaEtaria: animal['codigo_faixa_etaria'],
+                        peso: animal['peso'],
+                        dataPesagem: animal['data_pesagem'],
+                        codFazenda: animal['codigo_fazenda'],
+                        codFornecedor: animal['codigo_fornecedor'],
+                        numeroSolSisbov: animal['numero_solicitacao_sisbov'],
+                        dataEntrada: animal['data_entrada'],
+                        movimentoOrigem: animal['movimento_origem'],
+                        rfid: animal['rfid'],
+                        lote: animal['lote'],
+                        pasto: animal['pasto'],
+                        dataLibAbateCertificadora: animal['data_lib_abate_certificadora'],
+                        dataAbate: animal['data_abate'],
+                        dataLibAbateSanitario: animal['data_lib_abate_sanitario'],
+                        dataApontamentoMorte: animal['data_apontamento_morte'],
+                        controleWebservice: animal['controle_webservice'],
+                        status: animal['status'],
+                        dataLimiteCotaHilton: animal['data_limite_cota_hilton'],
+                        cadastro: animal['cadastro'],
+                        dataAtualizacaoAnimal: animal['data_atualizacao_animal'],
+                        fazendaOrigem: animal['fazenda_origem'],
+                        certificadora: animal['certificadora'],
+                        dataCertificadora: animal['data_certificadora'],
+                        controleTransferencia: animal['controle_transferencia'],
+                        dataSync: animal['data_sync']
                     })
                 }
                 resolve(arrAnimais);
@@ -229,6 +237,29 @@ export default {
                 });
                 db.close();
             }
+        })
+    },
+    quantidadeAnimaisFazenda(idFazenda) {
+        return new Promise((resolve, reject) => {
+            const db = database();
+            try {
+                db.serialize(() => {
+                    db.get(`
+                        SELECT COUNT(*) as animais FROM animal WHERE codigo_fazenda = ${idFazenda} 
+                    `, (err, row) => {
+                        if (err) {
+                            reject(err)
+                        } else {
+                            resolve(row['animais'])
+                        }
+                    })
+                });
+                db.close();
+            } catch (e) {
+                db.close();
+                reject(null)
+            }
+
         })
     }
 }

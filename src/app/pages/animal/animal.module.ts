@@ -1,18 +1,19 @@
 import {NgModule} from "@angular/core";
 import {IndexAnimaisComponent} from "./index-animais/index-animais.component";
 import {AnimalRoutingModule} from "./animal-routing.module";
-import {PoButtonModule} from "@portinari/portinari-ui";
+import {PoButtonModule, PoTableModule} from "@portinari/portinari-ui";
 
 @NgModule({
 
-  declarations:[
+  declarations: [
     IndexAnimaisComponent
   ],
-  imports:[
+  imports: [
     AnimalRoutingModule,
 
     //PortinariModules
-    PoButtonModule
+    PoButtonModule,
+    PoTableModule
   ]
 
 })

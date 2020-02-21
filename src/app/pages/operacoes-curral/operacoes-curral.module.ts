@@ -8,7 +8,7 @@ import {
   PoContainerModule, PoFieldModule,
   PoGridModule, PoModule, PoTableModule
 } from "@portinari/portinari-ui";
-import {ManejoHomeComponent} from "./manejo-home/manejo-home.component";
+import {OperacoesCurralHomeComponent} from "./operacoes-curral-home/operacoes-curral-home.component";
 import {ManejoSaidaComponent} from "./manejo-saida/manejo-saida.component";
 import {ManejoMovimentacaoInternaComponent} from "./manejo-movimentacao-interna/manejo-movimentacao-interna.component";
 import {OperacoesCurralCadastroComponent} from "./operacoes-curral-cadastro/operacoes-curral-cadastro.component";
@@ -24,13 +24,15 @@ import {InformacoesTroncoComponent} from "./operacoes-tronco/components/informac
 import {PoStorageModule} from "@portinari/portinari-storage";
 import {AparteDestinoComponent} from "./components/aparte-destino/aparte-destino.component";
 import {ComponentsModule} from "../../components/components.module";
+import {OperacoesCurralFormComponent} from "./operacoes-curral-form/operacoes-curral-form.component";
+import {IndicadorQuantidadeAnimalComponent} from "./components/indicador-quantidade-animal/indicador-quantidade-animal.component";
 
 @NgModule({
   declarations: [
     IndexManejoComponent,
     OperacoesCurralCadastroComponent,
     MovimentoEntradaListComponent,
-    ManejoHomeComponent,
+    OperacoesCurralHomeComponent,
     ManejoSaidaComponent,
     ManejoMovimentacaoInternaComponent,
     ManejoTroncoPrincipalComponent,
@@ -38,7 +40,9 @@ import {ComponentsModule} from "../../components/components.module";
     ModalFiltrosTroncoComponent,
     InformacoesAnimalTroncoComponent,
     InformacoesTroncoComponent,
-    AparteDestinoComponent
+    AparteDestinoComponent,
+    OperacoesCurralFormComponent,
+    IndicadorQuantidadeAnimalComponent
   ],
   imports: [
     CommonModule,

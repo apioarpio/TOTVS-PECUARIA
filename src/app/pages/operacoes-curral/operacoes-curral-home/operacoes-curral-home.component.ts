@@ -6,7 +6,7 @@ import {Location} from "@angular/common";
 @Component({
   selector: 'app-manejo-home',
   templateUrl: './operacoes-curral-home.component.html',
-  styleUrls: ['./manejo-home.component.scss']
+  styleUrls: ['./operacoes-curral-home.component.scss']
 })
 export class OperacoesCurralHomeComponent implements OnInit {
   botoesManejo: Array<PoButtonGroupItem> = [

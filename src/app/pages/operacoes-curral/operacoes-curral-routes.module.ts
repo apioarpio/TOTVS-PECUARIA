@@ -3,7 +3,7 @@ import {RouterModule, Routes} from "@angular/router";
 import {IndexManejoComponent} from "./index-manejo/index-manejo.component";
 import {ManejoSaidaComponent} from "./manejo-saida/manejo-saida.component";
 import {ManejoMovimentacaoInternaComponent} from "./manejo-movimentacao-interna/manejo-movimentacao-interna.component";
-import {ManejoHomeComponent} from "./manejo-home/manejo-home.component";
+import {OperacoesCurralHomeComponent} from "./operacoes-curral-home/operacoes-curral-home.component";
 import {OperacoesCurralCadastroComponent} from "./operacoes-curral-cadastro/operacoes-curral-cadastro.component";
 import {MovimentoEntradaListComponent} from "./movimento-entrada/movimento-entrada-list/movimento-entrada-list.component";
 import {ManejoTroncoPrincipalComponent} from "./operacoes-tronco/tronco/manejo-tronco-principal.component";
@@ -13,12 +13,13 @@ const manejoRoutes: Routes = [
     path: '',
     component: IndexManejoComponent,
     children: [
-      {path: 'manejoHome', component: ManejoHomeComponent},
+      {path: 'manejoHome', component: OperacoesCurralHomeComponent},
       {path: 'operacaoCadastro/:tipoMovimentacao', component: OperacoesCurralCadastroComponent},
       {path: 'manejoEntradaList', component: MovimentoEntradaListComponent},
       {path: 'manejoSaida', component: ManejoSaidaComponent},
       {path: 'manejoMovimentacaoInterna', component: ManejoMovimentacaoInternaComponent},
-      {path: 'tronco/:idMovimentacao', component: ManejoTroncoPrincipalComponent}
+      {path: 'tronco/:idMovimentacao', component: ManejoTroncoPrincipalComponent},
+      {path: 'animal', loadChildren: '../animal/animal.module#AnimalModule'}
     ]
   },
   {

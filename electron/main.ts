@@ -10,9 +10,15 @@ import appUpdater from "./src/auto-updater/update";
 let win: BrowserWindow;
 
 app.on('ready', () => {
-  createWindow();
-
-  appUpdater(null, null, null);
+  appUpdater(null, null, null)
+    .then(result => {
+      console.log();
+      createWindow();
+    })
+    .catch(err => {
+      console.log();
+      createWindow();
+    });
 });
 
 app.on('activate', () => {

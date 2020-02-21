@@ -12,11 +12,10 @@
     "lint": "ng lint",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "publish": "electron-builder --win --mac --publish always",
     "e2e": "ng e2e",
     "electron": "ng build --base-href ./ && tsc --p electron && electron .",
     "electron-lr": "wait-on http://localhost:4200 && electron .",
-    "rebuild": "electron-rebuild -f -w sqlite3",
     "prestart": "npm run clean",
     "start-e": "concurrently -k \"ng serve\" \"npm run electron-lr\""
   },
@@ -33,7 +32,10 @@
       ]
     },
     "win": {
-      "icon": "electron/icons/icon.png"
+      "icon": "electron/icons/icon.png",
+      "publish": [
+        "github"
+      ]
     },
     "publish": [
       {
@@ -41,7 +43,7 @@
         "owner": "apioarpio",
         "repo": "TOTVS-PECUARIA",
         "host": "github.com",
-        "token": "f664f2b14e12e6e280259c53914d9f3eb4836326",
+        "token": "4e51009c43a07e13aafddaae450cada715a7f283",
         "private": true,
         "releaseType": "release",
         "publishAutoUpdate": true
@@ -128,7 +130,6 @@
     "codelyzer": "~5.1.0",
     "electron": "^5.0.2",
     "electron-builder": "^22.3.2",
-    "electron-rebuild": "^1.10.0",
     "electron-reload": "^1.5.0",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",

@@ -7,7 +7,8 @@ let updater = {
 };
 
 autoUpdater.on('error', error => {
-  dialog.showErrorBox('Error: ', error == null ? "Desconhecido" : (error.stack || error).toString())
+  console.log(error == null ? "Desconhecido" : (error.stack || error).toString());
+  // dialog.showErrorBox('Error: ', "Não foi possível atualizar a aplicação.")
 });
 
 autoUpdater.on('update-available', () => {
@@ -51,7 +52,14 @@ function checkForUpdates(menuItem, focusedWindow, event) {
     enabled: false
   };
   updater.enabled = false;
-  autoUpdater.checkForUpdates();
+  return autoUpdater.checkForUpdates()
+    .then((result) => {
+      console.log();
+      dialog.showMessageBox({
+        title: 'info',
+        message: 'atualização finalizada'
+      });
+    });
 }
 
 

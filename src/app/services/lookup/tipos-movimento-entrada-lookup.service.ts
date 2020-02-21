@@ -19,13 +19,13 @@ export class TiposMovimentoEntradaLookupService implements PoLookupFilter {
     let tipoFiltro;
     console.log(tipo);
     switch (tipo) {
-      case '1':
+      case 1:
         tipoFiltro = 'entrada';
         break;
-      case '2':
+      case 2:
         tipoFiltro = 'interno';
         break;
-      case '3':
+      case 3:
         tipoFiltro = 'saida';
         break;
       default:

@@ -1,3 +1,25 @@
-<p>index-animais works!</p>
+<div class="po-row" class="pec-header-toolbar">
+  <div class="pec-header-toolbar-back">
+    <span class="po-icon po-icon-arrow-left pecuaria-back-span" (click)="backRoute()"></span>
+  </div>
+  <div class="pec-header-toolbar-title">
+    <h3>Animais</h3>
+  </div>
+</div>
 
-<po-button (p-click)="sync()" p-label="Sync"></po-button>
+<div class="row">
+
+  <po-table
+    p-container
+    p-height="400"
+    p-hide-select-all="true"
+    p-hide-text-overflow
+    p-sort="true"
+    p-striped="true"
+    [p-actions]="actions"
+    [p-columns]="columns"
+    [p-items]="items"
+    [p-max-columns]="6">
+  </po-table>
+
+</div>

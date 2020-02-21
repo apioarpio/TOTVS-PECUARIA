@@ -1,4 +1,4 @@
-import contextoModel from '../../db/models/contexto';
+import contextoModel from '../../db/models/Contexto';
 
 export default (req, res) => {
 

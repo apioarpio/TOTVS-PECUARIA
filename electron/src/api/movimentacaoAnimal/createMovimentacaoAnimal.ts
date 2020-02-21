@@ -1,5 +1,5 @@
 import MovimentacaoAnimal from '../../db/models/movimentacaoAnimal';
-import AnimalDao from '../../db/models/animal';
+import AnimalDao from '../../db/models/Animal';
 import HistoricoPeso from "../../db/models/historicoPeso";
 import HistoricoArea from '../../db/models/HistoricoArea'
 import HistoricoLote from '../../db/models/HistoricoLote'

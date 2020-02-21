@@ -42,7 +42,7 @@ export class RacaAnimalService {
   }
 
   getProtheusRacasAnimal(): Observable<any> {
-    return this.http.get(`${this.serverService.protheusAddress}/pecRacaAnimal1`)
+    return this.http.get(`${this.serverService.protheusAddress}/pecRacaAnimal`)
 
   }
 
@@ -50,7 +50,7 @@ export class RacaAnimalService {
     return this.http.post(`${this.serverService.sqlite}/racaAnimal`, {"racaAnimal": racaAnimal.getRacaAnimalObject()})
   }
 
-  getRacaAnimalLocal() {
+  getRacaAnimalLocal(): Observable<Object> {
     return this.http.get(`${this.serverService.sqlite}/racaAnimal`);
   }
 

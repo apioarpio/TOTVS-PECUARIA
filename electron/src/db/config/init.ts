@@ -17,7 +17,7 @@ import scriptHistoricoAreaTable from '../scripts/createHistoricoAreaTable';
 import scriptHistoricoLoteTable from '../scripts/createHistoricoLoteTable';
 import createMedicamentoTable from '../scripts/createMedicamentoTable';
 import createHistoricoMedicamentoTable from '../scripts/createHistoricoMedicamentoTable';
-import Contexto from '../models/contexto';
+import Contexto from '../models/Contexto';
 
 export default async () => {
     try {

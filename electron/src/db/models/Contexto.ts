@@ -43,7 +43,6 @@ export default {
             const db = database();
             try {
                 let contexto = await this.getContexto();
-                contexto = contexto.contexto;
 
                 let hasFazenda = await this.getFazendasContexto(codFazenda)
                 if (hasFazenda) {
@@ -92,7 +91,6 @@ export default {
                 try {
 
                     let contexto = await this.getContexto();
-                    contexto = contexto.contexto;
 
                     db.serialize(() => {
                         db.run(`
@@ -130,7 +128,7 @@ export default {
      * @param macAddress
      * @return {Promise<any>}
      */
-    getContexto: function () {
+    getContexto: function (): Promise<Object> {
         return new Promise((resolve, reject) => {
             const db = database();
 
@@ -143,11 +141,9 @@ export default {
                         console.log(result);
                         if (result) {
                             resolve({
-                                contexto: {
-                                    codEstacao: result['cod_estacao'],
-                                    codFazendaAtual: result['cod_fazenda_atual'],
-                                    macAddress: result['mac_address']
-                                }
+                                codEstacao: result['cod_estacao'],
+                                codFazendaAtual: result['cod_fazenda_atual'],
+                                macAddress: result['mac_address']
                             })
                         } else {
                             reject({
@@ -165,8 +161,7 @@ export default {
         return new Promise(async (resolve, reject) => {
             const db = database();
             try {
-                const contextoResponse = await this.getContexto();
-                const contexto = contextoResponse['contexto'];
+                const contexto = await this.getContexto();
                 resolve(contexto);
                 // if (contexto) {
                 //     db.serialize(() => {

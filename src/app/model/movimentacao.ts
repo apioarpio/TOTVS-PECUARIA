@@ -3,7 +3,7 @@ import {TiposMovimento} from "./tipos-movimento";
 export class Movimentacao {
 
   id: number;
-  tipoMovimento: TiposMovimento;
+  tipoMovimento: TiposMovimento = new TiposMovimento();
   descricaoTm: string;
   quantidadeAnimal: number;
   tipo: TipoMovimentacao; // 1 - entrada, 2 - saida, 3 - interno

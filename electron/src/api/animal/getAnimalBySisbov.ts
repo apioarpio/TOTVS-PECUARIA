@@ -1,4 +1,4 @@
-import animalDAO from '../../db/models/animal';
+import animalDAO from '../../db/models/Animal';
 
 export default (req, res) => {
 
