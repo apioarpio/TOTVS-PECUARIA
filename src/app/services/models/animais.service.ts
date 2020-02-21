@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {ServerService} from "../utils/server.service";
-import {HttpClient} from "@angular/common/http";
-import {Animal} from "../../model/animal";
-import {IntegracaoLogService} from "../utils/integracao-log.service";
-import {Movimentacao} from "../../model/movimentacao";
-import {Observable} from "rxjs";
+import {ServerService} from '../utils/server.service';
+import {HttpClient} from '@angular/common/http';
+import {Animal} from '../../model/animal';
+import {IntegracaoLogService} from '../utils/integracao-log.service';
+import {Movimentacao} from '../../model/movimentacao';
+import {Observable} from 'rxjs';
 
-import * as moment from 'moment'
-import {HistoricoPeso} from "../../model/historico-peso";
-import {ContextoService} from "../contexto.service";
+import * as moment from 'moment';
+import {HistoricoPeso} from '../../model/historico-peso';
+import {ContextoService} from '../contexto.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,52 +23,60 @@ export class AnimaisService {
   ) {
   }
 
-  async syncAnimais(): Promise<any> {
-    //TODO criar uma variavel fora do try para abrigar todas as promises de inclusão, para que
-    //caso haja uma excessão no meio da execução de busca dos animais, os animais que estão sendo incluidos
-    //sejam exibidos como concluidos para os usuários
+  syncAnimais(): Promise<any> {
+    // TODO criar uma variavel fora do try para abrigar todas as promises de inclusão, para que
+    // caso haja uma excessão no meio da execução de busca dos animais, os animais que estão sendo incluidos
+    // sejam exibidos como concluidos para os usuários
+    return new Promise(async (resolve, reject) => {
 
-    let contSync = true; //informa se a sincronização deve continuar
-    const promiseArr: Promise<any>[] = []; //array de promises de inclusão
-    try {
-      const idFazenda: number = await this.contextoService.getFazenda();
-      console.log(idFazenda)
-      while (contSync) {
-        //busca os animais no servidor
-        const animaisServer = await this.getAnimaisServer(idFazenda, '', 1000);
-        console.log(animaisServer);
-        if (animaisServer['animais']) {
-          const animaisInclusao: Animal[] = [];
-          for (let animalServer of animaisServer['animais']) {
-            let animal: Animal = new Animal();
-            animal.createAnimal(
-              animalServer['SISBOV'], animalServer['MANEJO'], animalServer['RACA'], animalServer['SEXO'],
-              animalServer['DTNASC'], animalServer['DTSBOV'], animalServer['FXEERA'], animalServer['PESO'],
-              animalServer['DTPSGE'] ? moment(animalServer['DTPSGE'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
-              animalServer['CODFAZ'], animalServer['CODFOR'], animalServer['NUMSOL'], animalServer['DTENTR'], animalServer['MOVORI'],
-              animalServer['CDRFID'], animalServer['LOTE'], animalServer['pasto'], animalServer['dtLbab'], animalServer['DTABAT'],
-              animalServer['DLBAB2'], animalServer['dtMort'], animalServer['ctrlws'], animalServer['STATUS'],
-              animalServer['DTCTHT'], animalServer['cstrdo'], animalServer['dtAtua'], animalServer['fazOri'], animalServer['CERTIF'],
-              animalServer['DTCERT'], animalServer['transf']);
-            animaisInclusao.push(animal);
-          }
-          contSync = false;
-          promiseArr.push(this.saveAnimaisLocal(animaisInclusao).toPromise());
-          if (animaisServer["registrosRem"] === 0) {
+      let contSync = true; // informa se a sincronização deve continuar
+      const promiseArr: Promise<any>[] = []; // array de promises de inclusão
+      try {
+        const idFazenda: number = await this.contextoService.getFazenda();
+        console.log(idFazenda);
+        while (contSync) {
+          // busca os animais no servidor
+          const animaisServer = await this.getAnimaisServer(idFazenda, '', 1000);
+          console.log(animaisServer);
+          if (animaisServer['animais']) {
+            const animaisInclusao: Animal[] = [];
+            for (let animalServer of animaisServer['animais']) {
+              let animal: Animal = new Animal();
+              animal.createAnimal(
+                animalServer['SISBOV'], animalServer['MANEJO'], animalServer['RACA'], animalServer['SEXO'],
+                animalServer['DTNASC'], animalServer['DTSBOV'], animalServer['FXEERA'], animalServer['PESO'],
+                animalServer['DTPSGE'] ? moment(animalServer['DTPSGE'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+                animalServer['CODFAZ'], animalServer['CODFOR'], animalServer['NUMSOL'], animalServer['DTENTR'], animalServer['MOVORI'],
+                animalServer['CDRFID'], animalServer['LOTE'], animalServer['pasto'], animalServer['dtLbab'], animalServer['DTABAT'],
+                animalServer['DLBAB2'], animalServer['dtMort'], animalServer['ctrlws'], animalServer['STATUS'],
+                animalServer['DTCTHT'], animalServer['cstrdo'], animalServer['dtAtua'], animalServer['fazOri'], animalServer['CERTIF'],
+                animalServer['DTCERT'], animalServer['transf']);
+              animaisInclusao.push(animal);
+            }
             contSync = false;
+            promiseArr.push(this.saveAnimaisLocal(animaisInclusao).toPromise());
+            if (animaisServer['registrosRem'] === 0) {
+              contSync = false;
+            }
+            Promise.all(promiseArr)
+              .finally( () => {
+                resolve();
+              });
           }
         }
+
+        await this.integracaoLogService.saveSync('animal.ts', 1000).toPromise();
+
+      } catch (e) {
+        console.log(e);
+        reject(e);
       }
+    });
 
-      await this.integracaoLogService.saveSync('animal.ts', 1000).toPromise();
-
-    } catch (e) {
-      console.log(e);
-    }
   }
 
   getAnimaisLocal(): Observable<any> {
-    return this.http.get(`${this.serverService.sqlite}/animal`)
+    return this.http.get(`${this.serverService.sqlite}/animal`);
   }
 
   getAnimalBySisbov(sisbov: number): Promise<Animal> {
@@ -114,9 +122,9 @@ export class AnimaisService {
             historicoPeso.peso = animal['historicoPeso'].peso;
             animalReturn.historicoPeso = historicoPeso;
           }
-          resolve(animalReturn)
-        }, err => err ? reject(err) : null)
-    })
+          resolve(animalReturn);
+        }, err => err ? reject(err) : null);
+    });
   }
 
   getIndicadoresAnimais(): Observable<any> {
@@ -126,7 +134,7 @@ export class AnimaisService {
   private getAnimaisServer(codFaz, recno, maxRecords): Promise<any> {
     return new Promise(async (resolve, reject) => {
       const queryStringArr = [];
-      let queryString = codFaz || recno || maxRecords ? "?" : "";
+      let queryString = codFaz || recno || maxRecords ? '?' : '';
       let protheusServer = await this.serverService.getProtheusServerAddress();
       codFaz ? queryStringArr.push(`codFaz=${codFaz}`) : null;
       recno ? queryStringArr.push(`recno=${recno}`) : null;
@@ -142,7 +150,7 @@ export class AnimaisService {
 
       let result = await this.http.get(`${protheusServer}/pecAnimal${queryString}`).toPromise();
       resolve(result);
-    })
+    });
   }
 
   private saveAnimaisLocal(animais: Animal[]) {
@@ -165,7 +173,7 @@ export class AnimaisService {
       tipoMovimentacao: movimentacao.tipo,
       peso: animal.peso,
       integrado: integrado
-    })
+    });
 
   }
 

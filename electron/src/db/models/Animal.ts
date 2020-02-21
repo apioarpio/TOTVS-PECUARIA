@@ -4,9 +4,9 @@ export default {
     createAnimal(animal) {
         return new Promise((resolve, reject) => {
             const db = database();
-            db.serialize(() => {
+            db.parallelize(() => {
 
-                let stmt = db.prepare('INSERT INTO ANIMAL VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+                const stmt = db.prepare('INSERT INTO ANIMAL VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
                 console.log(animal.sisbov);
                 stmt.run(
                     null,
@@ -42,7 +42,7 @@ export default {
                     animal.controleTransferencia,
                     null,
                     new Date().toLocaleString()
-                    , function (err) {
+                    , function(err) {
                         if (err) {
                             console.log(err);
                             reject(err);
@@ -52,21 +52,21 @@ export default {
                 stmt.finalize();
             });
             db.close();
-        })
+        });
     },
     getAnimalBySisbov(sisbov) {
         return new Promise((resolve, reject) => {
             const db = database();
             db.serialize(() => {
                 db.get(
-                    `SELECT 
-                        ANIMAL.*, 
-                        RA.*, 
+                    `SELECT
+                        ANIMAL.*,
+                        RA.*,
                         HP.peso peso_historico,
                         HP.data_pesagem historico_data_pesagem
-                    FROM animal 
-                        INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal 
-                        LEFT JOIN historico_peso HP ON HP.id_animal = ANIMAL.id_animal 
+                    FROM animal
+                        INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal
+                        LEFT JOIN historico_peso HP ON HP.id_animal = ANIMAL.id_animal
                     WHERE ANIMAL.SISBOV = ${sisbov}`
                     , (err, result) => {
                         if (err) {
@@ -74,12 +74,12 @@ export default {
                             reject(err);
                         } else {
                             let animal;
-                            //adiciona ao array de animais, o objeto animal compativel com o padrão do JSON de requisição
+                            // adiciona ao array de animais, o objeto animal compativel com o padrão do JSON de requisição
                             if (result) {
                                 animal = {
-                                    idAnimal: result['id_animal'],
-                                    sisbov: result['sisbov'],
-                                    manejo: result['manejo'],
+                                    idAnimal: result.id_animal,
+                                    sisbov: result.sisbov,
+                                    manejo: result.manejo,
                                     raca: {
                                         id: result['raca'],
                                         descricao: result['descricao']
@@ -147,19 +147,19 @@ export default {
 
             const db = database();
             console.log(`
-                    SELECT 
+                    SELECT
                         *
-                     FROM ANIMAL  
+                     FROM ANIMAL
                      INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal
                      ${queryPaginate}
                      ORDER BY ANIMAL.ROWID DESC ${queryMaxRecords}
                 `);
             db.all(`
-                    SELECT 
+                    SELECT
                         *
                      FROM ANIMAL
                      INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal
-                     ${queryPaginate} 
+                     ${queryPaginate}
                      ORDER BY ANIMAL.ROWID DESC ${queryMaxRecords}
                 `, (err, result) => {
                 if (err) {
@@ -245,7 +245,7 @@ export default {
             try {
                 db.serialize(() => {
                     db.get(`
-                        SELECT COUNT(*) as animais FROM animal WHERE codigo_fazenda = ${idFazenda} 
+                        SELECT COUNT(*) as animais FROM animal WHERE codigo_fazenda = ${idFazenda}
                     `, (err, row) => {
                         if (err) {
                             reject(err)
