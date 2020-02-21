@@ -153,7 +153,7 @@ export default {
                      INNER JOIN raca_animal RA ON ANIMAL.raca = RA.id_raca_animal
                      ${queryPaginate}
                      ORDER BY ANIMAL.ROWID DESC ${queryMaxRecords}
-                `)
+                `);
             db.all(`
                     SELECT 
                         *

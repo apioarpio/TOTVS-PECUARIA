@@ -2,14 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e46ce9d8-44bf-4157-b547-186c1559cacc" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/api/animal/getIndicadoresAnimal.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/auto-updater/onAutoUpdaterError.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/Animal.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/components/indicador-quantidade-animal/indicador-quantidade-animal.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/components/indicador-quantidade-animal/indicador-quantidade-animal.component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/components/indicador-quantidade-animal/indicador-quantidade-animal.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/components/indicador-quantidade-animal/indicador-quantidade-animal.component.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-form/operacoes-curral-form.component.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-form/operacoes-curral-form.component.scss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-form/operacoes-curral-form.component.spec.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-form/operacoes-curral-form.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/animal/getAnimais.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/animal/getAnimais.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/animal/getAnimalBySisbov.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/animal/getAnimalBySisbov.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/animal/getIndicadoresAnimal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/animal/getIndicadoresAnimal.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/animal/saveAnimal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/animal/saveAnimal.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/animal/updateAnimal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/animal/updateAnimal.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/contexto/addFazendaContexto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/contexto/addFazendaContexto.ts" afterDir="false" />
@@ -19,25 +24,24 @@
       <change beforePath="$PROJECT_DIR$/src/api/contexto/setFazendaAtual.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/contexto/setFazendaAtual.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/entidade/getEntidadeById.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/entidade/getEntidadeById.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/api/movimentacaoAnimal/createMovimentacaoAnimal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/movimentacaoAnimal/createMovimentacaoAnimal.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/auto-updater/onAutoUpdaterError.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auto-updater/onAutoUpdaterError.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/auto-updater/update.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/auto-updater/update.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/db/config/init.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/config/init.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/models/Animal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/Animal.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/db/models/Contexto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/Contexto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/db/models/Entidade.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/Entidade.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/models/animal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/Animal.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/db/models/contexto.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/Contexto.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/db/models/movimentacao.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/db/models/movimentacao.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/Animal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Animal.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/routes/Animal.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/Animal.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/model/movimentacao.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/model/movimentacao.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/animal/animal.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/animal/animal.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/animal/index-animais/index-animais.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/animal/index-animais/index-animais.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/animal/index-animais/index-animais.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/animal/index-animais/index-animais.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/components/modal-filtros-tronco/modal-filtros-tronco.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/components/modal-filtros-tronco/modal-filtros-tronco.component.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/manejo-home/manejo-home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/manejo-home/manejo-home.component.scss" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/manejo-home/manejo-home.component.spec.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/manejo-home/manejo-home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-cadastro/operacoes-curral-cadastro.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-cadastro/operacoes-curral-cadastro.component.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-cadastro/operacoes-curral-cadastro.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-cadastro/operacoes-curral-cadastro.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-home/operacoes-curral-home.component.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-routes.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral-routes.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/pages/operacoes-curral/operacoes-curral.module.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../src/app/services/lookup/entidades-lookup.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../src/app/services/lookup/entidades-lookup.service.ts" afterDir="false" />
@@ -71,8 +75,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/db/models/Animal.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="626">
-              <caret line="176" column="46" lean-forward="true" selection-start-line="176" selection-start-column="46" selection-end-line="176" selection-end-column="46" />
+            <state relative-caret-position="101">
+              <caret line="151" column="12" lean-forward="true" selection-start-line="151" selection-start-column="12" selection-end-line="151" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -140,43 +144,6 @@
               <item name="electron" type="b2602c69:ProjectViewProjectNode" />
               <item name="electron" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="electron" type="b2602c69:ProjectViewProjectNode" />
-              <item name="electron" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="electron" type="b2602c69:ProjectViewProjectNode" />
-              <item name="electron" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="electron" type="b2602c69:ProjectViewProjectNode" />
-              <item name="electron" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-              <item name="animal" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="electron" type="b2602c69:ProjectViewProjectNode" />
-              <item name="electron" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="electron" type="b2602c69:ProjectViewProjectNode" />
-              <item name="electron" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-              <item name="models" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="electron" type="b2602c69:ProjectViewProjectNode" />
-              <item name="electron" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="routes" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -221,16 +188,15 @@
       <workItem from="1581625871679" duration="4409000" />
       <workItem from="1581891830636" duration="1106000" />
       <workItem from="1582124734329" duration="7810000" />
-      <workItem from="1582204982290" duration="2770000" />
+      <workItem from="1582204982290" duration="3054000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19741000" />
+    <option name="totallyTimeSpent" value="20025000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1280" height="800" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2494043" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -404,8 +370,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/db/models/Animal.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="626">
-          <caret line="176" column="46" lean-forward="true" selection-start-line="176" selection-start-column="46" selection-end-line="176" selection-end-column="46" />
+        <state relative-caret-position="101">
+          <caret line="151" column="12" lean-forward="true" selection-start-line="151" selection-start-column="12" selection-end-line="151" selection-end-column="12" />
         </state>
       </provider>
     </entry>
