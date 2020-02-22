@@ -1,17 +1,17 @@
 export class Animal {
 
-    private _id;
-    private _sisbov;
-    private _manejo;
-    private _raca;
+    private _id: number;
+    private _sisbov: number;
+    private _manejo: number;
+    private _raca ;
     private _nomeRaca;
     private _sexo;
     private _dataNascimento;
     private _dataIncSisbov;
-    private _codFAixaEtaria;
+    private _codFaixaEtaria;
     private _peso;
     private _dataPesagem;
-    private _codFazenda;
+    private _codFazenda: number;
     private _codFornecedor;
     private _numeroSolSisbov;
     private _dataEntrada;
@@ -27,7 +27,7 @@ export class Animal {
     private _status;
     private _dataLimiteCotaHilton;
     private _cadastro;
-    private _dataAtualizacaoAnimal;
+    private _dataAtualizacaoAnimal: Date;
     private _fazendaOrigem;
     private _certificadora;
     private _dataCertificadora;
@@ -37,23 +37,54 @@ export class Animal {
     private _aparte;
 
     constructor() {
-
     }
 
-    get id() {
+    get id(): number {
         return this._id;
     }
 
-    set id(value) {
+    set id(value: number) {
         this._id = value;
     }
 
-    get manejo() {
+    get sisbov(): number {
+        return this._sisbov;
+    }
+
+    set sisbov(value: number) {
+        this._sisbov = value;
+    }
+
+    get manejo(): number {
         return this._manejo;
     }
 
-    set manejo(value) {
+    set manejo(value: number) {
         this._manejo = value;
+    }
+
+    get raca() {
+        return this._raca;
+    }
+
+    set raca(value) {
+        this._raca = value;
+    }
+
+    get nomeRaca() {
+        return this._nomeRaca;
+    }
+
+    set nomeRaca(value) {
+        this._nomeRaca = value;
+    }
+
+    get sexo() {
+        return this._sexo;
+    }
+
+    set sexo(value) {
+        this._sexo = value;
     }
 
     get dataNascimento() {
@@ -72,19 +103,35 @@ export class Animal {
         this._dataIncSisbov = value;
     }
 
-    get codFAixaEtaria() {
-        return this._codFAixaEtaria;
+    get codFaixaEtaria() {
+        return this._codFaixaEtaria;
     }
 
-    set codFAixaEtaria(value) {
-        this._codFAixaEtaria = value;
+    set codFaixaEtaria(value) {
+        this._codFaixaEtaria = value;
     }
 
-    get codFazenda() {
+    get peso() {
+        return this._peso;
+    }
+
+    set peso(value) {
+        this._peso = value;
+    }
+
+    get dataPesagem() {
+        return this._dataPesagem;
+    }
+
+    set dataPesagem(value) {
+        this._dataPesagem = value;
+    }
+
+    get codFazenda(): number {
         return this._codFazenda;
     }
 
-    set codFazenda(value) {
+    set codFazenda(value: number) {
         this._codFazenda = value;
     }
 
@@ -112,6 +159,22 @@ export class Animal {
         this._dataEntrada = value;
     }
 
+    get movimentoOrigem() {
+        return this._movimentoOrigem;
+    }
+
+    set movimentoOrigem(value) {
+        this._movimentoOrigem = value;
+    }
+
+    get rfid() {
+        return this._rfid;
+    }
+
+    set rfid(value) {
+        this._rfid = value;
+    }
+
     get lote() {
         return this._lote;
     }
@@ -134,103 +197,6 @@ export class Animal {
 
     set dataLibAbateCertificadora(value) {
         this._dataLibAbateCertificadora = value;
-    }
-
-    get dataLimiteCotaHilton() {
-        return this._dataLimiteCotaHilton;
-    }
-
-    set dataLimiteCotaHilton(value) {
-        this._dataLimiteCotaHilton = value;
-    }
-
-    get fazendaOrigem() {
-        return this._fazendaOrigem;
-    }
-
-    set fazendaOrigem(value) {
-        this._fazendaOrigem = value;
-    }
-
-    get dataCertificadora() {
-        return this._dataCertificadora;
-    }
-
-    set dataCertificadora(value) {
-        this._dataCertificadora = value;
-    }
-
-    get controleTransferencia() {
-        return this._controleTransferencia;
-    }
-
-    set controleTransferencia(value) {
-        this._controleTransferencia = value;
-    }
-
-    get dataSync() {
-        return this._dataSync;
-    }
-
-    set dataSync(value) {
-        this._dataSync = value;
-    }
-
-
-    get sisbov() {
-        return this._sisbov;
-    }
-
-    set sisbov(value) {
-        this._sisbov = value;
-    }
-
-    get raca() {
-        return this._raca;
-    }
-
-    set raca(value) {
-        this._raca = value;
-    }
-
-    get sexo() {
-        return this._sexo;
-    }
-
-    set sexo(value) {
-        this._sexo = value;
-    }
-
-    get peso() {
-        return this._peso;
-    }
-
-    set peso(value) {
-        this._peso = value;
-    }
-
-    get dataPesagem() {
-        return this._dataPesagem;
-    }
-
-    set dataPesagem(value) {
-        this._dataPesagem = value;
-    }
-
-    get movimentoOrigem() {
-        return this._movimentoOrigem;
-    }
-
-    set movimentoOrigem(value) {
-        this._movimentoOrigem = value;
-    }
-
-    get rfid() {
-        return this._rfid;
-    }
-
-    set rfid(value) {
-        this._rfid = value;
     }
 
     get dataAbate() {
@@ -273,6 +239,14 @@ export class Animal {
         this._status = value;
     }
 
+    get dataLimiteCotaHilton() {
+        return this._dataLimiteCotaHilton;
+    }
+
+    set dataLimiteCotaHilton(value) {
+        this._dataLimiteCotaHilton = value;
+    }
+
     get cadastro() {
         return this._cadastro;
     }
@@ -281,12 +255,20 @@ export class Animal {
         this._cadastro = value;
     }
 
-    get dataAtualizacaoAnimal() {
+    get dataAtualizacaoAnimal(): Date {
         return this._dataAtualizacaoAnimal;
     }
 
-    set dataAtualizacaoAnimal(value) {
+    set dataAtualizacaoAnimal(value: Date) {
         this._dataAtualizacaoAnimal = value;
+    }
+
+    get fazendaOrigem() {
+        return this._fazendaOrigem;
+    }
+
+    set fazendaOrigem(value) {
+        this._fazendaOrigem = value;
     }
 
     get certificadora() {
@@ -297,13 +279,28 @@ export class Animal {
         this._certificadora = value;
     }
 
-
-    get nomeRaca() {
-        return this._nomeRaca;
+    get dataCertificadora() {
+        return this._dataCertificadora;
     }
 
-    set nomeRaca(value) {
-        this._nomeRaca = value;
+    set dataCertificadora(value) {
+        this._dataCertificadora = value;
+    }
+
+    get controleTransferencia() {
+        return this._controleTransferencia;
+    }
+
+    set controleTransferencia(value) {
+        this._controleTransferencia = value;
+    }
+
+    get dataSync() {
+        return this._dataSync;
+    }
+
+    set dataSync(value) {
+        this._dataSync = value;
     }
 
     get idadeMeses() {

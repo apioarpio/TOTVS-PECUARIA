@@ -1,5 +1,6 @@
-import animalDAO from '../../db/models/Animal';
 import historicoPesoDAO from '../../db/models/historicoPeso';
+import {AnimalDAO} from "../../controller/AnimalDAO";
+import {Animal} from "../../models/Animal";
 
 export default async (req, res) => {
     try {
@@ -7,8 +8,44 @@ export default async (req, res) => {
             const animais = req.body.animais;
             const animaisInseridos = [];
             for (let animal of animais) {
+                let animalDAO: AnimalDAO = new AnimalDAO();
+                let newAnimal: Animal = new Animal();
+
+                newAnimal.sisbov = animal.sisbov;
+                newAnimal.manejo = animal.manejo;
+                newAnimal.raca = animal.raca;
+                newAnimal.sexo = animal.sexo;
+                newAnimal.dataNascimento = animal.dataNascimento;
+                newAnimal.dataIncSisbov = animal.dataIncSisbov;
+                newAnimal.codFaixaEtaria = animal.codFaixaEtaria;
+                newAnimal.peso = animal.peso;
+                newAnimal.dataPesagem = animal.dataPesagem;
+                newAnimal.codFazenda = animal.codFazenda;
+                newAnimal.codFornecedor = animal.codFornecedor;
+                newAnimal.numeroSolSisbov = animal.numeroSolSisbov;
+                newAnimal.dataEntrada = animal.dataEntrada;
+                newAnimal.movimentoOrigem = animal.movimentoOrigem;
+                newAnimal.rfid = animal.rfid;
+                newAnimal.lote = animal.lote;
+                newAnimal.area = animal.area;
+                newAnimal.dataLibAbateCertificadora = animal.dataLibAbateCertificadora;
+                newAnimal.dataAbate = animal.dataAbate;
+                newAnimal.dataLibAbateSanitario = animal.dataLibAbateSanitario;
+                newAnimal.dataApontamentoMorte = animal.dataApontamentoMorte;
+                newAnimal.controleWebservice = animal.controleWebservice;
+                newAnimal.status = animal.status;
+                newAnimal.dataLimiteCotaHilton = animal.dataLimiteCotaHilton;
+                newAnimal.cadastro = animal.cadastro;
+                newAnimal.dataAtualizacaoAnimal = animal.dataAtualizacaoAnimal;
+                newAnimal.fazendaOrigem = animal.fazendaOrigem;
+                newAnimal.certificadora = animal.certificadora;
+                newAnimal.dataCertificadora = animal.dataCertificadora;
+                newAnimal.controleTransferencia = animal.controleTransferencia;
+                newAnimal.certificadora = animal.certificadora;
+                newAnimal.certificadora = animal.certificadora;
+
                 let animalCriado = await animalDAO.createAnimal(animal);
-                console.log(animalCriado)
+                console.log(animalCriado);
                 if (animal.dataPesagem && animal.peso) {
                     console.log('criando Historico');
                     let hp = await historicoPesoDAO.create({
