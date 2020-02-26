@@ -1,15 +1,15 @@
 import historicoPesoDAO from '../../db/models/historicoPeso';
-import {AnimalDAO} from "../../controller/AnimalDAO";
-import {Animal} from "../../models/Animal";
+import {AnimalDAO} from '../../controller/AnimalDAO';
+import {Animal} from '../../models/Animal';
 
 export default async (req, res) => {
     try {
         if (req.body.animais) {
             const animais = req.body.animais;
             const animaisInseridos = [];
-            for (let animal of animais) {
-                let animalDAO: AnimalDAO = new AnimalDAO();
-                let newAnimal: Animal = new Animal();
+            for (const animal of animais) {
+                const animalDAO: AnimalDAO = new AnimalDAO();
+                const newAnimal: Animal = new Animal();
 
                 newAnimal.sisbov = animal.sisbov;
                 newAnimal.manejo = animal.manejo;
@@ -44,11 +44,11 @@ export default async (req, res) => {
                 newAnimal.certificadora = animal.certificadora;
                 newAnimal.certificadora = animal.certificadora;
 
-                let animalCriado = await animalDAO.createAnimal(animal);
+                const animalCriado = await animalDAO.createAnimal(newAnimal);
                 console.log(animalCriado);
                 if (animal.dataPesagem && animal.peso) {
                     console.log('criando Historico');
-                    let hp = await historicoPesoDAO.create({
+                    const hp = await historicoPesoDAO.create({
                         idAnimal: animalCriado,
                         idMovimentacao: null,
                         tipoMovimentacao: null,
@@ -59,12 +59,12 @@ export default async (req, res) => {
                 }
                 animaisInseridos.push(animalCriado);
             }
-            res.status(201).json({message: 'registros criados com sucesso', animais: animaisInseridos})
+            res.status(201).json({message: 'registros criados com sucesso', animais: animaisInseridos});
         } else {
             res.status(400).json({message: 'nenhum animal foi informado'});
         }
     } catch (e) {
         console.log('erro', e);
-        res.status(500).json({message: 'Erro ao Salvar a entidade', erro: e})
+        res.status(500).json({message: 'Erro ao Salvar a entidade', erro: e});
     }
-}
+};
