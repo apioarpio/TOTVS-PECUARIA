@@ -1,6 +1,11 @@
 import database from '../config/database';
 
 export default () => {
+  /**
+   * data_atualizacao = data em que o registro do animal foi alterado na aplicação
+   * data_sincronizacao = data em que o animal foi sincronizado com o servidor
+   */
+
     return new Promise((resolve, reject) => {
         const db = database();
         db.serialize(() => {
@@ -39,7 +44,7 @@ export default () => {
                 data_certificadora DATE,
                 controle_transferencia TEXT,
                 deletado BOOLEAN,
-                data_sync DATE
+                data_sincronizacao DATE
                 )
             `,
                 (err, success) => {
