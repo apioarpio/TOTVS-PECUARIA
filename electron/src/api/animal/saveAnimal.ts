@@ -1,31 +1,15 @@
-<<<<<<< HEAD
 import {AnimalDAO} from "../../controller/AnimalDAO";
 import {Animal} from "../../models/Animal";
 
 export default async (req, res) => {
   try {
     if (req.body.animais) {
-=======
-import historicoPesoDAO from '../../db/models/historicoPeso';
-import {AnimalDAO} from '../../controller/AnimalDAO';
-import {Animal} from '../../models/Animal';
-
-export default async (req, res) => {
-    try {
-        if (req.body.animais) {
-            const animais = req.body.animais;
-            const animaisInseridos = [];
-            for (const animal of animais) {
-                const animalDAO: AnimalDAO = new AnimalDAO();
-                const newAnimal: Animal = new Animal();
->>>>>>> 73b36a1ca7cb911a3c48cd42db7901bbbd9ce339
-
       const animais = req.body.animais;
       const animaisInseridos: Array<Promise<any>> = [];
 
-<<<<<<< HEAD
       for (let animal of animais) {
-        console.log('Inserindo Animal');
+        console.log('Inserindo Animal:  ');
+        console.log(animal.sisbov);
         let animalDAO: AnimalDAO = new AnimalDAO();
         let newAnimal: Animal = new Animal();
 
@@ -61,8 +45,6 @@ export default async (req, res) => {
         newAnimal.controleTransferencia = animal.controleTransferencia;
         newAnimal.certificadora = animal.certificadora;
 
-        animaisInseridos.push(animalDAO.createAnimal(animal));
-
       }
       Promise.all(animaisInseridos)
         .then(value => {
@@ -79,29 +61,3 @@ export default async (req, res) => {
     res.status(500).json({message: 'Erro ao Salvar a entidade', erro: e})
   }
 }
-=======
-                const animalCriado = await animalDAO.createAnimal(newAnimal);
-                console.log(animalCriado);
-                if (animal.dataPesagem && animal.peso) {
-                    console.log('criando Historico');
-                    const hp = await historicoPesoDAO.create({
-                        idAnimal: animalCriado,
-                        idMovimentacao: null,
-                        tipoMovimentacao: null,
-                        peso: animal.peso,
-                        dataPesagem: animal.dataPesagem,
-                        integrado: false,
-                    });
-                }
-                animaisInseridos.push(animalCriado);
-            }
-            res.status(201).json({message: 'registros criados com sucesso', animais: animaisInseridos});
-        } else {
-            res.status(400).json({message: 'nenhum animal foi informado'});
-        }
-    } catch (e) {
-        console.log('erro', e);
-        res.status(500).json({message: 'Erro ao Salvar a entidade', erro: e});
-    }
-};
->>>>>>> 73b36a1ca7cb911a3c48cd42db7901bbbd9ce339
