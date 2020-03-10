@@ -9,7 +9,7 @@ moment.updateLocale('pt-BR');
 export class AnimalDAO {
 
   constructor() {
-
+    console.log('constructor')
   }
 
   /**
