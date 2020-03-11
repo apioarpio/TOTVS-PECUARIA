@@ -37,14 +37,14 @@ export default async (req, res) => {
         newAnimal.controleWebservice = animal.controleWebservice;
         newAnimal.status = animal.status;
         newAnimal.dataLimiteCotaHilton = animal.dataLimiteCotaHilton;
-        newAnimal.cadastro = animal.cadastro;
+        newAnimal.cadastro = animal.dataCadastro;
         newAnimal.dataAtualizacaoAnimal = animal.dataAtualizacaoAnimal;
         newAnimal.fazendaOrigem = animal.fazendaOrigem;
         newAnimal.certificadora = animal.certificadora;
         newAnimal.dataCertificadora = animal.dataCertificadora;
         newAnimal.controleTransferencia = animal.controleTransferencia;
         newAnimal.certificadora = animal.certificadora;
-
+        animaisInseridos.push(animalDAO.createAnimal(newAnimal));
       }
       Promise.all(animaisInseridos)
         .then(value => {

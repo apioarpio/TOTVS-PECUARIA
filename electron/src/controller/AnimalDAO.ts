@@ -58,7 +58,10 @@ export class AnimalDAO {
     });
   }
 
-  public updateAnimal(animal: Animal): Promise<Animal> {
+  /**
+   * @description atualiza o animal com os dados da sincronização
+   */
+  public sincronizacaoUpdateAnimal(animal: Animal): Promise<Animal> {
     return new Promise((resolve, reject) => {
 
     });
@@ -163,8 +166,8 @@ export class AnimalDAO {
           animal.controleWebservice,
           animal.status,
           animal.dataLimiteCotaHilton,
-          moment(animal.cadastro, 'DD/MM/YYYY'),
-          moment(animal.dataAtualizacaoAnimal, 'DD/MM/YYYY'),
+          animal.cadastro ? moment(animal.cadastro, "DD/MM/YYYY h:mm:ss").format("DD/MM/YYYY h:mm:ss") : moment().format("DD/MM/YYYY h:mm:ss"),
+          animal.dataAtualizacaoAnimal ? moment(animal.dataAtualizacaoAnimal, "DD/MM/YYYY h:mm:ss").format("DD/MM/YYYY h:mm:ss") : moment().format("DD/MM/YYYY h:mm:ss"),
           animal.fazendaOrigem,
           animal.certificadora,
           animal.dataCertificadora,

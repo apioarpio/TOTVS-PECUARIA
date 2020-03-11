@@ -78,10 +78,13 @@ export class ModalSyncComponent implements OnInit {
     this.startLoadingButton(this.animalSyncBtn);
     this.syncService.setStartSyncTable(TablesSync.ANIMAL);
 
+    console.log('Inicio sincronização: ' + new Date().toLocaleString());
+
     this.animaisService.syncAnimais()
       .finally(() => {
         this.stopLoadingButton(this.animalSyncBtn);
         this.syncService.setStopSynctable(TablesSync.ANIMAL);
+        console.log('Inicio sincronização: ' + new Date().toLocaleString());
       });
   }
 
