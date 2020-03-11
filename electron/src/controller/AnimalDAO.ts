@@ -1,35 +1,35 @@
-import {Animal} from "../models/Animal";
-import {DatabaseFactory} from "../db/config/DatabaseFactory";
+import {Animal} from '../models/Animal';
+import {DatabaseFactory} from '../db/config/DatabaseFactory';
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
-import historicoPesoDAO from "../db/models/historicoPeso";
+import historicoPesoDAO from '../db/models/historicoPeso';
 
 moment.updateLocale('pt-BR');
 
 export class AnimalDAO {
 
   constructor() {
-    console.log('constructor')
+    console.log('constructor');
   }
 
   /**
    * @description Cria um animal na base local.
    * antes da criação do animal, é verificado se o mesmo já existe na base, caso existir, é realizado um update nas informações do animal.
    * esse update é realizado apenas se a data de atualização do animal for maior do que a existente na base.
-   * @param animal
    * @param fazenda fazenda em que será inserido o animal
    */
   public createAnimal(animal: Animal): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
         const animalLocal: Animal = await this.getAnimalBySisbov(animal.sisbov, animal.codFazenda);
-        if (animalLocal) { //verifica se o animal já existe
+        if (animalLocal) { // verifica se o animal já existe
           console.log('animal existe');
           console.log(animal.dataAtualizacaoAnimal);
           console.log(animalLocal.dataAtualizacaoAnimal);
           console.log(`data de atualização do animal recebido: ${moment(animal.dataAtualizacaoAnimal).format()}`);
           console.log(`data de atualização do animal salvo local: ${moment(animalLocal.dataAtualizacaoAnimal).format()}`);
 
+          // tslint:disable-next-line:max-line-length
           if ((animal.dataAtualizacaoAnimal && animalLocal.dataAtualizacaoAnimal) && (moment(animal.dataAtualizacaoAnimal) >= moment(animalLocal.dataAtualizacaoAnimal))) {
             console.log(moment(animal.dataAtualizacaoAnimal).format());
             console.log(moment(animalLocal.dataAtualizacaoAnimal).format());
@@ -40,7 +40,7 @@ export class AnimalDAO {
           animal.id = await this.insertAnimal(animal);
           if (animal.dataPesagem && animal.peso) {
             console.log('criando Historico');
-            let hp = await historicoPesoDAO.create({
+            const hp = await historicoPesoDAO.create({
               idAnimal: animal.id,
               idMovimentacao: null,
               tipoMovimentacao: null,
@@ -55,33 +55,31 @@ export class AnimalDAO {
         console.log(e);
         reject(e);
       }
-    })
+    });
   }
 
   public updateAnimal(animal: Animal): Promise<Animal> {
     return new Promise((resolve, reject) => {
 
-    })
+    });
   }
 
   /**
    * @description busca o animal na base local.
-   * @param sisbov
-   * @param fazenda
    */
   public getAnimalBySisbov(sisbov: number, fazenda: number): Promise<Animal> {
     return new Promise((resolve, reject) => {
       if (sisbov && fazenda) {
-        let databaseFactory = new DatabaseFactory();
-        let db = databaseFactory.createDatabase(); // busca a instancia do banco
+        const databaseFactory = new DatabaseFactory();
+        const db = databaseFactory.createDatabase(); // busca a instancia do banco
         db.parallelize(() => {
           db.get(`SELECT * FROM ANIMAL WHERE sisbov = ${sisbov} AND codigo_fazenda = ${fazenda}`,
             (err, result) => {
               if (err) {
                 console.log('Erro ao consultar o animal pelo sisbov : ', err);
-                reject(err)
+                reject(err);
               } else if (result) {
-                let animalRetorno = new Animal();
+                const animalRetorno = new Animal();
 
                 animalRetorno.id = result.hasOwnProperty('id_animal') ? result.sisbov : '';
                 animalRetorno.sisbov = result.hasOwnProperty('sisbov') ? result.sisbov : '';
@@ -117,27 +115,27 @@ export class AnimalDAO {
                 animalRetorno.deletado = result.hasOwnProperty('deletado') ? result.sisbov : '';
                 animalRetorno.dataSincronizacao = result.hasOwnProperty('data_sincronizacao') ? result.sisbov : '';
 
-                resolve(animalRetorno)
+                resolve(animalRetorno);
               } else {
-                resolve()
+                resolve();
               }
-            })
+            });
         });
         // fecha a conexão
-        db.close()
+        db.close();
       } else {
-        reject("Parâmetros não informados");
+        reject('Parâmetros não informados');
       }
-    })
+    });
   }
 
   private insertAnimal(animal: Animal): Promise<number> {
     return new Promise((resolve, reject) => {
-      let databaseFactory = new DatabaseFactory();
-      let db = databaseFactory.createDatabase();
+      const databaseFactory = new DatabaseFactory();
+      const db = databaseFactory.createDatabase();
       db.parallelize(() => {
 
-        let stmt = db.prepare('INSERT INTO ANIMAL VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
+        const stmt = db.prepare('INSERT INTO ANIMAL VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
         console.log(animal.sisbov);
         stmt.run(
           null,
@@ -171,9 +169,9 @@ export class AnimalDAO {
           animal.certificadora,
           animal.dataCertificadora,
           animal.controleTransferencia,
-          null,//deletado
-          new Date().toLocaleString() //data Sincronização
-          , function (err) {
+          null, // deletado
+          new Date().toLocaleString() // data Sincronização
+          , function(err) {
             if (err) {
               console.log(err);
               reject(err);
@@ -183,7 +181,7 @@ export class AnimalDAO {
         stmt.finalize();
       });
       db.close();
-    })
+    });
   }
 
 }

@@ -1,5 +1,5 @@
-import {AnimalDAO} from "../../controller/AnimalDAO";
-import {Animal} from "../../models/Animal";
+import {AnimalDAO} from '../../controller/AnimalDAO';
+import {Animal} from '../../models/Animal';
 
 export default async (req, res) => {
   try {
@@ -7,11 +7,11 @@ export default async (req, res) => {
       const animais = req.body.animais;
       const animaisInseridos: Array<Promise<any>> = [];
 
-      for (let animal of animais) {
+      for (const animal of animais) {
         console.log('Inserindo Animal:  ');
         console.log(animal.sisbov);
-        let animalDAO: AnimalDAO = new AnimalDAO();
-        let newAnimal: Animal = new Animal();
+        const animalDAO: AnimalDAO = new AnimalDAO();
+        const newAnimal: Animal = new Animal();
 
         newAnimal.sisbov = animal.sisbov;
         newAnimal.manejo = animal.manejo;
@@ -48,16 +48,16 @@ export default async (req, res) => {
       }
       Promise.all(animaisInseridos)
         .then(value => {
-          res.status(201).json({message: 'Animais criados com sucesso', response: value})
+          res.status(201).json({message: 'Animais criados com sucesso', response: value});
         })
         .catch(reason => {
           res.status(400).json({message: reason});
-        })
+        });
     } else {
       res.status(400).json({message: 'nenhum animal foi informado'});
     }
   } catch (e) {
     console.log('erro', e);
-    res.status(500).json({message: 'Erro ao Salvar a entidade', erro: e})
+    res.status(500).json({message: 'Erro ao Salvar a entidade', erro: e});
   }
-}
+};
