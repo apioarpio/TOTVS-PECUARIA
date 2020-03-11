@@ -3,13 +3,13 @@ import {DatabaseFactory} from "../db/config/DatabaseFactory";
 import * as moment from 'moment';
 import 'moment/locale/pt-br';
 import historicoPesoDAO from "../db/models/historicoPeso";
+import database from "../db/config/database";
 
 moment.updateLocale('pt-BR');
 
 export class AnimalDAO {
 
   constructor() {
-    console.log('constructor')
   }
 
   /**
@@ -24,22 +24,15 @@ export class AnimalDAO {
       try {
         const animalLocal: Animal = await this.getAnimalBySisbov(animal.sisbov, animal.codFazenda);
         if (animalLocal) { //verifica se o animal já existe
-          console.log('animal existe');
-          console.log(animal.dataAtualizacaoAnimal);
-          console.log(animalLocal.dataAtualizacaoAnimal);
-          console.log(`data de atualização do animal recebido: ${moment(animal.dataAtualizacaoAnimal).format()}`);
-          console.log(`data de atualização do animal salvo local: ${moment(animalLocal.dataAtualizacaoAnimal).format()}`);
 
-          if ((animal.dataAtualizacaoAnimal && animalLocal.dataAtualizacaoAnimal) && (moment(animal.dataAtualizacaoAnimal) >= moment(animalLocal.dataAtualizacaoAnimal))) {
-            console.log(moment(animal.dataAtualizacaoAnimal).format());
-            console.log(moment(animalLocal.dataAtualizacaoAnimal).format());
+          if ((animal.dataAtualizacaoAnimal && animalLocal.dataAtualizacaoAnimal) && (moment(animal.dataAtualizacaoAnimal, "YYYYMMDD") >= moment(animalLocal.dataAtualizacaoAnimal, "YYYYMMDD"))) {
+            await this.sincronizacaoUpdateAnimal(animal);
             console.log('animal atualizado');
           }
           resolve();
         } else {
           animal.id = await this.insertAnimal(animal);
           if (animal.dataPesagem && animal.peso) {
-            console.log('criando Historico');
             let hp = await historicoPesoDAO.create({
               idAnimal: animal.id,
               idMovimentacao: null,
@@ -58,9 +51,59 @@ export class AnimalDAO {
     })
   }
 
-  public updateAnimal(animal: Animal): Promise<Animal> {
+  /**
+   * @description atualiza o animal com os dados da sincronização
+   */
+  public sincronizacaoUpdateAnimal(animal: Animal): Promise<Animal> {
     return new Promise((resolve, reject) => {
-
+      const db = database();
+      try {
+        db.parallelize(() => {
+          db.run(`
+              UPDATE animal
+              SET
+                raca = ${animal.raca},
+                sexo = ${animal.sexo},
+                data_inclusao_sisbov = ${animal.dataIncSisbov},
+                codigo_faixa_etaria = ${animal.codFaixaEtaria},
+                peso = ${animal.peso},
+                data_pesage = ${animal.dataPesagem},
+                codigo_fornecedor = ${animal.codFornecedor},
+                numero_solicitacao_sisbov = ${animal.numeroSolSisbov},
+                data_entrada = ${animal.dataEntrada},
+                movimento_origem = ${animal.movimentoOrigem},
+                rfid = ${animal.rfid},
+                lote = ${animal.lote},
+                area = ${animal.area},
+                data_lib_abate_certificadora = ${animal.dataLibAbateCertificadora},
+                data_abate = ${animal.dataAbate},
+                data_lib_abate_sanitario = ${animal.dataLibAbateSanitario},
+                data_apontamento_morte = ${animal.dataApontamentoMorte},
+                controle_webservice = ${animal.controleWebservice},
+                status = ${animal.status},
+                data_limite_cota_hilton = ${animal.dataLimiteCotaHilton},
+                data_cadastro = ${animal.cadastro},
+                data_atualizacao_animal = ${animal.dataAtualizacaoAnimal},
+                fazenda_origem = ${animal.fazendaOrigem},
+                certificadora = ${animal.certificadora},
+                data_certificadora = ${animal.dataCertificadora},
+                controle_transferencia = ${animal.controleWebservice},
+                deletado = ${animal.deletado}
+              WHERE sisbov = ${animal.sisbov}
+            `, err => {
+            if (err) {
+              reject(err)
+            } else {
+              resolve()
+            }
+          })
+        });
+        db.close();
+      } catch (e) {
+        db.close();
+        console.log(e);
+        reject(e);
+      }
     })
   }
 
@@ -136,9 +179,7 @@ export class AnimalDAO {
       let databaseFactory = new DatabaseFactory();
       let db = databaseFactory.createDatabase();
       db.parallelize(() => {
-
         let stmt = db.prepare('INSERT INTO ANIMAL VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
-        console.log(animal.sisbov);
         stmt.run(
           null,
           animal.sisbov,
@@ -165,8 +206,8 @@ export class AnimalDAO {
           animal.controleWebservice,
           animal.status,
           animal.dataLimiteCotaHilton,
-          moment(animal.cadastro, 'DD/MM/YYYY'),
-          moment(animal.dataAtualizacaoAnimal, 'DD/MM/YYYY'),
+          animal.cadastro ? moment(animal.cadastro, "DD/MM/YYYY h:mm:ss").format("DD/MM/YYYY h:mm:ss") : moment().format("DD/MM/YYYY h:mm:ss"),
+          animal.dataAtualizacaoAnimal ? moment(animal.dataAtualizacaoAnimal, "DD/MM/YYYY h:mm:ss").format("DD/MM/YYYY h:mm:ss") : moment().format("DD/MM/YYYY h:mm:ss"),
           animal.fazendaOrigem,
           animal.certificadora,
           animal.dataCertificadora,

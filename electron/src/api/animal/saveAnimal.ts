@@ -8,8 +8,6 @@ export default async (req, res) => {
       const animaisInseridos: Array<Promise<any>> = [];
 
       for (let animal of animais) {
-        console.log('Inserindo Animal:  ');
-        console.log(animal.sisbov);
         let animalDAO: AnimalDAO = new AnimalDAO();
         let newAnimal: Animal = new Animal();
 
@@ -37,21 +35,18 @@ export default async (req, res) => {
         newAnimal.controleWebservice = animal.controleWebservice;
         newAnimal.status = animal.status;
         newAnimal.dataLimiteCotaHilton = animal.dataLimiteCotaHilton;
-        newAnimal.cadastro = animal.cadastro;
+        newAnimal.cadastro = animal.dataCadastro;
         newAnimal.dataAtualizacaoAnimal = animal.dataAtualizacaoAnimal;
         newAnimal.fazendaOrigem = animal.fazendaOrigem;
         newAnimal.certificadora = animal.certificadora;
         newAnimal.dataCertificadora = animal.dataCertificadora;
         newAnimal.controleTransferencia = animal.controleTransferencia;
         newAnimal.certificadora = animal.certificadora;
-
+        animaisInseridos.push(animalDAO.createAnimal(newAnimal));
       }
       Promise.all(animaisInseridos)
-        .then(value => {
-          res.status(201).json({message: 'Animais criados com sucesso', response: value})
-        })
-        .catch(reason => {
-          res.status(400).json({message: reason});
+        .finally(() => {
+          res.status(201).json({message: 'Animais criados com sucesso'})
         })
     } else {
       res.status(400).json({message: 'nenhum animal foi informado'});

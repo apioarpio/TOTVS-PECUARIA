@@ -31,48 +31,39 @@ export class AnimaisService {
 
       let contSync = true; // informa se a sincronização deve continuar
       const promiseArr: Promise<any>[] = []; // array de promises de inclusão
+      let ultimoRecno: number = 0;
       try {
-        const idFazenda: number = await this.contextoService.getFazenda();
-        console.log(idFazenda);
+        const idFazenda: number = await this.contextoService.getFazenda(); //busca a fazenda selecionada
         while (contSync) {
-          // busca os animais no servidor
-          const animaisServer = await this.getAnimaisServer(idFazenda, '', 1000);
-          console.log(animaisServer);
+          const animaisServer = await this.getAnimaisServer(idFazenda, ultimoRecno, 1000);// busca os animais no servidor
           if (animaisServer['animais']) {
             const animaisInclusao: Animal[] = [];
             for (let animalServer of animaisServer['animais']) {
-              let animal: Animal = new Animal();
-              animal.createAnimal(
-                animalServer['SISBOV'], animalServer['MANEJO'], animalServer['RACA'], animalServer['SEXO'],
-                animalServer['DTNASC'], animalServer['DTSBOV'], animalServer['FXEERA'], animalServer['PESO'],
-                animalServer['DTPSGE'] ? moment(animalServer['DTPSGE'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
-                animalServer['CODFAZ'], animalServer['CODFOR'], animalServer['NUMSOL'], animalServer['DTENTR'], animalServer['MOVORI'],
-                animalServer['CDRFID'], animalServer['LOTE'], animalServer['pasto'], animalServer['dtLbab'], animalServer['DTABAT'],
-                animalServer['DLBAB2'], animalServer['dtMort'], animalServer['ctrlws'], animalServer['STATUS'],
-                animalServer['DTCTHT'], animalServer['cstrdo'], animalServer['dtAtua'], animalServer['fazOri'], animalServer['CERTIF'],
-                animalServer['DTCERT'], animalServer['transf']);
-              animaisInclusao.push(animal);
+              let animal: Animal = this.animalWsToAnimal(animalServer); //transforma a resposta em um objeto animal
+              animaisInclusao.push(animal); // adiciona ao array de animais
             }
-            contSync = false;
             promiseArr.push(this.saveAnimaisLocal(animaisInclusao).toPromise());
-            if (animaisServer['registrosRem'] === 0) {
+            console.log(animaisServer['registrosRem']);
+            if (parseInt(animaisServer['registrosRem']) === 0) {
               contSync = false;
             }
             Promise.all(promiseArr)
-              .finally( () => {
+              .finally(() => {
                 resolve();
               });
+            console.log(animaisServer['ultimoRecno']);
+            // caso nào houver ulitmo recno, para a execução.
+            animaisServer['ultimoRecno'] ? ultimoRecno = animaisServer['ultimoRecno'] : contSync = false;
+          } else {
+            contSync = false; // para a sincornização
           }
         }
-
         await this.integracaoLogService.saveSync('animal.ts', 1000).toPromise();
-
       } catch (e) {
         console.log(e);
         reject(e);
       }
     });
-
   }
 
   getAnimaisLocal(): Observable<any> {
@@ -157,7 +148,7 @@ export class AnimaisService {
     let arrAnimais = [];
     for (let animal of animais) {
       if (animal.sisbov) {
-        console.log(`adicionando o animal ${animal.sisbov} ao array`);
+        // console.log(`adicionando o animal ${animal.sisbov} ao array`);
         arrAnimais.push(animal.getAnimalObject());
 
       }
@@ -175,6 +166,45 @@ export class AnimaisService {
       integrado: integrado
     });
 
+  }
+
+  /**
+   * @description converte o retorno do webservice protheus para um objeto Animal
+   */
+  private animalWsToAnimal(animalServer): Animal {
+    let animal: Animal = new Animal();
+    animal.createAnimal(
+      animalServer['SISBOV'],
+      animalServer['MANEJO'],
+      animalServer['RACA'],
+      animalServer['SEXO'],
+      animalServer['DTNASC'] ? moment(animalServer['DTNASC'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['DTSBOV'] ? moment(animalServer['DTSBOV'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['FXEERA'],
+      animalServer['PESO'],
+      animalServer['DTPSGE'] ? moment(animalServer['DTPSGE'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['CODFAZ'],
+      animalServer['CODFOR'],
+      animalServer['NUMSOL'],
+      animalServer['DTENTR'] ? moment(animalServer['DTENTR'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['MOVORI'],
+      animalServer['CDRFID'],
+      animalServer['LOTE'],
+      animalServer['PASTO'],
+      animalServer['DTLBAB'] ? moment(animalServer['DTLBAB'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['DTABAT'] ? moment(animalServer['DTABAT'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['DLBAB2'] ? moment(animalServer['DLBAB2'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['DTMORT'] ? moment(animalServer['DTMORT'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['CRTLWS'],
+      animalServer['STATUS'],
+      animalServer['DTCTHT'] ? moment(animalServer['DTCTHT'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['cstrdo'],
+      animalServer['DTATUA'] ? moment(animalServer['DTATUA'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['FAZORI'],
+      animalServer['CERTIF'],
+      animalServer['DTCERT'] ? moment(animalServer['DTCERT'], 'YYYYMMDD').format('DD/MM/YYYY') : '',
+      animalServer['TRANSF']);
+    return animal
   }
 
 }
